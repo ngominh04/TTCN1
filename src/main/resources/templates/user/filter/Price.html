@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="py-5" layout:fragment="content">
+
+        <div th:if="${session.price1 != null}"> <!--        giá tiền tăng dần-->
+            <div class="container-fluid px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5" th:each="pro: ${price_up}">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" th:src="'/product_image/'+${pro.image.url}" alt="..." />
+                            <!--                            <img class="card-img-top" src="/product_image/laptop_hp_240_1.jpg" alt="..." />-->
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder" th:text="${pro.name} +'/'+ ${pro.notes}"></h5>
+                                    <!-- Product price-->
+                                    <p >Giá chỉ: <span th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></p>
+                                    <p>Số lượng: <span th:text="${pro.quatity}"></span></p>
+                                    <div th:if="${pro.isactive == 1}">
+                                        <h5 style="color: greenyellow">Còn bán</h5>
+                                    </div>
+                                    <div th:if="${pro.isactive == 0}">
+                                        <h5 style="color: orangered">Đã hết hàng</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{'/view/productChiTiet/'+${pro.id}}">Xem Sản phẩm</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${session.price1 == null}"><!--        giá tiền giảm dần-->
+            <div class="container-fluid px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5" th:each="pro: ${price_Down}">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" th:src="'/product_image/'+${pro.image.url}" alt="..." />
+                            <!--                            <img class="card-img-top" src="/product_image/laptop_hp_240_1.jpg" alt="..." />-->
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder" th:text="${pro.name} +'/'+ ${pro.notes}"></h5>
+                                    <!-- Product price-->
+                                    <p >Giá chỉ: <span th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></p>
+                                    <p>Số lượng: <span th:text="${pro.quatity}"></span></p>
+                                    <div th:if="${pro.isactive == 1}">
+                                        <h5 style="color: greenyellow">Còn bán</h5>
+                                    </div>
+                                    <div th:if="${pro.isactive == 0}">
+                                        <h5 style="color: orangered">Đã hết hàng</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{'/view/productChiTiet/'+${pro.id}}">Xem Sản phẩm</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${session.price2 != null}"> <!--        giá tiền dưới 15tr-->
+            <div class="container-fluid px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5" th:each="pro: ${price_15}">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" th:src="'/product_image/'+${pro.image.url}" alt="..." />
+                            <!--                            <img class="card-img-top" src="/product_image/laptop_hp_240_1.jpg" alt="..." />-->
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder" th:text="${pro.name} +'/'+ ${pro.notes}"></h5>
+                                    <!-- Product price-->
+                                    <p >Giá chỉ: <span th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></p>
+                                    <p>Số lượng: <span th:text="${pro.quatity}"></span></p>
+                                    <div th:if="${pro.isactive == 1}">
+                                        <h5 style="color: greenyellow">Còn bán</h5>
+                                    </div>
+                                    <div th:if="${pro.isactive == 0}">
+                                        <h5 style="color: orangered">Đã hết hàng</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{'/view/productChiTiet/'+${pro.id}}">Xem Sản phẩm</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${session.price3 != null}"> <!--        giá tiền 15tr đến 25tr-->
+            <div class="container-fluid px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5" th:each="pro: ${price_15_25}">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" th:src="'/product_image/'+${pro.image.url}" alt="..." />
+                            <!--                            <img class="card-img-top" src="/product_image/laptop_hp_240_1.jpg" alt="..." />-->
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder" th:text="${pro.name} +'/'+ ${pro.notes}"></h5>
+                                    <!-- Product price-->
+                                    <p >Giá chỉ: <span th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></p>
+                                    <p>Số lượng: <span th:text="${pro.quatity}"></span></p>
+                                    <div th:if="${pro.isactive == 1}">
+                                        <h5 style="color: greenyellow">Còn bán</h5>
+                                    </div>
+                                    <div th:if="${pro.isactive == 0}">
+                                        <h5 style="color: orangered">Đã hết hàng</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{'/view/productChiTiet/'+${pro.id}}">Xem Sản phẩm</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${session.price4 != null}"> <!--        giá tiền 25tr đến 35tr-->
+            <div class="container-fluid px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5" th:each="pro: ${price_25_35}">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" th:src="'/product_image/'+${pro.image.url}" alt="..." />
+                            <!--                            <img class="card-img-top" src="/product_image/laptop_hp_240_1.jpg" alt="..." />-->
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder" th:text="${pro.name} +'/'+ ${pro.notes}"></h5>
+                                    <!-- Product price-->
+                                    <p >Giá chỉ: <span th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></p>
+                                    <p>Số lượng: <span th:text="${pro.quatity}"></span></p>
+                                    <div th:if="${pro.isactive == 1}">
+                                        <h5 style="color: greenyellow">Còn bán</h5>
+                                    </div>
+                                    <div th:if="${pro.isactive == 0}">
+                                        <h5 style="color: orangered">Đã hết hàng</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{'/view/productChiTiet/'+${pro.id}}">Xem Sản phẩm</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${session.price5 != null}"> <!--        giá tiền trên 35tr-->
+            <div class="container-fluid px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5" th:each="pro: ${price_35}">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" th:src="'/product_image/'+${pro.image.url}" alt="..." />
+                            <!--                            <img class="card-img-top" src="/product_image/laptop_hp_240_1.jpg" alt="..." />-->
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder" th:text="${pro.name} +'/'+ ${pro.notes}"></h5>
+                                    <!-- Product price-->
+                                    <p >Giá chỉ: <span th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></p>
+                                    <p>Số lượng: <span th:text="${pro.quatity}"></span></p>
+                                    <div th:if="${pro.isactive == 1}">
+                                        <h5 style="color: greenyellow">Còn bán</h5>
+                                    </div>
+                                    <div th:if="${pro.isactive == 0}">
+                                        <h5 style="color: orangered">Đã hết hàng</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{'/view/productChiTiet/'+${pro.id}}">Xem Sản phẩm</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
