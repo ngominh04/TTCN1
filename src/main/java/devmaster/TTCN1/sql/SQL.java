@@ -29,4 +29,35 @@ public class SQL {
             "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
             "from product\n" +
             "where PRICE > 35000000";
+    public static final String ACCER="" +
+            "select id, name, description, notes, image, idcategory,\n" +
+            "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
+            "from product\n" +
+            "where DESCRIPTION = 'accer'";
+    public static final String ASUS="" +
+            "select id, name, description, notes, image, idcategory,\n" +
+            "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
+            "from product\n" +
+            "where DESCRIPTION = 'asus'";
+    public static final String DELL="" +
+            "select id, name, description, notes, image, idcategory,\n" +
+            "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
+            "from product\n" +
+            "where DESCRIPTION = 'dell'";
+    public static final String HP="" +
+            "select id, name, description, notes, image, idcategory,\n" +
+            "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
+            "from product\n" +
+            "where DESCRIPTION = 'hp'";
+    public static final String LENOVO="" +
+            "select id, name, description, notes, image, idcategory,\n" +
+            "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
+            "from product\n" +
+            "where DESCRIPTION = 'lenovo'";
+    public static final String APPLE="" +
+            "select id, name, description, notes, image, idcategory,\n" +
+            "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
+            "from product\n" +
+            "where DESCRIPTION = 'apple'";
+
 }

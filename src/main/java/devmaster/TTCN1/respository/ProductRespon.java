@@ -33,4 +33,16 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
     List<Product> getPrice_25_35();
     @Query(value = SQL.PRICE_35,nativeQuery = true) // lọc theo giá tiền trên 35tr
     List<Product> getPrice_35();
+    @Query(value = SQL.ACCER,nativeQuery = true)// lọc theo hãng accer
+    List<Product> getAccer();
+    @Query(value = SQL.ASUS,nativeQuery = true)// lọc theo hãng asus
+    List<Product> getAsus();
+    @Query(value = SQL.DELL,nativeQuery = true)// lọc theo hãng dell
+    List<Product> getDell();
+    @Query(value = SQL.HP,nativeQuery = true)// lọc theo hãng hp
+    List<Product> getHp();
+    @Query(value = SQL.LENOVO,nativeQuery = true)// lọc theo hãng lenovo
+    List<Product> getLenovo();
+    @Query(value = SQL.APPLE,nativeQuery = true)// lọc theo hãng apple
+    List<Product> getApple();
 }
