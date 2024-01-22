@@ -59,5 +59,5 @@ public class SQL {
             "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
             "from product\n" +
             "where DESCRIPTION = 'apple'";
-
+    public static final String CUSTOMER ="select *from customer where USERNAME =?";
 }

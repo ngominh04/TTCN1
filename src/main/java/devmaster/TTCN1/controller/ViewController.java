@@ -25,14 +25,24 @@ public class ViewController {
     }
     @GetMapping("/price_up")
     public String getPriceUp(Model model, HttpSession session){
-        session.setAttribute("price1",productRespon.getPriceUp());
+        session.removeAttribute("price2");
+        session.removeAttribute("price1");
+        session.removeAttribute("price3");
+        session.removeAttribute("price4");
+        session.removeAttribute("price5");
+        session.setAttribute("price",productRespon.getPriceUp());
         model.addAttribute("price_up",productRespon.getPriceUp());
 
         return "user/filter/Price";
     }
     @GetMapping("/price_down")
     public String getPriceDown(Model model, HttpSession session){
-        session.removeAttribute("price1");
+        session.removeAttribute("price");
+        session.removeAttribute("price2");
+        session.removeAttribute("price3");
+        session.removeAttribute("price4");
+        session.removeAttribute("price5");
+        session.setAttribute("price1",productRespon.getPriceDown());
         model.addAttribute("price_Down",productRespon.getPriceDown());
 
         return "user/filter/Price";
@@ -41,6 +51,7 @@ public class ViewController {
     @GetMapping("/price_15")
     public String getPrice_15(Model model,HttpSession session){
         session.removeAttribute("price1");
+        session.removeAttribute("price");
         session.removeAttribute("price3");
         session.removeAttribute("price4");
         session.removeAttribute("price5");
@@ -51,6 +62,7 @@ public class ViewController {
     @GetMapping("/price_15_25")
     public String getPrice_15_25(Model model,HttpSession session){
         session.removeAttribute("price1");
+        session.removeAttribute("price");
         session.removeAttribute("price2");
         session.removeAttribute("price4");
         session.removeAttribute("price5");
@@ -61,6 +73,7 @@ public class ViewController {
     @GetMapping("/price_25_35")
     public String getPrice_25_35(Model model,HttpSession session){
         session.removeAttribute("price1");
+        session.removeAttribute("price");
         session.removeAttribute("price2");
         session.removeAttribute("price3");
         session.removeAttribute("price5");
@@ -71,6 +84,7 @@ public class ViewController {
     @GetMapping("/price_35")
     public String getPrice_35(Model model,HttpSession session){
         session.removeAttribute("price1");
+        session.removeAttribute("price");
         session.removeAttribute("price2");
         session.removeAttribute("price3");
         session.removeAttribute("price4");
@@ -143,5 +157,9 @@ public class ViewController {
         session.setAttribute("apple",productRespon.getApple());
         model.addAttribute("apple",productRespon.getApple());
         return "user/filter/Description";
+    }
+    @GetMapping("/backProductChiTiet")
+    public String getBackProductChiTiet(Model model){
+        return "redirect:/";
     }
 }

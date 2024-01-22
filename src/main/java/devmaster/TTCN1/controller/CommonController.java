@@ -15,7 +15,8 @@ public class CommonController {
     ProductRespon productRespon;
 
     @GetMapping("/")
-    public String showUser(Model model){
+    public String showUser(Model model,HttpSession session){
+        session.getAttribute("saveCus");
         model.addAttribute("product",productRespon.getAllProduct());
         return "user/index";
     }

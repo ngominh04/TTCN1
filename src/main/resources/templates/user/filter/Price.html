@@ -9,7 +9,7 @@
 <body>
     <div class="py-5" layout:fragment="content">
 
-        <div th:if="${session.price1 != null}"> <!--        giá tiền tăng dần-->
+        <div th:if="${session.price != null}"> <!--        giá tiền tăng dần-->
             <div class="container-fluid px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5" th:each="pro: ${price_up}">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div th:if="${session.price1 == null}"><!--        giá tiền giảm dần-->
+        <div th:if="${session.price1 != null}"><!--        giá tiền giảm dần-->
             <div class="container-fluid px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5" th:each="pro: ${price_Down}">

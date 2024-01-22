@@ -10,12 +10,17 @@
 <div class="py-5" layout:fragment="content">
     <div class="container">
         <div class="row">
-            <div class="col-6" style="text-align: center;">
-                <!--                <section class="regular slider">-->
-                <!--                    <div th:each="img: ${productImages}">-->
-                <!--                        <img th:src="@{'/product_image/'+${img.url}}">-->
-                <!--                    </div>-->
-                <!--                </section>-->
+            <div class="col-6" >
+                <section class="slider-for slider" style="width: 100%;margin-top: 0">
+                    <div th:each="img: ${productImages}">
+                        <img th:src="@{'/product_image/'+${img.url}}">
+                    </div>
+                </section>
+                <section class="slider-nav slider" style="width: 100%;margin-top: -10%">
+                    <div th:each="img: ${productImages}">
+                        <img th:src="@{'/product_image/'+${img.url}}" >
+                    </div>
+                </section>
             </div>
             <div class="col-6" style="text-align: center">
                 <h3 th:text="${productChiTiet.name}+' / '+${productChiTiet.description}+' / '+${productChiTiet.notes}"></h3>
@@ -30,13 +35,20 @@
                 </div>
                 <br>
                 <div th:if="${productChiTiet.isactive == 1}">
-                    <!--                    <div th:if="${session.username == null}">-->
-                    <!--                        <a class="btn1" style="color: gray;text-decoration: none" th:href="@{'/shoping_cart/add/'+${productId.id}}"> Thêm vào giỏ hàng <i class="fa fa-shopping-basket"></i></a>-->
-                    <!--                    </div>-->
-                    <!--                    <div th:if="${session.username != null}">-->
-                    <!--                        <a class="btn1" style="color: gray;text-decoration: none" th:href="@{'/shoping_cart/add/'+${productId.id}+'/'+${session.username}}"> Add to cart <i class="fa fa-shopping-basket"></i></a>-->
-                    <!--                    </div>-->
+                    <a class="btn1" style="color: gray;text-decoration: none;color: white" th:href="@{'/shopping_cart/add/'+${productChiTiet.id}}"> Thêm vào giỏ hàng </a>
+<!--                    <div th:if="${session.username == null}">-->
+<!--                        <a class="btn1" style="color: gray;text-decoration: none" th:href="@{'/shoping_cart/add/'+${productId.id}}"> Thêm vào giỏ hàng <i class="fa fa-shopping-basket"></i></a>-->
+<!--                    </div>-->
+<!--                    <div th:if="${session.username != null}">-->
+<!--                        <a class="btn1" style="color: gray;text-decoration: none" th:href="@{'/shoping_cart/add/'+${productId.id}+'/'+${session.username}}"> Add to cart <i class="fa fa-shopping-basket"></i></a>-->
+<!--                    </div>-->
                 </div>
+            </div>
+            <div class="col-6">
+                <a class="btn1"
+                   th:href="@{/view/backProductChiTiet}"
+                    style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
+                >Back</a>
             </div>
         </div>
     </div>
