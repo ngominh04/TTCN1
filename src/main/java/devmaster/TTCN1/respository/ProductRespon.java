@@ -12,6 +12,8 @@ import java.util.List;
 
 @Repository
 public interface ProductRespon extends CrudRepository<Product, Integer> {
+    Product findAllById(Integer idPro);
+
     @Query(value = SQL.TRANGCHU,nativeQuery = true) // SHOW SẢN PHẨM TRANG CHỦ
     List<Product> getAllProduct();
 
@@ -45,4 +47,7 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
     List<Product> getLenovo();
     @Query(value = SQL.APPLE,nativeQuery = true)// lọc theo hãng apple
     List<Product> getApple();
+
+    @Query(value = SQL.PHUKIEN,nativeQuery = true) // lọc theo phụ kiện
+    List<Product> getPhuKien();
 }

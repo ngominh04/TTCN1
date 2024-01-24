@@ -153,6 +153,9 @@
                                 <li><hr class="dropdown-divider" /></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/view/phuKien}">Phụ kiện</a>
+                        </li>
                         <div th:if="${session.saveCus == null}">
                             <li class="nav-item" style="background-color: black;color: #b6effb;margin-top: 0.5rem;margin-left: 2rem">Bạn chưa đăng nhập</li>
                         </div>
@@ -164,14 +167,6 @@
                         </div>
 
                     </ul>
-                    <form class="d-flex" style="margin-left: -1.5rem">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                    <div style="width: 5px"></div> <!--khoảng cách -->
                     <div th:if="${session.saveCus == null}">
                         <form class="d-flex" >
                             <a class="btn1" th:href="@{/register/login}" style="text-decoration: none;color: #b6effb">Đăng nhập</a>
@@ -179,6 +174,13 @@
                     </div>
                     <div th:if="${session.saveCus != null}">
                         <form class="d-flex" >
+                            <a style="margin-left: -1.5rem"
+                                    class="btn btn-outline-dark"
+                                    th:href="@{'/shopping_cart/cart/'+${session.saveCus.id}}">
+                                <i class="bi-cart-fill me-1"></i>
+                                Cart
+<!--                                <span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${countCart.count}"></span>-->
+                            </a>
                             <a class="btn1" th:href="@{/register/logout}" style="text-decoration: none;color: #b6effb">Đăng xuất</a>
                         </form>
                     </div>
@@ -190,10 +192,6 @@
             <div class="container-fluid px-4 px-lg-5 my-5">
                 <img src="/admin/assets/img/banner-00.jpg"
                      alt="..." style="width: 100%;height: 300px">
-<!--                <div class="text-center text-white">-->
-<!--                    <h1 class="display-4 fw-bolder">Shop in style</h1>-->
-<!--                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>-->
-<!--                </div>-->
             </div>
 
         </header>

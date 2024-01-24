@@ -2,6 +2,7 @@ package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.Cart;
 import devmaster.TTCN1.domain.Customer;
+import devmaster.TTCN1.respository.CartRespon;
 import devmaster.TTCN1.respository.CustomerRespon;
 import devmaster.TTCN1.service.ParamService;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +21,8 @@ public class RegisterController {
     CustomerRespon customerRespon;
     @Autowired
     ParamService paramService;
+    @Autowired
+    CartRespon cartRespon;
     @GetMapping("/login")
     public String login(){
         return "user/register/Login";
@@ -43,11 +46,12 @@ public class RegisterController {
 //                model.addAttribute("listNguoiNhan",nguoinhan);
 //
 //                item.setUsername(username);
-//                if(customer.getPhanquyen() == 1){
-//                    return "admin/admin";
-//                }else {
+                if(customer.getPhanquyen() == 1){
+                    return "redirect:/admin";
+                }else {
+
                     return "redirect:/";
-//                }
+                }
             }
         }catch (Exception e){
             model.addAttribute("message","Không tồn tại tài khoản");

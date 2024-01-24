@@ -40,4 +40,7 @@ public class Customer {
     @Column(name = "ISACTIVE")
     private Byte isactive;
 
+    @Column(name = "phanquyen")
+    private Integer phanquyen;
+
 }

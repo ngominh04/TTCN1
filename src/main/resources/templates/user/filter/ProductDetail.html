@@ -35,13 +35,20 @@
                 </div>
                 <br>
                 <div th:if="${productChiTiet.isactive == 1}">
-                    <a class="btn1" style="color: gray;text-decoration: none;color: white" th:href="@{'/shopping_cart/add/'+${productChiTiet.id}}"> Thêm vào giỏ hàng </a>
-<!--                    <div th:if="${session.username == null}">-->
-<!--                        <a class="btn1" style="color: gray;text-decoration: none" th:href="@{'/shoping_cart/add/'+${productId.id}}"> Thêm vào giỏ hàng <i class="fa fa-shopping-basket"></i></a>-->
-<!--                    </div>-->
-<!--                    <div th:if="${session.username != null}">-->
-<!--                        <a class="btn1" style="color: gray;text-decoration: none" th:href="@{'/shoping_cart/add/'+${productId.id}+'/'+${session.username}}"> Add to cart <i class="fa fa-shopping-basket"></i></a>-->
-<!--                    </div>-->
+                    <div th:if="${session.saveCus == null}">
+                        <a class="btn1"
+                           style="color: #b6effb;text-decoration: none;color: white"
+                           th:href="@{/register/login}">
+                            Thêm vào giỏ hàng
+                        </a>
+                    </div>
+                    <div th:if="${session.saveCus != null}">
+                        <a class="btn1"
+                           style="color: #b6effb;text-decoration: none;color: white"
+                           th:href="@{'/shopping_cart/add/'+${session.saveCus.id}+'/'+${productChiTiet.id}}">
+                            Thêm vào giỏ hàng </a>
+                    </div>
+
                 </div>
             </div>
             <div class="col-6">

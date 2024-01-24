@@ -158,6 +158,19 @@ public class ViewController {
         model.addAttribute("apple",productRespon.getApple());
         return "user/filter/Description";
     }
+    @GetMapping("/phuKien")
+    public String showPhuKien(Model model,HttpSession session) {session.removeAttribute("accer");
+        session.removeAttribute("dell");
+        session.removeAttribute("lenovo");
+        session.removeAttribute("hp");
+        session.removeAttribute("asus");
+        session.removeAttribute("apple");
+
+        session.setAttribute("phuKien",productRespon.getPhuKien());
+        model.addAttribute("phuKien",productRespon.getPhuKien());
+        return "user/filter/Description";
+    }
+
     @GetMapping("/backProductChiTiet")
     public String getBackProductChiTiet(Model model){
         return "redirect:/";

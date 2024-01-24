@@ -23,15 +23,16 @@ public class Cart {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "image")
-    private Integer image;
-
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image")
+    private ProductImage image;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer")
-    private Customer idCustomer;
+    private Integer idCustomer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_prduct")
-    private Product idPrduct;
+    private Integer idPrduct;
 
 }
