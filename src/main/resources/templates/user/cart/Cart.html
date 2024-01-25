@@ -28,13 +28,6 @@
                                         <p class="lead fw-normal mb-0" th:text="${pro.name}"></p>
                                     </div>
                                 </div>
-<!--                                <div class="col-md-2 d-flex justify-content-center">-->
-<!--                                    <div>-->
-<!--                                        <p class="small text-muted mb-4 pb-2">Color</p>-->
-<!--                                        <p class="lead fw-normal mb-0"><i class="fas fa-circle me-2" style="color: #fdd8d2;"></i>-->
-<!--                                            pink rose</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Quantity</p>
@@ -44,13 +37,7 @@
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Price</p>
-                                        <p class="lead fw-normal mb-0" th:text="${pro.price}">$799</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 d-flex justify-content-center">
-                                    <div>
-                                        <p class="small text-muted mb-4 pb-2">Total</p>
-                                        <p class="lead fw-normal mb-0">$799</p>
+                                        <p class="lead fw-normal mb-0" th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></p>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +51,7 @@
                             <div class="float-end">
                                 <p class="mb-0 me-5 d-flex align-items-center">
                                     <span class="small text-muted me-2">Order total:</span> <span
-                                        class="lead fw-normal">$799</span>
+                                        class="lead fw-normal" th:text="${#numbers.formatDecimal(total,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span>
                                 </p>
                             </div>
 
