@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
@@ -76,4 +77,39 @@ public class CartController {
 //        session.setAttribute("cartItem",cartService.findAll());
         return "redirect:/shopping_cart/cart/{idCus}";
     }
+
+    @GetMapping("/update1/{idCus}/{idCart}")// cập nhật khi ấn giảm số lượng
+    public String update1(Model model,@PathVariable("idCart")Integer idCart,@PathVariable("idCus")Integer idCus){
+        Cart cart = cartRespon.findAllById(idCart);
+        if (cart.getQuantity() > 1){
+            cart.setQuantity(cart.getQuantity() - 1);
+        }else {
+            cart.setQuantity(cart.getQuantity());
+        }
+
+        cartRespon.save(cart);
+
+        return "redirect:/shopping_cart/cart/{idCus}";
+    }
+    @GetMapping("/update2/{idCus}/{idPro}/{idCart}")// cập nhật khi ấn tăng số lượng
+    public String update2(@PathVariable("idCus")Integer idCus,@PathVariable("idCart")Integer idCart,@PathVariable("idPro")Integer idPro){
+        Product product = productRespon.findAllById(idPro);
+
+        Cart cart = cartRespon.findAllById(idCart);
+        if (cart.getQuantity() > product.getQuatity()){
+            cart.setQuantity(cart.getQuantity());
+        }else {
+            cart.setQuantity(cart.getQuantity()+1);
+        }
+        cartRespon.save(cart);
+
+        return "redirect:/shopping_cart/cart/{idCus}";
+    }
+    @GetMapping("/remove/{idCus}/{idCart}")
+    public String removeCart(@PathVariable("idCart")Integer idCart,@PathVariable("idCus")Integer idCus){
+        Cart cart = cartRespon.findAllById(idCart);
+        cartService.delete(cart);
+        return "redirect:/shopping_cart/cart/{idCus}";
+    }
+
 }

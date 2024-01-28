@@ -8,11 +8,11 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <section class="vh-100" style="background-color: #fdccbc;">
-        <div class="container h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
+    <section  style="background-color: #fdccbc;">
+        <div class="container ">
+            <div class="row d-flex justify-content-center align-items-center ">
                 <div class="col">
-                    <p><span class="h2">Shopping Cart </span></p>
+                    <p style="margin-top: 1rem"><span class="h2">Shopping Cart </span></p>
 
                     <div class="card mb-4" th:each="pro: ${cart}">
                         <div class="card-body p-4">
@@ -31,13 +31,30 @@
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Quantity</p>
-                                        <p class="lead fw-normal mb-0" th:text="${pro.quantity}"></p>
+                                        <p class="lead fw-normal mb-0" >
+                                            <a th:href="@{'/shopping_cart/update1/'+${session.saveCus.id}+'/'+${pro.id}}"
+                                               style="text-decoration: none;border: 1px solid black;padding: 0.25rem;border-radius: 10px">
+                                                <b>-</b></a>
+                                            <input type="number" name="quantity" id="quantity" th:value="${pro.quantity}" style="width: 75px">
+                                            <a th:href="@{'/shopping_cart/update2/'+${session.saveCus.id}+'/'+${pro.idPrduct}+'/'+${pro.id}}"
+                                               style="text-decoration: none;border: 1px solid black;padding: 0.25rem;border-radius: 10px">
+                                                <b>+</b></a>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-md-2 d-flex justify-content-center">
                                     <div>
                                         <p class="small text-muted mb-4 pb-2">Price</p>
                                         <p class="lead fw-normal mb-0" th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-center">
+                                    <div>
+                                        <p class="small text-muted mb-4 pb-2">Remove</p>
+                                        <a
+                                                style="text-decoration: none;border: 1px solid black;padding: 0.25rem;border-radius: 10px"
+                                                th:href="@{'/shopping_cart/remove/'+${session.saveCus.id}+'/'+${pro.id}}">
+                                            <b>X</b></a>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +75,7 @@
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end" style="margin-bottom: 1rem">
                         <button type="button" class="btn btn-light btn-lg me-2">Continue shopping</button>
                         <button type="button" class="btn btn-primary btn-lg">Add to cart</button>
                     </div>
