@@ -8,7 +8,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <section  style="background-color: #fdccbc;">
+    <section  style="background-color: #fdccbc;margin-top: 3.5rem" >
         <div class="container ">
             <div class="row d-flex justify-content-center align-items-center ">
                 <div class="col">
@@ -76,8 +76,11 @@
                     </div>
 
                     <div class="d-flex justify-content-end" style="margin-bottom: 1rem">
-                        <button type="button" class="btn btn-light btn-lg me-2">Continue shopping</button>
-                        <button type="button" class="btn btn-primary btn-lg">Add to cart</button>
+                        <a class="btn1"
+                           th:href="@{/view/backProductChiTiet}"
+                           style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">Tiếp tục mua</a>
+                        <div style="width: 5px"></div>
+                        <a th:href="@{'/order/showOrder/'+${session.saveCus.id}}" class="btn1" style="text-decoration: none;color: #b6effb">Đặt hàng</a>
                     </div>
 
                 </div>

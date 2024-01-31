@@ -63,4 +63,5 @@ public class SQL {
     public static final String PHUKIEN = "select *from product where IDCATEGORY !=1;";
     public static final String CART="select * from cart where id_customer =?";
     public static final String COUNTCART="select count(id_customer) count from cart where id_customer =?";
+    public static final String RECEIVER="select *from receiver where idcus=?;";
 }

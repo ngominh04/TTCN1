@@ -1,6 +1,7 @@
 package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.Customer;
+import devmaster.TTCN1.projection.ICountCart;
 import devmaster.TTCN1.respository.CartRespon;
 import devmaster.TTCN1.respository.ProductRespon;
 import jakarta.servlet.http.HttpSession;
@@ -22,9 +23,9 @@ public class CommonController {
         session.getAttribute("saveCus");
         if (session.getAttribute("saveCus") != null){
             Customer customer = (Customer) session.getAttribute("saveCus");
-            int count = customer.getId();
-            System.out.println(cartRespon.getCount(count));
-            model.addAttribute("countCart",cartRespon.getCount(count));// đếm số lượng cartItem khi đăng nhập
+            int idCus = customer.getId();
+            ICountCart countCart = cartRespon.getCount(idCus);
+            model.addAttribute("countCart",countCart.getCount());// đếm số lượng cartItem khi đăng nhập
         }
 
         model.addAttribute("product",productRespon.getAllProduct());
