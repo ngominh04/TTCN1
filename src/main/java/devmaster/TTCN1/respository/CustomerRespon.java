@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface CustomerRespon extends CrudRepository<Customer, Integer> {
     @Query(value = SQL.CUSTOMER,nativeQuery = true)
     Customer getCustomer(String username);
+    @Query(value = SQL.CUSTOMER_BY_ID,nativeQuery = true)
+    Customer getCustomerById(Integer idCus);
 }

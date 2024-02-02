@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface ReceiverRespon extends CrudRepository<Receiver,Integer> {
     // show toàn bộ receiver
-    @Query(value = SQL.RECEIVER,nativeQuery = true)
+    @Query(value = SQL.RECEIVER,nativeQuery = true) // lấy toàn bộ receiver theo idCus
     List<Receiver> getAllReceiver(Integer idCus);
+
+    Receiver findAllById(Integer idRece);
 }

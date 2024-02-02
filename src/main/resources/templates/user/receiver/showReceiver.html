@@ -9,6 +9,7 @@
 <body>
     <div layout:fragment="content">
         <div class="container" style="margin-top: 3.5rem">
+            <h2>Danh sách các địa chỉ nhận của bạn</h2>
             <ul class="responsive-table">
                 <li class="table-header">
                     <div class="col col-1">Tên</div>
@@ -21,11 +22,23 @@
                     <div class="col col-2" data-label="Customer Name" th:text="${rece.phone}"></div>
                     <div class="col col-3" data-label="Amount" th:text="${rece.address}"></div>
                     <div class="col col-4" data-label="Payment Status">
-                        <a href="#">Sửa</a>
-                        <a href="#">Xóa</a>
+                        <a class="btn1"
+                           style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
+                            th:href="@{'/receiver/repairReceiver/'+${rece.id}}">Sửa</a>
+                        <a class="btn1"
+                           style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
+                            th:href="@{'/receiver/remove/'+${rece.idCus}+'/'+${rece.id}}">Xóa</a>
                     </div>
                 </li>
             </ul>
+            <div>
+                <a class="btn1"
+                   th:href="@{/view/backProductChiTiet}"
+                   style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                    Back</a>
+                <span style="width: 5px"></span>
+                <a class="btn1" style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154" th:href="@{/receiver/newReceiver}">Thêm địa chỉ</a>
+            </div>
         </div>
     </div>
 </body>

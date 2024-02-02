@@ -193,7 +193,7 @@
                     flex-basis: 35%;
                 }
                 .col-4 {
-                    flex-basis: 10%;
+                    flex-basis: 17%;
                 }
 
                 @media all and (max-width: 767px) {
@@ -223,6 +223,47 @@
                         }
                     }
                 }
+            }
+            /*nhúng css đoạn order */
+            @charset "UTF-8";
+            .custom-select {
+                position: relative;
+                display: block;
+                max-width: 400px;
+                min-width: 180px;
+                margin: 0 auto;
+                border: 1px solid #3C1C78;
+                background-color: #16013E;
+                z-index: 10;
+            }
+            .custom-select select {
+                border: none;
+                outline: none;
+                background: transparent;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                border-radius: 0;
+                margin: 0;
+                display: block;
+                width: 100%;
+                padding: 12px 55px 15px 15px;
+                font-size: 14px;
+                color: #714BB9;
+            }
+            .custom-select:after {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 50px;
+                height: 100%;
+                line-height: 38px;
+                content: "∨";
+                text-align: center;
+                color: #714BB9;
+                font-size: 24px;
+                border-left: 1px solid #3C1C78;
+                z-index: -1;
             }
         </style>
     </head>
@@ -274,7 +315,7 @@
                         </div>
                         <div th:if="${session.saveCus !=null}">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" th:href="@{'/register/receiver/'+${session.saveCus.id}}">Người Nhận</a>
+                                <a class="nav-link  " aria-current="page" th:href="@{'/receiver/receiver/'+${session.saveCus.id}}">Người Nhận</a>
                             </li>
                             <li class="nav-item" style="margin-top: 0.5rem;margin-left: 2rem">
                                 <p style="background-color: black;color: #b6effb;padding-right:1.5rem;padding-left: 1.5rem ">
@@ -379,7 +420,6 @@
                     autoplaySpeed: 2000,
                 });
             });
-
         </script>
     </body>
 </html>

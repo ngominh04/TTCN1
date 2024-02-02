@@ -2,15 +2,19 @@ package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.Cart;
 import devmaster.TTCN1.domain.Customer;
+import devmaster.TTCN1.domain.Receiver;
 import devmaster.TTCN1.respository.CartRespon;
 import devmaster.TTCN1.respository.CustomerRespon;
 import devmaster.TTCN1.respository.ReceiverRespon;
 import devmaster.TTCN1.service.ParamService;
+import devmaster.TTCN1.service.ReceiverService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/register")
@@ -63,12 +67,5 @@ public class RegisterController {
         return "redirect:/";
     }
 
-    @Autowired
-    ReceiverRespon receiverRespon;
-    // người nhận
-    @GetMapping("/receiver/{idCus}")
-    public String showRereiver(Model model, @PathVariable("idCus")Integer idCus){
-        model.addAttribute("receiver",receiverRespon.getAllReceiver(idCus));
-        return "user/receiver/showReceiver";
-    }
+
 }

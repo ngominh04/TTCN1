@@ -12,10 +12,10 @@ import java.util.List;
 
 @Repository
 public interface CartRespon extends CrudRepository<Cart,Integer> {
-    Cart findAllById(Integer idCart);
-    @Query(value = SQL.CART,nativeQuery = true)
+    Cart findAllById(Integer idCart); // lấy cart theo id
+    @Query(value = SQL.CART,nativeQuery = true) // lấy toàn bộ cart
     List<Cart> getCart(Integer idCus);
 
-    @Query(value = SQL.COUNTCART,nativeQuery = true)
+    @Query(value = SQL.COUNTCART,nativeQuery = true) // đếm số lượng cart
     ICountCart getCount(Integer idCus);
 }

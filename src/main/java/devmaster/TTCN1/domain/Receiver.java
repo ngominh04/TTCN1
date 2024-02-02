@@ -26,4 +26,7 @@ public class Receiver {
     @Column(name = "idcus", nullable = false)
     private Integer idCus;
 
+    @Column(name = "isdelete", nullable = false)
+    private Integer isDelete;
+
 }

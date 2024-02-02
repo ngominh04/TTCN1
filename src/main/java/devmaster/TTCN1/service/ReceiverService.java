@@ -3,7 +3,6 @@ package devmaster.TTCN1.service;
 import devmaster.TTCN1.domain.Receiver;
 import devmaster.TTCN1.respository.ReceiverRespon;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
