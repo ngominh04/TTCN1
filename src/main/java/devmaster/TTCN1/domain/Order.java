@@ -1,14 +1,17 @@
 package devmaster.TTCN1.domain;
 
+import groovy.transform.builder.Builder;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "order")
 public class Order {
     @Id
@@ -17,23 +20,23 @@ public class Order {
     private Integer id;
 
     @Column(name = "IDORDERS", length = 10)
-    private String idorders;
+    private String idOrders;
 
-    @Column(name = "ORDERS_DATE")
-    private Instant ordersDate;
+    @Column(name = "ORDERSDATE")
+    private String ordersDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDCUSTOMER")
-    private Customer idcustomer;
+    private Integer idCustomer;
 
-    @Column(name = "TOTAL_MONEY")
+    @Column(name = "TOTALMONEY")
     private Double totalMoney;
 
     @Lob
     @Column(name = "NOTES")
     private String notes;
 
-    @Column(name = "NAME_RECIVER", length = 250)
+    @Column(name = "NAMERECIVER", length = 250)
     private String nameReciver;
 
     @Column(name = "ADDRESS", length = 500)

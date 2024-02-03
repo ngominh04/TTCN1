@@ -1,7 +1,6 @@
 package devmaster.TTCN1.respository;
 
 import devmaster.TTCN1.domain.Cart;
-import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.projection.ICountCart;
 import devmaster.TTCN1.sql.SQL;
 import org.springframework.data.jpa.repository.Query;

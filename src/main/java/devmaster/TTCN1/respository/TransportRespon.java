@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface TransportRespon extends CrudRepository<TransportMethod,Integer> {
+    TransportMethod getById(Integer idTrans);
     @Query(value = SQL.ALL_TRANSPORT,nativeQuery = true)
     List<TransportMethod> getAllById();
 }
