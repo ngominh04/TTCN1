@@ -14,21 +14,21 @@ public class OrdersPayment {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDORD")
-    private Order idord;
+    private Integer idord;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDPAYMENT")
-    private PaymentMethod idpayment;
+    private Integer idpayment;
 
     @Column(name = "TOTAL")
     private Integer total;
 
     @Column(name = "NOTES")
-    private Integer notes;
+    private String notes;
 
-    @Column(name = "STATUS", length = 50)
-    private String status;
+//    @Column(name = "STATUS", length = 50)
+//    private String status;
 
 }

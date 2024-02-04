@@ -12,4 +12,6 @@ import java.util.List;
 public interface PaymentRespon extends CrudRepository<PaymentMethod,Integer> {
     @Query(value = SQL.ALL_PAYMENT,nativeQuery = true)
     List<PaymentMethod> getAllById();
+
+    PaymentMethod getById(Integer idPayment);
 }

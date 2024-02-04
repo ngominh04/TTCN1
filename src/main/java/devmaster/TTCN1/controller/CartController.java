@@ -41,7 +41,7 @@ public class CartController {
         return "user/cart/Cart";
     }
     @GetMapping("/add/{idCus}/{idPro}")
-    public String getAddCart(Model model,@PathVariable("idCus")Integer idCus, @PathVariable("idPro") Integer idPro, HttpSession session){
+    public String getAddCart(@PathVariable("idCus")Integer idCus, @PathVariable("idPro") Integer idPro, HttpSession session){
         Customer customer= (Customer) session.getAttribute("saveCus");
         Product product = productRespon.findAllById(idPro.intValue());
         boolean checkCart = false; // biến kiểm tra idPro trong giỏ
@@ -62,7 +62,7 @@ public class CartController {
                     checkCart=true;
                 }
             }
-            if (checkCart){ // khi duyệt hết vòng lặp nếu checkCart == true thì tạo 1 cart mới
+            if (checkCart || carts.size() == 0){ // khi duyệt hết vòng lặp nếu checkCart == true thì tạo 1 cart mới
                 Cart cart1 = new Cart();
                 cart1.setName(product.getName());
                 cart1.setPrice(product.getPrice());
@@ -74,7 +74,6 @@ public class CartController {
             }
         }
 
-//        session.setAttribute("cartItem",cartService.findAll());
         return "redirect:/shopping_cart/cart/{idCus}";
     }
 

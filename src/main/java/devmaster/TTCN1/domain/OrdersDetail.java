@@ -14,13 +14,13 @@ public class OrdersDetail {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDORD")
-    private Order idord;
+    private Integer idord;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDPRODUCT")
-    private Product idproduct;
+    private Integer idproduct;
 
     @Column(name = "PRICE")
     private Double price;

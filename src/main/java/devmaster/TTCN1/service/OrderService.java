@@ -5,7 +5,6 @@ import devmaster.TTCN1.respository.OrderRespon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,12 +12,12 @@ public class OrderService {
     @Autowired
     OrderRespon orderRespon;
 
-    public Order save(Order entity) {
+    public <S extends Order> S save(S entity) {
         return orderRespon.save(entity);
     }
 
-    public List<Order> saveAll(List<Order> entities) {
-        return (List<Order>) orderRespon.saveAll(entities);
+    public <S extends Order> Iterable<S> saveAll(Iterable<S> entities) {
+        return orderRespon.saveAll(entities);
     }
 
     public Optional<Order> findById(Integer integer) {
@@ -29,12 +28,12 @@ public class OrderService {
         return orderRespon.existsById(integer);
     }
 
-    public List<Order> findAll() {
-        return (List<Order>) orderRespon.findAll();
+    public Iterable<Order> findAll() {
+        return orderRespon.findAll();
     }
 
-    public List<Order> findAllById(List<Integer> integers) {
-        return (List<Order>) orderRespon.findAllById(integers);
+    public Iterable<Order> findAllById(Iterable<Integer> integers) {
+        return orderRespon.findAllById(integers);
     }
 
     public long count() {
@@ -49,11 +48,11 @@ public class OrderService {
         orderRespon.delete(entity);
     }
 
-    public void deleteAllById(List<Integer> integers) {
+    public void deleteAllById(Iterable<? extends Integer> integers) {
         orderRespon.deleteAllById(integers);
     }
 
-    public void deleteAll(List<Order> entities) {
+    public void deleteAll(Iterable<? extends Order> entities) {
         orderRespon.deleteAll(entities);
     }
 
