@@ -6,6 +6,7 @@ import devmaster.TTCN1.domain.Receiver;
 import devmaster.TTCN1.respository.CartRespon;
 import devmaster.TTCN1.respository.CustomerRespon;
 import devmaster.TTCN1.respository.ReceiverRespon;
+import devmaster.TTCN1.service.CustomerService;
 import devmaster.TTCN1.service.ParamService;
 import devmaster.TTCN1.service.ReceiverService;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +24,8 @@ import java.util.Optional;
 public class RegisterController {
     @Autowired
     CustomerRespon customerRespon;
+    @Autowired
+    CustomerService customerService;
     @Autowired
     ParamService paramService;
     @Autowired
@@ -31,15 +36,12 @@ public class RegisterController {
     }
     @PostMapping("/login_check")
     public String login(Model model, @RequestParam(name = "username") String username, HttpSession session, Cart item){
-//        String username = paramService.getString("username","");
         String password = paramService.getString("password","");
         Customer customer= customerRespon.getCustomer(username);
         session.setAttribute("saveCus",customer);
         try {
-
             if(!customer.getPassword().equals(password)){
                 model.addAttribute("message","Mật khẩu có vấn đề");
-
             }else {
 
                 model.addAttribute("customer",customerRespon.getCustomer(username));
@@ -67,5 +69,62 @@ public class RegisterController {
         return "redirect:/";
     }
 
+    // đăng kí người dùng
+    @GetMapping("/newCus")
+    public String newCus(){
+        return "/user/register/newCus";
+    }
 
+    // lưu tài khoản mới
+    @PostMapping("/newCustomer")
+    public String newCustomer(@RequestParam("name")String name,
+                              @RequestParam("email")String email,
+                              @RequestParam("address")String address,
+                              @RequestParam("phone")String phone,
+                              @RequestParam("username")String username,
+                              @RequestParam("password")String password,
+                              Model model){
+        boolean checkCus = false;
+        List<Customer> customers = customerRespon.getAllById();
+        for (Customer cus:customers) {
+            if (cus.getEmail().equals(email) == true){
+                model.addAttribute("message","Đã tồn tại email này");
+                checkCus = false;
+                break;
+            }if (cus.getUsername().equals(username) == true){
+                model.addAttribute("message","Đã tồn tại tên tài khoản");
+                checkCus = false;
+                break;
+            }
+            if (phone.length() != 10 ){
+                model.addAttribute("message","Xem lại số điện thoại");
+                checkCus = false;
+                break;
+            }
+            if (password.length() < 5 ){
+                model.addAttribute("message","Mật khẩu phải trên 5 kí tự");
+                checkCus = false;
+                break;
+            }
+            else {
+                checkCus =true;
+            }
+        }
+        if(checkCus) {
+            Customer customer = new Customer();
+            customer.setIsactive((byte) 1);
+            customer.setIsDelete((byte) 1);
+            customer.setPhone(phone);
+            customer.setEmail(email);
+            customer.setPassword(password);
+            customer.setCreatedDate(String.valueOf(LocalDateTime.now()));
+            customer.setPhanquyen(0);
+            customer.setUsername(username);
+            customer.setAddress(address);
+            customer.setName(name);
+            customerService.save(customer);
+            return "/user/register/Login";
+        }
+        return "/user/register/newCus";
+    }
 }

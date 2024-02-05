@@ -67,4 +67,5 @@ public class SQL {
     public static final String RECEIVER="select *from receiver where isdelete = 1 and idcus=?;";
     public static final String ALL_TRANSPORT="select * from transport_method where ISACTIVE =1 and ISDELETE = 1;";
     public static final String ALL_PAYMENT="select * from payment_method where ISACTIVE =1 and ISDELETE = 1;";
+    public static final String ALL_CUSTOMER="select * from customer";
 }

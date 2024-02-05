@@ -35,10 +35,13 @@ public class Customer {
     private String phone;
 
     @Column(name = "CREATED_DATE")
-    private Instant createdDate;
+    private String createdDate;
 
     @Column(name = "ISACTIVE")
     private Byte isactive;
+
+    @Column(name = "ISDELETE")
+    private Byte isDelete;
 
     @Column(name = "phanquyen")
     private Integer phanquyen;
