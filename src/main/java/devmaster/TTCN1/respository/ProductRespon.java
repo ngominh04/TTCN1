@@ -50,4 +50,7 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
 
     @Query(value = SQL.PHUKIEN,nativeQuery = true) // lọc theo phụ kiện
     List<Product> getPhuKien();
+
+    @Query(value = "select p.* from Product p where p.isactive = 1 and p.isdelete = 1 and p.name like concat('%',:name,'%')",nativeQuery = true)
+    List<Product> getAllName(String name);
 }

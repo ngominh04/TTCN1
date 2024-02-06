@@ -266,7 +266,8 @@
                 z-index: -1;
             }
 
-            /*css search */
+            /* css search */
+
             #search {
                 display: grid;
                 grid-area: search;
@@ -312,8 +313,8 @@
 
             .spark:nth-child(1) {
                 animation:
-                        spark-radius 2.03s 1s both,
-                        spark-one-motion 2s 1s both;
+                        spark-radius 1.03s 0.5s both,
+                        spark-one-motion 1s 0.5s both;
             }
 
             @keyframes spark-radius {
@@ -334,8 +335,8 @@
 
             .spark:nth-child(2) {
                 animation:
-                        spark-radius 2.03s 1s both,
-                        spark-two-motion 2.03s 1s both;
+                        spark-radius 1.03s 0.5s both,
+                        spark-two-motion 1.03s 0.5s both;
             }
 
             @keyframes spark-two-motion {
@@ -349,8 +350,8 @@
 
             .spark:nth-child(3) {
                 animation:
-                        spark-radius 2.05s 1s both,
-                        spark-three-motion 2.03s 1s both;
+                        spark-radius 1.05s 0.5s both,
+                        spark-three-motion 1.03s 0.5s both;
             }
 
             @keyframes spark-three-motion {
@@ -411,12 +412,12 @@
                 5%, 80% { opacity: 1 }
             }
 
-            .burst :nth-child(1) { animation: particle-fade 600ms 2.95s both, particle-one-move 600ms 2.95s both; }
-            .burst :nth-child(2) { animation: particle-fade 600ms 2.95s both, particle-two-move 600ms 2.95s both; }
-            .burst :nth-child(3) { animation: particle-fade 600ms 2.95s both, particle-three-move 600ms 2.95s both; }
-            .burst :nth-child(4) { animation: particle-fade 600ms 2.95s both, particle-four-move 600ms 2.95s both; }
-            .burst :nth-child(5) { animation: particle-fade 600ms 2.95s both, particle-five-move 600ms 2.95s both; }
-            .burst :nth-child(6) { animation: particle-fade 600ms 2.95s both, particle-six-move 600ms 2.95s both; }
+            .burst :nth-child(1) { animation: particle-fade 300ms 1.5s both, particle-one-move 300ms 1.5s both; }
+            .burst :nth-child(2) { animation: particle-fade 300ms 1.5s both, particle-two-move 300ms 1.5s both; }
+            .burst :nth-child(3) { animation: particle-fade 300ms 1.5s both, particle-three-move 300ms 1.5s both; }
+            .burst :nth-child(4) { animation: particle-fade 300ms 1.5s both, particle-four-move 300ms 1.5s both; }
+            .burst :nth-child(5) { animation: particle-fade 300ms 1.5s both, particle-five-move 300ms 1.5s both; }
+            .burst :nth-child(6) { animation: particle-fade 300ms 1.5s both, particle-six-move 300ms 1.5s both; }
 
             @keyframes particle-one-move { 0% { transform: rotate(0deg) translate(-5%) scale(0.0001, 0.0001) } 100% { transform: rotate(-20deg) translateX(8%) scale(0.5, 0.5) } }
             @keyframes particle-two-move { 0% { transform: rotate(0deg) translate(-5%) scale(0.0001, 0.0001) } 100% { transform: rotate(0deg) translateX(8%) scale(0.5, 0.5) } }
@@ -432,7 +433,7 @@
                 height: 100%;
                 ry: 50%;
                 stroke-width: 10;
-                animation: bar-in 900ms 3s both;
+                animation: bar-in 450ms 1.5s both;
             }
 
             @keyframes bar-in {
@@ -441,7 +442,7 @@
             }
 
             .magnifier {
-                animation: magnifier-in 600ms 3.6s both;
+                animation: magnifier-in 300ms 1.9s both;
                 transform-box: fill-box;
             }
 
@@ -522,7 +523,7 @@
                                 <a class="nav-link  " aria-current="page" th:href="@{'/receiver/receiver/'+${session.saveCus.id}}">Người Nhận</a>
                             </li>
                             <li class="nav-item" style="margin-top: 0.5rem;margin-left: 2rem">
-                                <p style="background-color: black;color: #b6effb;padding-right:1.5rem;padding-left: 1.5rem ">
+                                <p style="margin-top: -2.5rem;margin-left: 8rem;background-color: black;color: #b6effb;padding-right:1.5rem;padding-left: 1.5rem ">
                                     Xin chào: <span th:text="${session.saveCus.name}" style=""></span></p>
                             </li>
                         </div>
@@ -554,53 +555,56 @@
         <div class="py-5" layout:fragment="content">
             <!--                search                        -->
             <div style="margin-top: 3rem;margin-bottom: 1rem">
-                <div id="search">
-                    <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
-                        <rect class="bar"/>
+                <form method="post" th:action="@{/view/search}" enctype="multipart/form-data">
+                    <div id="search">
+                        <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect class="bar"/>
 
-                        <g class="magnifier">
-                            <circle class="glass"/>
-                            <line class="handle" x1="32" y1="32" x2="44" y2="44"></line>
-                        </g>
+                            <g class="magnifier">
+                                <circle class="glass"/>
+                                <line class="handle" x1="32" y1="32" x2="44" y2="44"></line>
+                            </g>
 
-                        <g class="sparks">
-                            <circle class="spark"/>
-                            <circle class="spark"/>
-                            <circle class="spark"/>
-                        </g>
+                            <g class="sparks">
+                                <circle class="spark"/>
+                                <circle class="spark"/>
+                                <circle class="spark"/>
+                            </g>
 
-                        <g class="burst pattern-one">
-                            <circle class="particle circle"/>
-                            <path class="particle triangle"/>
-                            <circle class="particle circle"/>
-                            <path class="particle plus"/>
-                            <rect class="particle rect"/>
-                            <path class="particle triangle"/>
-                        </g>
-                        <g class="burst pattern-two">
-                            <path class="particle plus"/>
-                            <circle class="particle circle"/>
-                            <path class="particle triangle"/>
-                            <rect class="particle rect"/>
-                            <circle class="particle circle"/>
-                            <path class="particle plus"/>
-                        </g>
-                        <g class="burst pattern-three">
-                            <circle class="particle circle"/>
-                            <rect class="particle rect"/>
-                            <path class="particle plus"/>
-                            <path class="particle triangle"/>
-                            <rect class="particle rect"/>
-                            <path class="particle plus"/>
-                        </g>
-                    </svg>
-                    <input type=search name=q aria-label="Search for inspiration"/>
-                </div>
+                            <g class="burst pattern-one">
+                                <circle class="particle circle"/>
+                                <path class="particle triangle"/>
+                                <circle class="particle circle"/>
+                                <path class="particle plus"/>
+                                <rect class="particle rect"/>
+                                <path class="particle triangle"/>
+                            </g>
+                            <g class="burst pattern-two">
+                                <path class="particle plus"/>
+                                <circle class="particle circle"/>
+                                <path class="particle triangle"/>
+                                <rect class="particle rect"/>
+                                <circle class="particle circle"/>
+                                <path class="particle plus"/>
+                            </g>
+                            <g class="burst pattern-three">
+                                <circle class="particle circle"/>
+                                <rect class="particle rect"/>
+                                <path class="particle plus"/>
+                                <path class="particle triangle"/>
+                                <rect class="particle rect"/>
+                                <path class="particle plus"/>
+                            </g>
+                        </svg>
+                        <input type=search id="name" name="name" aria-label="Search for inspiration"/>
+                    </div>
 
-                <div id="results">
+                    <div id="results">
 
-                </div>
-                <button type="submit" >Search</button>
+                    </div>
+                    <button type="submit" hidden="hidden">Search</button>
+                </form>
+
             </div>
 
             <!--                end search-->

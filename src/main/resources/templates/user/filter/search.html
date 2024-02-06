@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!--                search                        -->
+        <div style="margin-top: 3rem;margin-bottom: 1rem">
+            <form method="post" th:action="@{/view/search}" enctype="multipart/form-data">
+                <div id="search">
+                    <svg viewBox="0 0 420 60" xmlns="http://www.w3.org/2000/svg">
+                        <rect class="bar"/>
+
+                        <g class="magnifier">
+                            <circle class="glass"/>
+                            <line class="handle" x1="32" y1="32" x2="44" y2="44"></line>
+                        </g>
+
+                        <g class="sparks">
+                            <circle class="spark"/>
+                            <circle class="spark"/>
+                            <circle class="spark"/>
+                        </g>
+
+                        <g class="burst pattern-one">
+                            <circle class="particle circle"/>
+                            <path class="particle triangle"/>
+                            <circle class="particle circle"/>
+                            <path class="particle plus"/>
+                            <rect class="particle rect"/>
+                            <path class="particle triangle"/>
+                        </g>
+                        <g class="burst pattern-two">
+                            <path class="particle plus"/>
+                            <circle class="particle circle"/>
+                            <path class="particle triangle"/>
+                            <rect class="particle rect"/>
+                            <circle class="particle circle"/>
+                            <path class="particle plus"/>
+                        </g>
+                        <g class="burst pattern-three">
+                            <circle class="particle circle"/>
+                            <rect class="particle rect"/>
+                            <path class="particle plus"/>
+                            <path class="particle triangle"/>
+                            <rect class="particle rect"/>
+                            <path class="particle plus"/>
+                        </g>
+                    </svg>
+                    <input type=search name="name" id="name" aria-label="Search for inspiration"/>
+                </div>
+
+                <div id="results">
+
+                </div>
+                <button type="submit" hidden="hidden">Search</button>
+            </form>
+
+        </div>
+
+        <!--                end search-->
+        <div class="container-fluid px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="col mb-5" th:each="pro: ${proByName}">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" th:src="'/product_image/'+${pro.image.url}" alt="..." />
+                        <!--                            <img class="card-img-top" src="/product_image/laptop_hp_240_1.jpg" alt="..." />-->
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder" th:text="${pro.name} +'/'+ ${pro.notes}"></h5>
+                                <!-- Product price-->
+                                <p >Giá chỉ: <span th:text="${#numbers.formatDecimal(pro.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></p>
+                                <p>Số lượng: <span th:text="${pro.quatity}"></span></p>
+                                <div th:if="${pro.isactive == 1}">
+                                    <h5 style="color: greenyellow">Còn bán</h5>
+                                </div>
+                                <div th:if="${pro.isactive == 0}">
+                                    <h5 style="color: orangered">Đã hết hàng</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{'/view/productChiTiet/'+${pro.id}}">Xem Sản phẩm</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
