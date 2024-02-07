@@ -57,19 +57,26 @@ public class OrderController {
 
     @GetMapping("/showOrder/{idCus}")
     public String showOrder(Model model, @PathVariable("idCus") Integer idCus,HttpSession session){
+
         ICountCart cart = cartRespon.getCount(idCus);
-        model.addAttribute("count",cart.getCount());
-        model.addAttribute("cart",cartRespon.getCart(idCus));
-        model.addAttribute("receiver",receiverRespon.getAllReceiver(idCus));
-        model.addAttribute("transport",transportRespon.getAllById());
-        model.addAttribute("payment",paymentRespon.getAllById());
         List<Cart> carts = cartRespon.getCart(idCus);
-        double total = 0;
-        for (Cart cartItem:carts) {
-            total = total+ cartItem.getQuantity()*cartItem.getPrice();
+        if(carts.size() == 0){
+            model.addAttribute("message","Giỏ hàng đang trống,quý khách hãy chọn sản phẩm để mua !");
+            return "/user/cart/Cart";
+        }else {
+            model.addAttribute("count",cart.getCount());
+            model.addAttribute("cart",cartRespon.getCart(idCus));
+            model.addAttribute("receiver",receiverRespon.getAllReceiver(idCus));
+            model.addAttribute("transport",transportRespon.getAllById());
+            model.addAttribute("payment",paymentRespon.getAllById());
+            double total = 0;
+            for (Cart cartItem:carts) {
+                total = total+ cartItem.getQuantity()*cartItem.getPrice();
+            }
+            model.addAttribute("total",total);
+            return "user/order/showOrder";
         }
-        model.addAttribute("total",total);
-        return "user/order/showOrder";
+
     }
 
 
@@ -81,76 +88,85 @@ public class OrderController {
                               @RequestParam(value = "idRece",required = false)Integer idRece,
                               @RequestParam(value = "idTrans",required = false)Integer idTrans,
                               @RequestParam(value = "idPayment",required = false)Integer idPayment,
-                              @RequestParam(value = "notes",required = false)String notes){
-        // save order
-        Order order = new Order();
+                              @RequestParam(value = "notes",required = false)String notes,
+                              Model model,HttpSession session){
 
-        String idOrder = UUID.randomUUID().toString().substring(0,10);
-        order.setIdOrders(idOrder);
+        if(idRece == null){ // ktra địa chỉ nhận , chưa có thì bắn lỗi
+            showOrder(model,idCus,session); // gọi lại hàm showOrder ở trên để lấy lấy lại thông tin order
+            model.addAttribute("message","Chưa có địa chỉ nhận hàng");
+            return "user/order/showOrder";
+        }else {
+            // save order
+            Order order = new Order();
 
-        order.setOrdersDate(String.valueOf(LocalDateTime.now()));
-        order.setStatus(1); // đặt trạng thái đã đặt hàng từ người dùng
-        order.setNotes(notes);
+            String idOrder = UUID.randomUUID().toString().substring(0,10);
+            order.setIdOrders(idOrder);
 
-        Receiver receiver = receiverRespon.findAllById(idRece);
-        order.setNameReciver(receiver.getName());
-        order.setPhone(receiver.getPhone());
-        order.setAddress(receiver.getAddress());
-        order.setIdCustomer(idCus);
+            order.setOrdersDate(String.valueOf(LocalDateTime.now()));
+            order.setStatus(1); // đặt trạng thái đã đặt hàng từ người dùng
+            order.setNotes(notes);
 
-        List<Cart> carts = cartRespon.getCart(idCus);
-        double total = 0;
-        for (Cart cartItem:carts) {
-            total = total+ cartItem.getQuantity()*cartItem.getPrice();
-        }
-        TransportMethod transport = transportRespon.getById(idTrans);
-        order.setTotalMoney(total+transport.getPrice());
+            Receiver receiver = receiverRespon.findAllById(idRece);
+            order.setNameReciver(receiver.getName());
+            order.setPhone(receiver.getPhone());
+            order.setAddress(receiver.getAddress());
+            order.setIdCustomer(idCus);
 
-        orderService.save(order);
-        // end save order
-
-        // save order_payment
-        OrdersPayment ordersPayment = new OrdersPayment();
-        ordersPayment.setIdord(order.getId());
-        ordersPayment.setIdpayment(idPayment);
-        ordersPayment.setTotal(0);
-        ordersPayment.setNotes(paymentRespon.getById(idPayment).getName());
-        orderPaymentService.save(ordersPayment);
-
-        // save order_transport
-        OrdersTransport ordersTransport = new OrdersTransport();
-        ordersTransport.setIdtransport(idTrans);
-        ordersTransport.setNotes(transportRespon.getById(idTrans).getName());
-        ordersTransport.setIdord(order.getId());
-        ordersTransport.setTotal(transportRespon.getById(idTrans).getPrice());
-        orderTransportService.save(ordersTransport);
-
-        // save order_detail
-        List<Cart> item = cartRespon.getCart(idCus);
-        for (Cart item1 : item) {
-            OrdersDetail orderDetail = new OrdersDetail();
-            orderDetail.setIdord(order.getId());
-            orderDetail.setQty(item1.getQuantity());
-            orderDetail.setIdproduct(item1.getIdPrduct());
-            orderDetail.setPrice(item1.getPrice());
-            //save oder detail
-            orderDetailRespon.save(orderDetail);
-            // cập nhật lại số lượng sản phẩm
-            int idProduct =  item1.getIdPrduct();
-            Product product = productRespon.findAllById(idProduct);
-            product.setQuatity(product.getQuatity()-item1.getQuantity());
-            // cập nhật lại trạng thái nếu hết hàng
-            if(product.getQuatity() == 0){
-                product.setIsactive((byte) 0);
+            List<Cart> carts = cartRespon.getCart(idCus);
+            double total = 0;
+            for (Cart cartItem:carts) {
+                total = total+ cartItem.getQuantity()*cartItem.getPrice();
             }
-            productRespon.save(product);
+            TransportMethod transport = transportRespon.getById(idTrans);
+            order.setTotalMoney(total+transport.getPrice());
+
+            orderService.save(order);
+            // end save order
+
+            // save order_payment
+            OrdersPayment ordersPayment = new OrdersPayment();
+            ordersPayment.setIdord(order.getId());
+            ordersPayment.setIdpayment(idPayment);
+            ordersPayment.setTotal(0);
+            ordersPayment.setNotes(paymentRespon.getById(idPayment).getName());
+            orderPaymentService.save(ordersPayment);
+
+            // save order_transport
+            OrdersTransport ordersTransport = new OrdersTransport();
+            ordersTransport.setIdtransport(idTrans);
+            ordersTransport.setNotes(transportRespon.getById(idTrans).getName());
+            ordersTransport.setIdord(order.getId());
+            ordersTransport.setTotal(transportRespon.getById(idTrans).getPrice());
+            orderTransportService.save(ordersTransport);
+
+            // save order_detail
+            List<Cart> item = cartRespon.getCart(idCus);
+            for (Cart item1 : item) {
+                OrdersDetail orderDetail = new OrdersDetail();
+                orderDetail.setIdord(order.getId());
+                orderDetail.setQty(item1.getQuantity());
+                orderDetail.setIdproduct(item1.getIdPrduct());
+                orderDetail.setPrice(item1.getPrice());
+                //save oder detail
+                orderDetailRespon.save(orderDetail);
+                // cập nhật lại số lượng sản phẩm
+                int idProduct =  item1.getIdPrduct();
+                Product product = productRespon.findAllById(idProduct);
+                product.setQuatity(product.getQuatity()-item1.getQuantity());
+                // cập nhật lại trạng thái nếu hết hàng
+                if(product.getQuatity() == 0){
+                    product.setIsactive((byte) 0);
+                }
+                productRespon.save(product);
+            }
+
+            // xóa cart của ng dùng
+            for (Cart cart:carts) {
+                cartService.delete(cart);
+            }
+            return "user/order/notifyOrder";
         }
 
-        // xóa cart của ng dùng
-        for (Cart cart:carts) {
-            cartService.delete(cart);
-        }
-        return "user/order/notifyOrder";
     }
 
 }

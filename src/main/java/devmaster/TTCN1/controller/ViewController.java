@@ -1,13 +1,21 @@
 package devmaster.TTCN1.controller;
 
+import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.respository.ProductRespon;
+import devmaster.TTCN1.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.lang.model.element.NestingKind;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/view")
@@ -174,10 +182,58 @@ public class ViewController {
         return "redirect:/";
     }
 
+    @Autowired
+    ProductService productService;
     // search
-    @PostMapping("/search")
-    public String search(@RequestParam("name")String name,Model model){
-        model.addAttribute("proByName",productRespon.getAllName(name));
+    @PostMapping("/search" )
+    public String search(@RequestParam("name")String name,Model model,
+                         @RequestParam("page") Optional<Integer> page,
+                         @RequestParam("size") Optional<Integer> size,
+                         HttpSession session){
+//        model.addAttribute("proByName",productRespon.getAllName(name));
+        // phân trang cho search
+        session.setAttribute("searchName",name);
+        int currentPage = page.orElse(1); // số trang
+        int pageSize = size.orElse(8); // số sản phẩn trên 1 trang
+        Page<Product> productPage = productService.findPaginatedSearch(PageRequest.of(currentPage - 1, pageSize),name);
+
+        model.addAttribute("proByName", productPage);
+
+        int totalPages = productPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("maxPageNumber",pageNumbers.size());
+        }
+        // end phân trang
+        return "user/filter/search";
+    }
+    @GetMapping("/Search" )
+    public String Search(Model model,
+                         @RequestParam("page") Optional<Integer> page,
+                         @RequestParam("size") Optional<Integer> size,
+                         HttpSession session){
+//        model.addAttribute("proByName",productRespon.getAllName(name));
+        // phân trang cho search
+
+        String name = (String) session.getAttribute("searchName");
+        int currentPage = page.orElse(1); // số trang
+        int pageSize = size.orElse(8); // số sản phẩn trên 1 trang
+        Page<Product> productPage = productService.findPaginatedSearch(PageRequest.of(currentPage - 1, pageSize),name);
+
+        model.addAttribute("proByName", productPage);
+
+        int totalPages = productPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("maxPageNumber",pageNumbers.size());
+        }
+        // end phân trang
         return "user/filter/search";
     }
 }

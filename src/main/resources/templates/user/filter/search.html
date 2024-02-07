@@ -57,7 +57,7 @@
                 <div id="results">
 
                 </div>
-                <button type="submit" hidden="hidden">Search</button>
+                <button type="submit" hidden="hidden" >Search</button>
             </form>
 
         </div>
@@ -93,6 +93,24 @@
                     </div>
                 </div>
             </div>
+            <input name="name" type="hidden" th:value="${session.searchName}">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" th:href="@{/view/Search(size=${proByName.size}, page=1)}">First</a></li>
+                    <div th:if="${proByName.totalPages > 0}"
+                         th:each="pageNumber : ${pageNumbers}">
+                        <li class="page-link" >
+                            <a
+                                    th:href="@{/view/Search(size=${proByName.size}, page=${pageNumber})}"
+                                    th:text="${pageNumber}"
+                                    th:class="${pageNumber==proByName.number + 1} ? active"
+                                    class="page-link"
+                            ></a>
+                        </li>
+                    </div>
+                    <li class="page-item"><a class="page-link" th:href="@{/view/Search(size=${proByName.size}, page=${maxPageNumber})}">Last</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </body>

@@ -1,7 +1,7 @@
 package devmaster.TTCN1.sql;
 
 public class SQL {
-    public static final String TRANGCHU="select * from product ";
+    public static final String TRANGCHU="select * from product where ISACTIVE = 1 and ISDELETE = 1";
 
     public static final String TRANGCHUCHITIET="select id, name, description, notes, image, idcategory, price, quatity, created_date, updated_date, isactive, isdelete " +
             "from product where ID = ?";

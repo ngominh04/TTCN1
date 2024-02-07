@@ -30,6 +30,10 @@ public class RegisterController {
     ParamService paramService;
     @Autowired
     CartRespon cartRespon;
+    @Autowired
+    ReceiverRespon receiverRespon;
+    @Autowired
+    ReceiverService receiverService;
     @GetMapping("/login")
     public String login(){
         return "user/register/Login";
@@ -123,6 +127,14 @@ public class RegisterController {
             customer.setAddress(address);
             customer.setName(name);
             customerService.save(customer);
+            // đồng thời tạo luôn receiver mặc định khi ng dùng tạo xong tài khoản mới
+            Receiver receiver = new Receiver();
+            receiver.setIdCus(customer.getId());
+            receiver.setName(customer.getName());
+            receiver.setIsDelete(1);
+            receiver.setAddress(customer.getAddress());
+            receiver.setPhone(customer.getPhone());
+            receiverService.save(receiver);
             return "/user/register/Login";
         }
         return "/user/register/newCus";

@@ -63,9 +63,11 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 bg-grey">
+
                                             <div class="p-5">
                                                 <div class="fw-bold mb-5 mt-2 pt-1">
                                                     <p>Chọn địa chỉ nhận hàng</p>
+                                                    <h5 style="color: red" th:text="${message}"></h5>
                                                     <label class="custom-select" for="idRece"><select id="idRece" name="idRece" >
                                                         <option th:each="rece: ${receiver}" th:value="${rece.id}"
                                                                 th:text="${rece.name}+' - '+${rece.phone}+' - '+${rece.address}"></option>

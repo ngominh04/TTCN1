@@ -4,6 +4,8 @@ import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.projection.AllProductImage;
 import devmaster.TTCN1.projection.IProduct;
 import devmaster.TTCN1.sql.SQL;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -53,4 +55,5 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
 
     @Query(value = "select p.* from Product p where p.isactive = 1 and p.isdelete = 1 and p.name like concat('%',:name,'%')",nativeQuery = true)
     List<Product> getAllName(String name);
+
 }
