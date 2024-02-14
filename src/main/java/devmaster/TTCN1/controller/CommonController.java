@@ -1,10 +1,15 @@
 package devmaster.TTCN1.controller;
 
+import devmaster.TTCN1.domain.Category;
 import devmaster.TTCN1.domain.Customer;
+import devmaster.TTCN1.domain.Order;
 import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.projection.ICountCart;
 import devmaster.TTCN1.respository.CartRespon;
+import devmaster.TTCN1.respository.CategoryRespon;
+import devmaster.TTCN1.respository.OrderRespon;
 import devmaster.TTCN1.respository.ProductRespon;
+import devmaster.TTCN1.service.CategoryService;
 import devmaster.TTCN1.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +68,18 @@ public class CommonController {
         return "user/index";
     }
 
+    @Autowired
+    CategoryRespon categoryRespon;
+    @Autowired
+    CategoryService categoryService;
+    @Autowired
+    OrderRespon orderRespon;
     @GetMapping("/admin")
-    public String showAdmin(){
+    public String showAdmin(Model model){
+        model.addAttribute("category",categoryRespon.getAll());
+        List<Order> orders = orderRespon.getOrderByStatus(1);
+        model.addAttribute("order",orders);
+
         return "admin/index";
     }
 }

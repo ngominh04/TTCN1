@@ -139,4 +139,72 @@ public class RegisterController {
         }
         return "/user/register/newCus";
     }
+
+    // ng dùng quên pass
+    @GetMapping("/forgotPass")
+    public String forgotpass(){
+        return "/user/register/forgotPass";
+    }
+    @PostMapping("/forgotPass")
+    public String forgotPass(Model model,
+                             @RequestParam("email")String email,
+                             @RequestParam("username")String username,
+                             HttpSession session){
+        List<Customer> customers = customerRespon.getAllById();
+        boolean check = false;
+        for (Customer customer:customers) {
+            if (customer.getEmail().equals(email) == true){
+                if (customer.getUsername().equals(username) == true){
+                    check = false;
+                    session.setAttribute("usernameForgot",username);
+                    return "/user/register/forgotPass2";
+                }
+            }
+            else {
+                check = true;
+            }
+        }
+        if(check){
+            model.addAttribute("message","Không tồn tại email hoặc tài khoản này");
+        }
+        return "/user/register/forgotPass";
+    }
+    @PostMapping("forgotPass2")
+    public String forgotPass2(Model model,
+                              @RequestParam("password")String password,
+                              @RequestParam("password2")String password2,
+                              HttpSession session){
+        if (password.equals(password2) == false){
+            model.addAttribute("message","2 mật khẩu phải giống nhau");
+            return "/user/register/forgotPass2";
+        }
+        if (password.length() <5 && password2.length()<5){
+            model.addAttribute("message","Mật khẩu phải trên 5 ký tự");
+            return "/user/register/forgotPass2";
+        }else {
+            Customer customer = customerRespon.getCustomer((String) session.getAttribute("usernameForgot"));
+            customer.setPassword(password);
+            session.removeAttribute("usernameForgot");
+            customerService.save(customer);
+        }
+        return "/user/register/Login";
+    }
+    // sửa thông tin tài khoản
+    @GetMapping("/updateCus")
+    public String updateCus(HttpSession session,Model model){
+        Customer customer = (Customer) session.getAttribute("saveCus");
+        model.addAttribute("customer",customer);
+        return "user/register/updateCus";
+    }
+    @PostMapping("/updateCus")
+    public String updatecus(@RequestParam("fullName")String fullName,
+                            @RequestParam("email")String email,
+                            @RequestParam("username")String username,
+                            @RequestParam("password")String password,
+                            HttpSession session,
+                            Model model){
+        Customer customer = (Customer) session.getAttribute("saveCus");
+
+        return "redirect:/";
+    }
 }

@@ -25,7 +25,9 @@ public class ReceiverController {
     ReceiverService receiverService;
     // show người nhận
     @GetMapping("/receiver/{idCus}")
-    public String showRereiver(Model model, @PathVariable("idCus")Integer idCus){
+    public String showRereiver(Model model, @PathVariable("idCus")Integer idCus,HttpSession session){
+        Customer customer = (Customer) session.getAttribute("saveCus");
+        model.addAttribute("customer",customer);
         model.addAttribute("receiver",receiverRespon.getAllReceiver(idCus));
         return "user/receiver/showReceiver";
     }

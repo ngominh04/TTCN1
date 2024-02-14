@@ -92,7 +92,7 @@ public class OrderController {
                               Model model,HttpSession session){
 
         if(idRece == null){ // ktra địa chỉ nhận , chưa có thì bắn lỗi
-            showOrder(model,idCus,session); // gọi lại hàm showOrder ở trên để lấy lấy lại thông tin order
+            showOrder(model,idCus,session); // gọi lại hàm showOrder ở trên để lấy lấy lại thông tin order7
             model.addAttribute("message","Chưa có địa chỉ nhận hàng");
             return "user/order/showOrder";
         }else {
@@ -166,7 +166,14 @@ public class OrderController {
             }
             return "user/order/notifyOrder";
         }
+    }
 
+    // order 1 , khi người dùng ấn đặt hàng, admin vào xác nhận và chuẩn bị đơn
+    @GetMapping("/order1")
+    public String order1(Model model){
+        List<Order> orders = orderRespon.getOrderByStatus(1);
+        model.addAttribute("order",orders);
+        return "admin/order/order1";
     }
 
 }

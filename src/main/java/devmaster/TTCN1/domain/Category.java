@@ -30,18 +30,14 @@ public class Category {
     private String icon;
 
     @Column(name = "CREATED_DATE")
-    private Instant createdDate;
+    private String createdDate;
 
     @Column(name = "UPDATED_DATE")
-    private Instant updatedDate;
-
-    @Column(name = "CREATED_BY", length = 50)
-    private String createdBy;
-
-    @Column(name = "UPDATED_BY", length = 50)
-    private String updatedBy;
+    private String updatedDate;
 
     @Column(name = "ISACTIVE")
-    private Byte isactive;
+    private Byte isActive;
 
+    @Column(name = "ISDELETE")
+    private Byte isDelete;
 }
