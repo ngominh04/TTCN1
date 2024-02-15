@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/order/order}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div layout:fragment="order">
+        <section  style="background-color: #d2c9ff;margin-top: 1rem;margin-bottom: 1rem" >
+            <div class="container py-5 ">
+                <div class="row d-flex justify-content-center align-items-center ">
+                    <div class="col-12">
+                        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                            <div class="card-body p-0">
+                                <div class="row g-0">
+                                    <div class="col-lg-8">
+                                        <div class="p-5">
+                                            <div class="d-flex justify-content-between align-items-center mb-5">
+                                                <h1 th:if="${receiver.status == 1}" class="fw-bold mb-0 text-black">Đơn hàng chờ xác nhận</h1>
+                                                <h1 th:if="${receiver.status == 2}" class="fw-bold mb-0 text-black">Đơn hàng đang giao</h1>
+                                                <h1 th:if="${receiver.status == 3}" class="fw-bold mb-0 text-black">Đơn hàng đã mua</h1>
+                                                <h1 th:if="${receiver.status == 0}" class="fw-bold mb-0 text-black">Đơn hủy</h1>
+                                            </div>
+                                            <hr class="my-4">
+
+                                            <div class="row mb-4 d-flex justify-content-between align-items-center" th:each="p: ${pro}">
+                                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                                    <img th:src="'/product_image/'+${p.image}"
+                                                         class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                                    <h6 class="text-black mb-0" th:text="${p.name}"></h6>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex" style="width: 25%">
+                                                    <h6 class="text-black mb-0" >Số Lượng: <span th:text="${p.quantity}"></span></h6>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                    <h6 class="mb-0" style="width: 200%" th:text="${#numbers.formatDecimal(p.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></h6>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                    <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+                                                </div>
+                                            </div>
+                                            <hr class="my-4">
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <h6 class="text-uppercase">Tổng tiền sản phẩm</h6>
+                                                <h6><span th:text="${#numbers.formatDecimal(total,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></h6>
+                                            </div>
+                                            <div class="pt-5" style="margin-top: -3rem">
+
+                                                <h6 class="mb-0" style="width: 100%;height: 40px" >Lời nhắn cho shop: <span th:text="${receiver.notes}"></span></h6>
+                                            </div>
+                                            <div style="margin-top: 3rem" th:if="${receiver.status == 1}">
+                                                <a class="btn1" th:href="@{'/order/order0/'+${session.saveCus.id}+'/'+${receiver.id}}"
+                                                   style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                                                    Hủy đơn</a>
+                                            </div>
+                                            <div style="margin-top: 3rem" th:if="${receiver.status == 2}">
+                                                <a class="btn1" th:href="@{'/order/xacNhan/'+${session.saveCus.id}+'/'+${receiver.id}}"
+                                                   style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                                                    Đã nhận</a>
+                                            </div>
+                                            <div style="margin-top: 3rem" th:if="${receiver.status == 0}">
+                                                <a class="btn1" th:href="@{'/order/muaLai/'+${session.saveCus.id}+'/'+${receiver.id}}"
+                                                   style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                                                    Mua lại</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 bg-grey">
+                                        <div class="p-5">
+                                            <div class="fw-bold mb-5 mt-2 pt-1">
+                                                <p>Địa chỉ nhận hàng: </p>
+                                                <p >
+                                                    <span th:text="${receiver.nameReceiver}"></span><br>
+                                                    <span th:text="${receiver.phone}"></span><br>
+                                                    <span th:text="${receiver.address}"></span>
+                                                </p>
+                                            </div>
+
+                                            <hr class="my-4">
+                                            <div class="fw-bold mb-5 mt-2 pt-1">
+                                                <p>Phương thức vận chuyển: </p>
+                                                <p >
+                                                    <span th:text="${transport.noteTran}"></span><br>
+                                                    <span th:text="${#numbers.formatDecimal(transport.totalTran,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span>
+                                                </p>
+                                            </div>
+
+                                            <hr class="my-4">
+                                            <div class="fw-bold mb-5 mt-2 pt-1">
+                                                <p>Phương thức thanh toán: </p>
+                                                <p th:text="${payment.notePayment}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <a class="btn1" th:href="@{'/order/backOrderChiTiet/'+${session.saveCus.id}}"
+           style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+            Back</a>
+    </div>
+</body>
+</html>

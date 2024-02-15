@@ -69,4 +69,31 @@ public class SQL {
     public static final String ALL_PAYMENT="select * from payment_method where ISACTIVE =1 and ISDELETE = 1;";
     public static final String ALL_CUSTOMER="select * from customer";
     public static final String ORDER="select *from `order` o where o.STATUS = ?";
+    public static final String ORDER_STATUS_IDCUS=" " +
+            "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,\n" +
+            "       o.TOTAL_MONEY totalMoney, o.NAME_RECIVER nameReceiver,\n" +
+            "       o.ADDRESS address,o.PHONE phone,od.QTY quantity,\n" +
+            "       op.NOTES notePayment,ot.NOTES noteTran,ot.TOTAL totalTran\n" +
+            "       from `order` o\n" +
+            "    inner JOIN material.orders_details od on o.ID = od.IDORD\n" +
+            "    inner JOIN material.orders_payment op on o.ID = op.IDORD\n" +
+            "    inner join material.orders_transport ot on o.ID = ot.IDORD\n" +
+            "where o.ID_CUSTOMER = ? and o.STATUS = ?";
+    public static final String ORDER_BY_ID="" +
+            "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,\n" +
+            "       o.TOTAL_MONEY totalMoney, o.NAME_RECIVER nameReceiver,\n" +
+            "       o.ADDRESS address,o.PHONE phone,od.QTY quantity,\n" +
+            "       op.NOTES notePayment,ot.NOTES noteTran,ot.TOTAL totalTran\n" +
+            "from `order` o\n" +
+            "         inner JOIN material.orders_details od on o.ID = od.IDORD\n" +
+            "         inner JOIN material.orders_payment op on o.ID = op.IDORD\n" +
+            "         inner join material.orders_transport ot on o.ID = ot.IDORD\n" +
+            "         inner join material.product p on od.IDPRODUCT = p.ID\n" +
+            "where o.ID = ?";
+    public static final String ORDER_DETAIL_BY_IDORDER="" +
+            "select p.NAME name,pi.URL image,od.QTY quantity,od.PRICE price from orders_details od\n" +
+            "        inner JOIN material.product p on od.IDPRODUCT = p.ID\n" +
+            "        inner join material.product_images pi on p.IMAGE = pi.ID\n" +
+            "where od.IDORD = ?";
+
 }

@@ -10,10 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -102,6 +99,28 @@ public class CartController {
         }
         cartRespon.save(cart);
 
+        return "redirect:/shopping_cart/cart/{idCus}";
+    }
+    @PostMapping("update3/{idCus}") // cập nhật khi người dùng nhập vào ô input sô lượng sản phẩm
+    public String update3(@RequestParam("idPro")Integer idPro,
+                          @RequestParam("quantity")Integer quantity,
+                          @RequestParam("idCart")Integer idCart,
+                          @PathVariable("idCus")Integer idCus
+                          ){
+        Product product = productRespon.findAllById(idPro);
+        Cart cart= cartRespon.findAllById(idCart);
+        if(quantity > product.getQuatity()){
+            cart.setQuantity(product.getQuatity());
+            cartService.save(cart);
+        }
+        if (quantity < 1){
+            cart.setQuantity(1);
+            cartService.save(cart);
+        }
+        else {
+            cart.setQuantity(quantity);
+            cartService.save(cart);
+        }
         return "redirect:/shopping_cart/cart/{idCus}";
     }
     @GetMapping("/remove/{idCus}/{idCart}")

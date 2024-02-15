@@ -519,11 +519,14 @@
                             <li class="nav-item" style="background-color: black;color: #b6effb;margin-top: 0.5rem;margin-left: 2rem">Bạn chưa đăng nhập</li>
                         </div>
                         <div th:if="${session.saveCus !=null}">
-                            <li class="nav-item">
+                            <li class="nav-item" style="width: 90px">
                                 <a class="nav-link  " aria-current="page" th:href="@{'/receiver/receiver/'+${session.saveCus.id}}">Tài khoản</a>
                             </li>
+                            <li class="nav-item" style="width: 90px;margin-top: -2.5rem;margin-left: 5rem">
+                                <a class="nav-link  " aria-current="page" th:href="@{'/order/order/'+${session.saveCus.id}}">Đơn hàng</a>
+                            </li>
                             <li class="nav-item" style="margin-top: 0.5rem;margin-left: 2rem">
-                                <p style="margin-top: -2.5rem;margin-left: 8rem;background-color: black;color: #b6effb;padding-right:1.5rem;padding-left: 1.5rem ">
+                                <p style="margin-top: -2.5rem;margin-left: 10rem;background-color: black;color: #b6effb;padding-right:1.5rem;padding-left: 1.5rem ">
                                     Xin chào: <span th:text="${session.saveCus.name}" style=""></span></p>
                             </li>
                         </div>

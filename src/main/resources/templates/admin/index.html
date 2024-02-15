@@ -82,14 +82,6 @@
                 font-family: "Raleway";
                 height: 100%;
             }
-            #order h1 {
-                text-align: center;
-                color: #428bff;
-                font-weight: 300;
-                padding: 40px 0 20px 0;
-                margin: 0;
-            }
-
             .tabs {
                 left: 50%;
                 transform: translateX(-50%);
@@ -98,7 +90,7 @@
                 background: white;
                 padding: 50px;
                 padding-bottom: 80px;
-                width: 90%;
+                width: 95%;
                 height: 150%;
                 box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
                 border-radius: 5px;
@@ -536,7 +528,6 @@
             <div layout:fragment="content5">
                 <section class="resume-section" id="order">
                     <div class="resume-section-content">
-                        <h1>Pure CSS Tabs With Indicator</h1>
                         <div class="tabs">
 
                             <input type="radio" id="tab1" name="tab-control" checked>
@@ -571,17 +562,31 @@
                             <div class="content">
                                 <section>
                                     <h2>Xác nhận đơn</h2>
-                                    <p th:each="od: ${order}" class="tbl-content">
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
-                                        <span th:text="${od.nameReciver}"></span>
+                                    <p>
+                                    <ul style="">
+                                        <li style="width: 5%"><span style="color: #0a53be"><b>Id</b></span></li>
+                                        <li><span style="color: #0a53be"><b>Name Receiver</b></span></li>
+                                        <li><span style="color: #0a53be"><b>Address</b></span></li>
+                                        <li><span style="color: #0a53be"><b>Phone</b></span></li>
+                                        <li><span style="color: #0a53be"><b>Id customer</b></span></li>
+                                        <li><span style="color: #0a53be"><b>Order date</b></span></li>
+                                        <li><span style="color: #0a53be"><b>Total money</b></span></li>
+                                        <li><span style="color: #0a53be"><b>Confirm</b></span></li>
+                                    </ul>
+                                    </p>
+                                    <p class="tbl-content" style="margin-top: -20rem">
+                                    <ul th:each="od: ${order}" style="">
+                                        <li style="border-bottom: 1px solid #0a53be"><span th:text="${od.id}"></span></li>
+                                        <li style="border-bottom: 1px solid #0a53be;font-size: 13px"><span  th:text="${od.nameReciver}"></span></li>
+                                        <li style="border-bottom: 1px solid #0a53be;font-size: 13px"><span  th:text="${od.address}"></span></li>
+                                        <li style="border-bottom: 1px solid #0a53be"><span  th:text="${od.phone}"></span></li>
+                                        <li style="border-bottom: 1px solid #0a53be"><span  th:text="${od.idCustomer}"></span></li>
+                                        <li style="border-bottom: 1px solid #0a53be"><span  th:text="${od.ordersDate}"></span></li>
+                                        <li style="border-bottom: 1px solid #0a53be"><span th:text="${#numbers.formatDecimal(od.totalMoney,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></li>
+                                        <li style="border-bottom: 1px solid #0a53be"><a style="text-decoration: none" th:href="@{'/order/order1/'+${od.id}}">Xác Nhận</a></li>
+
+                                    </ul>
+
                                     </p>
                                 </section>
                                 <section>

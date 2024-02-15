@@ -2,6 +2,8 @@ package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.*;
 import devmaster.TTCN1.projection.ICountCart;
+import devmaster.TTCN1.projection.IOrder;
+import devmaster.TTCN1.projection.IOrderDetails;
 import devmaster.TTCN1.respository.*;
 import devmaster.TTCN1.service.*;
 import jakarta.servlet.http.HttpSession;
@@ -76,12 +78,11 @@ public class OrderController {
             model.addAttribute("total",total);
             return "user/order/showOrder";
         }
-
     }
 
 
     // các status của order:
-    // 1: đã đặt hàng ,2: chờ xác nhận, 3: Đang giao, 4: Đã giao đến người dùng, 0: Người dùng hủy hàng
+    // 1: đã đặt hàng, chờ xác nhận, 2: Đang giao, 3: Đã giao đến người dùng,4: người dùng xác nhận đã nhận được hàng, 0: Người dùng hủy hàng
 
     @PostMapping("/updateOrder/{idCus}") // lưu đồng thời bảng order , order_detail, order_payment,order_transport
     public String updateOrder(@PathVariable("idCus") Integer idCus,
@@ -169,11 +170,88 @@ public class OrderController {
     }
 
     // order 1 , khi người dùng ấn đặt hàng, admin vào xác nhận và chuẩn bị đơn
-    @GetMapping("/order1")
-    public String order1(Model model){
-        List<Order> orders = orderRespon.getOrderByStatus(1);
-        model.addAttribute("order",orders);
-        return "admin/order/order1";
+    @GetMapping("/order1/{idOrder}")
+    public String order1(Model model,@PathVariable("idOrder")Integer idOrder){
+        Order order = orderRespon.finById(idOrder);
+        order.setStatus(2);
+        orderRespon.save(order);
+        return "redirect:/admin#order";
+    }
+    // hiển thị đơn hàng ở trang người dùng
+    @GetMapping("/order/{idCus}")
+    public String order(Model model,@PathVariable("idCus")Integer idCus){
+        model.addAttribute("order2",orderRespon.getOrder_IdCus_Status(idCus,1));
+        return "/user/order/order";
+    }
+    // order 2 : ở  người dùng hiển thị đơn hàng chờ admin xác nhận
+    @GetMapping("/order2/{idCus}")
+    public String order2(@PathVariable("idCus")Integer idCus){
+        return "redirect:/order/order/{idCus}";
+    }
+    // order 3: đơn hàng đnag được giao tới người mua
+    @GetMapping("/order3/{idCus}")
+    public String order3(@PathVariable("idCus")Integer idCus,Model model){
+        model.addAttribute("order3",orderRespon.getOrder_IdCus_Status(idCus,2));
+        return "/user/order/order3";
+    }
+    // order0: người dùng hủy đơn hàng
+    @GetMapping("/order0/{idCus}/{idOrder}")
+    public String  order0(@PathVariable("idCus")Integer idCus,
+                          @PathVariable("idOrder")Integer idOrder){
+        Order order = orderRespon.finById(idOrder);
+        order.setStatus(0);
+        orderRespon.save(order);
+        return "redirect:/order/order/{idCus}";
+    }
+    @GetMapping("/order0/{idCus}")
+    public String order0(@PathVariable("idCus")Integer idCus,Model model){
+        model.addAttribute("order0",orderRespon.getOrder_IdCus_Status(idCus,0));
+        return "/user/order/order0";
+    }
+    // click xác nhận shiper giao hàng đến người dùng
+    @GetMapping("xacNhan/{idCus}/{idOrder}")
+    public String xacNhan(@PathVariable("idCus")Integer idCus,
+                          @PathVariable("idOrder")Integer idOrder){
+        Order order = orderRespon.finById(idOrder);
+        order.setStatus(3);
+        orderRespon.save(order);
+        return "redirect:/order/order/{idCus}";
+    }
+    // click xác nhận shiper giao hàng đến người dùng
+    @GetMapping("muaLai/{idCus}/{idOrder}")
+    public String muaLai(@PathVariable("idCus")Integer idCus,
+                          @PathVariable("idOrder")Integer idOrder){
+        Order order = orderRespon.finById(idOrder);
+        order.setStatus(1);
+        orderRespon.save(order);
+        return "redirect:/order/order/{idCus}";
+    }
+    //order4 : đơn người dùng đã mua
+    @GetMapping("/order4/{idCus}")
+    public String order4(@PathVariable("idCus")Integer idCus,Model model){
+        model.addAttribute("order4",orderRespon.getOrder_IdCus_Status(idCus,3));
+        return "/user/order/order4";
+    }
+    // xem chi tiết order khi người dùng đã đặt hàng
+    @GetMapping("/orderChiTiet/{idOrder}") // dùng theo form của showOrder
+    public String orderChiTiet(@PathVariable("idOrder")Integer idOrder,
+                               Model model){
+//        ICountCart cart = cartRespon.getCount(idCus);
+        List<IOrderDetails> ordersDetails =orderDetailRespon.getOrdersDetail_IdOrder(idOrder);
+        model.addAttribute("pro",orderDetailRespon.getOrdersDetail_IdOrder(idOrder));
+
+        IOrder order = orderRespon.getOrderById(idOrder);
+
+        model.addAttribute("receiver",order);
+        model.addAttribute("total",order.getTotalMoney());
+        model.addAttribute("payment",order);
+        model.addAttribute("transport",order);
+        return "/user/order/orderChiTiet";
+    }
+    // back trong order chi tiết
+    @GetMapping("backOrderChiTiet/{idCus}")
+    public String backOd(@PathVariable("idCus")Integer idCus){
+        return "redirect:/order/order/{idCus}";
     }
 
 }

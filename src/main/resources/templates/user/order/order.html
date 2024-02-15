@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{user/index}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div layout:fragment="content" >
+        <div style="margin-top: 3.5rem" class="container">
+            <a class="btn1" th:href="@{'/order/order2/'+${session.saveCus.id}}"
+               style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                Chờ xác nhận</a>
+            <a class="btn1" th:href="@{'/order/order3/'+${session.saveCus.id}}"
+               style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                Đang giao</a>
+            <a class="btn1" th:href="@{'/order/order4/'+${session.saveCus.id}}"
+               style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                Đã mua</a>
+            <a class="btn1" th:href="@{'/order/order0/'+${session.saveCus.id}}"
+               style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                Đơn hủy</a>
+            <div class="container" layout:fragment="order">
+                <h2>Đợi xác nhận từ phía shop</h2>
+                <ul class="responsive-table">
+                    <li class="table-header">
+                        <div class="col col_o-1">ID order</div>
+                        <div class="col col_o-2">Order date</div>
+                        <div class="col col_o-3">Total money</div>
+                        <div class="col col_o-4"></div>
+                    </li>
+                    <li class="table-row" th:each="od: ${order2}">
+                        <div class="col col_o-1" data-label="Job Id" th:text="${od.idOrder}"></div>
+                        <div class="col col_o-2" data-label="Customer Name" th:text="${od.orderDate}"></div>
+                        <div class="col col_o-3" data-label="Payment Status" th:text="${#numbers.formatDecimal(od.totalMoney,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></div>
+                        <div class="col col_o-4" data-label="Payment Status" >
+                            <a class="btn1" th:href="@{'/order/orderChiTiet/'+${od.id}}"
+                               style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                                Xem chi tiết</a>
+                        </div>
+                    </li>
+                </ul>
+                <a class="btn1" th:href="@{/view/backProductChiTiet}"
+                   style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                    Back to shop</a>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
