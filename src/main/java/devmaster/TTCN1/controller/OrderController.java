@@ -2,6 +2,7 @@ package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.*;
 import devmaster.TTCN1.projection.ICountCart;
+import devmaster.TTCN1.projection.IEvaluate;
 import devmaster.TTCN1.projection.IOrder;
 import devmaster.TTCN1.projection.IOrderDetails;
 import devmaster.TTCN1.respository.*;
@@ -56,6 +57,10 @@ public class OrderController {
     OrderDetailRespon orderDetailRespon;
     @Autowired
     CartService cartService;
+    @Autowired
+    EvaluateRespon evaluateRespon;
+    @Autowired
+    EvaluateService evaluateService;
 
     @GetMapping("/showOrder/{idCus}")
     public String showOrder(Model model, @PathVariable("idCus") Integer idCus,HttpSession session){
@@ -236,7 +241,7 @@ public class OrderController {
     @GetMapping("/orderChiTiet/{idOrder}") // dùng theo form của showOrder
     public String orderChiTiet(@PathVariable("idOrder")Integer idOrder,
                                Model model){
-//        ICountCart cart = cartRespon.getCount(idCus);
+
         List<IOrderDetails> ordersDetails =orderDetailRespon.getOrdersDetail_IdOrder(idOrder);
         model.addAttribute("pro",orderDetailRespon.getOrdersDetail_IdOrder(idOrder));
 
@@ -246,12 +251,30 @@ public class OrderController {
         model.addAttribute("total",order.getTotalMoney());
         model.addAttribute("payment",order);
         model.addAttribute("transport",order);
+
+        // hiển thị đánh giá sản phẩm khi người dùng đã đánh giá
+        Integer idCus= order.getIdCus();
+        IEvaluate evaluate = evaluateRespon.getEvaluate_IdOrder_IdCus(idOrder,idCus);
+        model.addAttribute("evaluate",evaluate);
         return "/user/order/orderChiTiet";
     }
     // back trong order chi tiết
     @GetMapping("backOrderChiTiet/{idCus}")
     public String backOd(@PathVariable("idCus")Integer idCus){
         return "redirect:/order/order/{idCus}";
+    }
+
+    // đánh giá sản phẩm khi người dùng đã mua hàng
+    @PostMapping("/evaluate/{idOrder}")
+    public String evaluate(@RequestParam("value")String value,
+                           @PathVariable("idOrder")Integer idOrder){
+        Evaluate evaluate = new Evaluate();
+        evaluate.setValue(value);
+        evaluate.setIdorder(idOrder);
+        evaluate.setIsActive((byte) 1);
+        evaluate.setIsDelete((byte) 1);
+        evaluateService.save(evaluate);
+        return "redirect:/order/orderChiTiet/{idOrder}";
     }
 
 }

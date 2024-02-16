@@ -3,6 +3,7 @@ package devmaster.TTCN1.projection;
 public interface IOrder {
     Integer getId();
     String getIdOrder();
+    Integer getIdCus();
     Integer getStatus();
     String getOrderDate();
     String getNotes();

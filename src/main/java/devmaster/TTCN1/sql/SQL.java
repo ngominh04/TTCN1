@@ -70,7 +70,7 @@ public class SQL {
     public static final String ALL_CUSTOMER="select * from customer";
     public static final String ORDER="select *from `order` o where o.STATUS = ?";
     public static final String ORDER_STATUS_IDCUS=" " +
-            "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,\n" +
+            "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,o.ID_CUSTOMER idCus,\n" +
             "       o.TOTAL_MONEY totalMoney, o.NAME_RECIVER nameReceiver,\n" +
             "       o.ADDRESS address,o.PHONE phone,od.QTY quantity,\n" +
             "       op.NOTES notePayment,ot.NOTES noteTran,ot.TOTAL totalTran\n" +
@@ -80,7 +80,7 @@ public class SQL {
             "    inner join material.orders_transport ot on o.ID = ot.IDORD\n" +
             "where o.ID_CUSTOMER = ? and o.STATUS = ?";
     public static final String ORDER_BY_ID="" +
-            "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,\n" +
+            "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,o.ID_CUSTOMER idCus,\n" +
             "       o.TOTAL_MONEY totalMoney, o.NAME_RECIVER nameReceiver,\n" +
             "       o.ADDRESS address,o.PHONE phone,od.QTY quantity,\n" +
             "       op.NOTES notePayment,ot.NOTES noteTran,ot.TOTAL totalTran\n" +
@@ -95,5 +95,9 @@ public class SQL {
             "        inner JOIN material.product p on od.IDPRODUCT = p.ID\n" +
             "        inner join material.product_images pi on p.IMAGE = pi.ID\n" +
             "where od.IDORD = ?";
+    public static final String EVALUATE_IDORDER_IDCUS="" +
+            "select *from evaluate\n" +
+            "        inner join material.`order` o on evaluate.IDORDER = o.ID\n" +
+            "        where IDORDER=? and o.ID_CUSTOMER = ?;";
 
 }

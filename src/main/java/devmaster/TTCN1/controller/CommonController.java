@@ -77,8 +77,10 @@ public class CommonController {
     @GetMapping("/admin")
     public String showAdmin(Model model){
         model.addAttribute("category",categoryRespon.getAll());
-        List<Order> orders = orderRespon.getOrderByStatus(1);
-        model.addAttribute("order",orders);
+//        List<Order> orders = orderRespon.getOrderByStatus(1);
+        model.addAttribute("order",orderRespon.getOrderByStatus(1));
+        model.addAttribute("order1",orderRespon.getOrderByStatus(2));
+        model.addAttribute("order2",orderRespon.getOrderByStatus(3));
 
         return "admin/index";
     }
