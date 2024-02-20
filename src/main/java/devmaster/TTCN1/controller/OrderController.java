@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -64,7 +65,7 @@ public class OrderController {
 
     @GetMapping("/showOrder/{idCus}")
     public String showOrder(Model model, @PathVariable("idCus") Integer idCus,HttpSession session){
-
+        session.setAttribute("newReceiverOrder",1);
         ICountCart cart = cartRespon.getCount(idCus);
         List<Cart> carts = cartRespon.getCart(idCus);
         if(carts.size() == 0){
@@ -268,12 +269,18 @@ public class OrderController {
     @PostMapping("/evaluate/{idOrder}")
     public String evaluate(@RequestParam("value")String value,
                            @PathVariable("idOrder")Integer idOrder){
-        Evaluate evaluate = new Evaluate();
-        evaluate.setValue(value);
-        evaluate.setIdorder(idOrder);
-        evaluate.setIsActive((byte) 1);
-        evaluate.setIsDelete((byte) 1);
-        evaluateService.save(evaluate);
+        List<IOrderDetails> iOrderDetails = orderDetailRespon.getOrdersDetail_IdOrder(idOrder);
+        List<Evaluate> evaluateList = new ArrayList<>();
+        for (IOrderDetails iOrderDetails1:iOrderDetails) {
+            Evaluate evaluate = new Evaluate();
+            evaluate.setValue(value);
+            evaluate.setIdOrder(idOrder);
+            evaluate.setIdPro(iOrderDetails1.getIdPro());
+            evaluate.setIsActive((byte) 1);
+            evaluate.setIsDelete((byte) 1);
+            evaluateList.add(evaluate);
+        }
+        evaluateService.saveAll(evaluateList);
         return "redirect:/order/orderChiTiet/{idOrder}";
     }
 

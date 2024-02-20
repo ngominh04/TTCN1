@@ -95,6 +95,7 @@
             </div>
             <input name="name" type="hidden" th:value="${session.searchName}">
             <nav aria-label="Page navigation example">
+                <p >Bạn đang ở trang thứ <span th:text="${proByName.getNumber()+1}"></span></p>
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" th:href="@{/view/Search(size=${proByName.size}, page=1)}">First</a></li>
                     <div th:if="${proByName.totalPages > 0}"

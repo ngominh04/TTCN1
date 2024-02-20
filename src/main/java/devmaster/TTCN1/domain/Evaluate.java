@@ -18,8 +18,11 @@ public class Evaluate {
     private String value;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDORDER")
-    private Integer idorder;
+    @JoinColumn(name = "ID_ORDER")
+    private Integer idOrder;
+
+    @JoinColumn(name = "ID_PRO")
+    private Integer idPro;
 
     @Column(name = "ISACTIVE")
     private Byte isActive;

@@ -12,15 +12,13 @@
     <ul class="responsive-table">
         <li class="table-header">
             <div class="col col_o-1">ID order</div>
-            <div class="col col_o-2">Product</div>
-            <div class="col col_o-3">Quantity</div>
+            <div class="col col_o-2">Order date</div>
             <div class="col col_o-4">Total money</div>
             <div class="col col_o-5"></div>
         </li>
         <li class="table-row" th:each="od: ${order3}">
             <div class="col col_o-1" data-label="Job Id" th:text="${od.idOrder}"></div>
-            <div class="col col_o-2" data-label="Customer Name" th:text="${od.namepro}"></div>
-            <div class="col col_o-3" data-label="Amount" th:text="${od.quantity}"></div>
+            <div class="col col_o-3" data-label="Amount" th:text="${od.orderDate}"></div>
             <div class="col col_o-3" data-label="Payment Status" th:text="${#numbers.formatDecimal(od.totalMoney,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></div>
             <div class="col col_o-5" data-label="Payment Status" >
                 <a class="btn1" th:href="@{'/order/orderChiTiet/'+${od.id}}"

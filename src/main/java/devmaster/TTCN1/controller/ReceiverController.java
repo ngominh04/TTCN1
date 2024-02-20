@@ -1,8 +1,10 @@
 package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.Customer;
+import devmaster.TTCN1.domain.Order;
 import devmaster.TTCN1.domain.Receiver;
 import devmaster.TTCN1.respository.CustomerRespon;
+import devmaster.TTCN1.respository.OrderRespon;
 import devmaster.TTCN1.respository.ReceiverRespon;
 import devmaster.TTCN1.service.ReceiverService;
 import jakarta.servlet.http.HttpSession;
@@ -23,12 +25,15 @@ public class ReceiverController {
     ReceiverRespon receiverRespon;
     @Autowired
     ReceiverService receiverService;
+    @Autowired
+    OrderRespon orderRespon;
     // show người nhận
     @GetMapping("/receiver/{idCus}")
     public String showRereiver(Model model, @PathVariable("idCus")Integer idCus,HttpSession session){
         Customer customer = (Customer) session.getAttribute("saveCus");
         model.addAttribute("customer",customer);
         model.addAttribute("receiver",receiverRespon.getAllReceiver(idCus));
+        session.removeAttribute("newReceiverOrder");
         return "user/receiver/showReceiver";
     }
     // đường dẫn tới table sửa người nhận
@@ -61,18 +66,47 @@ public class ReceiverController {
         return "redirect:/receiver/receiver/{idCus}";
     }
     // thêm địa chỉ mới
-    @GetMapping("/newReceiver")
+    @GetMapping("/newReceiver") // thêm mới khi đang ở nơi kiểm soát tài khoản  của ng dùng
     public String newRece(Model model){
         model.addAttribute("newRece",new Receiver());
         return "/user/receiver/newReceiver";
     }
-    @PostMapping("/newReceiver/{idCus}")
+    @PostMapping("/newReceiver/{idCus}") // lưu thêm mới ở chỗ kiểm soát tài khoản người dùng
     public String newReceiver(@ModelAttribute("receiver")Receiver receiver,@PathVariable("idCus")Integer idCus){
         receiver.setIsDelete(1);
         Customer customer = customerRespon.getCustomerById(idCus);
         receiver.setIdCus(customer.getId());
         receiverService.save(receiver);
         return "redirect:/receiver/receiver/{idCus}";
+    }
+    // nút back trong newReceOrder
+    @GetMapping("/back/{idCus}")
+    public String back(@PathVariable("idCus")Integer idCus){
+        return "redirect:/receiver/receiver/{idCus}";
+    }
+    @GetMapping("/newReceiverOrder/{idCus}") // thêm mới khi đang ở Order
+    public String newReceOrder(Model model,
+                               @PathVariable("idCus")Integer idCus,
+                               HttpSession session){
+        session.getAttribute("newReceiverOrder");
+        model.addAttribute("newRece",new Receiver());
+        return "/user/receiver/newReceiver";
+    }
+    @PostMapping("/newReceiverOrder/{idCus}") // lưu thêm mới ở order
+    public String newReceiverOrder(@ModelAttribute("receiver")Receiver receiver,
+                                   @PathVariable("idCus")Integer idCus,
+                                   HttpSession session){
+        session.removeAttribute("newReceiverOrder");
+        receiver.setIsDelete(1);
+        Customer customer = customerRespon.getCustomerById(idCus);
+        receiver.setIdCus(customer.getId());
+        receiverService.save(receiver);
+        return "redirect:/order/showOrder/{idCus}";
+    }
+    // nút back trong newReceOrder
+    @GetMapping("/backOrder/{idCus}")
+    public String backReceOrder(@PathVariable("idCus")Integer idCus){
+        return "redirect:/order/showOrder/{idCus}";
     }
 
 

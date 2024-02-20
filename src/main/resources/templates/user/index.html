@@ -649,10 +649,12 @@
                     </div>
                 </div>
                 <nav aria-label="Page navigation example">
+                    <p >Bạn đang ở trang thứ <span th:text="${proPage.getNumber()+1}"></span></p>
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" th:href="@{/(size=8, page=1)}">First</a></li>
                         <div th:if="${proPage.totalPages > 0}"
                              th:each="pageNumber : ${pageNumbers}">
+
                             <li class="page-link" >
                                 <a th:href="@{/(size=${proPage.size}, page=${pageNumber})}"
                                    th:text="${pageNumber}"

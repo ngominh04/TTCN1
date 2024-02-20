@@ -51,6 +51,24 @@
 
                 </div>
             </div>
+            <div class="col-12">
+                <h5>Đánh giá sản phẩm</h5>
+                <div th:if="${evaluate != null}">
+                    <div th:each="ev: ${evaluate}">
+                        <p style="border: 1px solid #b6effb;border-radius: 10px;padding: 0.5rem">
+                            <span th:text="${ev.nameCus}+' |'+${ev.orderDate}"></span>
+                            <br>
+                            <span style="margin-left: 1rem" th:text="${ev.value}"></span>
+                        </p>
+                    </div>
+                </div>
+                <div th:if="${evaluate.size() == 0}">
+                    <p style="border: 1px solid #b6effb;border-radius: 10px;padding: 0.5rem">
+                        Sản phẩm  chưa có đánh giá
+                    </p>
+                </div>
+
+            </div>
             <div class="col-6">
                 <a class="btn1"
                    th:href="@{/view/backProductChiTiet}"

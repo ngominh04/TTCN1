@@ -146,6 +146,53 @@
     form .signup-link a:hover{
         text-decoration: underline;
     }
+    .btn1 {
+        cursor: pointer;
+        position: relative;
+        padding: 10px 20px;
+        background: #4d5154;
+        font-size: 18px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        transition: all 0.5s;
+
+        &:after, &:before {
+            content: " ";
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            border: 0px solid #fff;
+            transition: all 1s;
+        }
+
+        &:after {
+            top: -1px;
+            left: -1px;
+            border-top: 5px solid #b6effb;
+            border-left: 5px solid #b6effb;
+        }
+
+        &:before {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 5px solid #b6effb;
+            border-right: 5px solid #b6effb;
+        }
+
+        &:hover {
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+        / / background: rgba(0, 0, 0, .5);
+        / / color: white;
+
+            &:before, &:after {
+
+                width: 100%;
+                height: 100%;
+            / / border-color: white;
+            }
+        }
+    }
 </style>
 <body>
 <!--dùng form -->
@@ -155,27 +202,59 @@
         Tạo Địa chỉ
     </div>
 
-    <form method="post" th:action="@{'/receiver/newReceiver/'+${session.saveCus.id}}" enctype="multipart/form-data">
-        <!--        <p style="color: red" th:text="${message}"></p>-->
-        <div class="field">
-            <p>Name</p>
-            <input type="text" id="name" name="name" required>
-            <!--            <label>Name</label>-->
-        </div>
-        <div class="field" style="margin-top: 4rem">
-            <p>Phone</p>
-            <input type="text" id="phone" name="phone" required>
-            <!--            <label>Phone</label>-->
-        </div>
-        <div class="field" style="margin-top: 4rem">
-            <p>Address</p>
-            <input type="text" id="address" name="address" required>
-            <!--            <label>Address</label>-->
-        </div>
-        <div class="field" style="margin-top: 4rem">
-            <input type="submit" value="Lưu">
-        </div>
-    </form>
+    <div th:if="${session.newReceiverOrder == 1}">
+        <form method="post" th:action="@{'/receiver/newReceiverOrder/'+${session.saveCus.id}}" enctype="multipart/form-data">
+            <!--        <p style="color: red" th:text="${message}"></p>-->
+            <div class="field">
+                <p>Name</p>
+                <input type="text" id="name" name="name" required>
+                <!--            <label>Name</label>-->
+            </div>
+            <div class="field" style="margin-top: 4rem">
+                <p>Phone</p>
+                <input type="text" id="phone" name="phone" required>
+                <!--            <label>Phone</label>-->
+            </div>
+            <div class="field" style="margin-top: 4rem">
+                <p>Address</p>
+                <input type="text" id="address" name="address" required>
+                <!--            <label>Address</label>-->
+            </div>
+            <div class="field" style="margin-top: 4rem">
+                <input type="submit" value="Lưu">
+                <br>
+                <br>
+                <a style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154" class="btn1" th:href="@{'/receiver/backOrder/'+${session.saveCus.id}}">Back order</a>
+            </div>
+        </form>
+    </div>
+    <div th:if="${session.newReceiverOrder == null}">
+        <form method="post" th:action="@{'/receiver/newReceiver/'+${session.saveCus.id}}" enctype="multipart/form-data">
+            <!--        <p style="color: red" th:text="${message}"></p>-->
+            <div class="field">
+                <p>Name</p>
+                <input type="text" id="name" name="name" required>
+                <!--            <label>Name</label>-->
+            </div>
+            <div class="field" style="margin-top: 4rem">
+                <p>Phone</p>
+                <input type="text" id="phone" name="phone" required>
+                <!--            <label>Phone</label>-->
+            </div>
+            <div class="field" style="margin-top: 4rem">
+                <p>Address</p>
+                <input type="text" id="address" name="address" required>
+                <!--            <label>Address</label>-->
+            </div>
+            <div class="field" style="margin-top: 4rem">
+                <input type="submit" value="Lưu">
+                <br>
+                <br>
+                <a style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154" class="btn1" th:href="@{'/receiver/back/'+${session.saveCus.id}}">Back</a>
+            </div>
+        </form>
+    </div>
+
 </div>
 </body>
 </html>

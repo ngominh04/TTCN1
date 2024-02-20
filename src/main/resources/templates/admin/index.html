@@ -620,7 +620,7 @@
                                         <li><span style="color: #0a53be"><b>Id customer</b></span></li>
                                         <li><span style="color: #0a53be"><b>Order date</b></span></li>
                                         <li><span style="color: #0a53be"><b>Total money</b></span></li>
-                                        <li><span style="color: #0a53be"><b>Confirm</b></span></li>
+<!--                                        <li><span style="color: #0a53be"><b>Confirm</b></span></li>-->
                                     </ul>
                                     </p>
                                     <p class="tbl-content" style="margin-top: -20rem">
@@ -632,7 +632,7 @@
                                         <li style="border-bottom: 1px solid #0a53be"><span  th:text="${od.idCustomer}"></span></li>
                                         <li style="border-bottom: 1px solid #0a53be"><span  th:text="${od.ordersDate}"></span></li>
                                         <li style="border-bottom: 1px solid #0a53be"><span th:text="${#numbers.formatDecimal(od.totalMoney,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></li>
-                                        <li style="border-bottom: 1px solid #0a53be"><a style="text-decoration: none" th:href="@{'/order/order1/'+${od.id}}">Quản lí đánh giá</a></li>
+<!--                                        <li style="border-bottom: 1px solid #0a53be"><a style="text-decoration: none" th:href="@{'/evaluate/evaluate/'+${od.id}}">Quản lí đánh giá</a></li>-->
 
                                     </ul>
                                     </p>

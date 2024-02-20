@@ -1,6 +1,7 @@
 package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.Product;
+import devmaster.TTCN1.respository.EvaluateRespon;
 import devmaster.TTCN1.respository.ProductRespon;
 import devmaster.TTCN1.service.ProductService;
 import jakarta.servlet.http.HttpSession;
@@ -22,11 +23,13 @@ import java.util.stream.IntStream;
 public class ViewController {
     @Autowired
     ProductRespon productRespon;
-
+    @Autowired
+    EvaluateRespon evaluateRespon;
     @GetMapping("/productChiTiet/{idPro}") // cchi tiết sản phẩm
     public String showChiTiet(Model model,@PathVariable("idPro") Integer idPro){
         model.addAttribute("productImages",productRespon.getAllImage(idPro));
         model.addAttribute("productChiTiet",productRespon.getProductChiTiet(idPro));
+        model.addAttribute("evaluate",evaluateRespon.getAllEvaluateByPro(idPro));
         return "user/filter/ProductDetail";
     }
     @GetMapping("/price_up")

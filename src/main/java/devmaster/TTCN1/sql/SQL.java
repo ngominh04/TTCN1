@@ -72,7 +72,7 @@ public class SQL {
     public static final String ORDER_STATUS_IDCUS=" " +
             "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,o.ID_CUSTOMER idCus,\n" +
             "       o.TOTAL_MONEY totalMoney, o.NAME_RECIVER nameReceiver,\n" +
-            "       o.ADDRESS address,o.PHONE phone,od.QTY quantity,\n" +
+            "       o.ADDRESS address,o.PHONE phone,\n" +
             "       op.NOTES notePayment,ot.NOTES noteTran,ot.TOTAL totalTran\n" +
             "       from `order` o\n" +
             "    inner JOIN material.orders_details od on o.ID = od.IDORD\n" +
@@ -82,7 +82,7 @@ public class SQL {
     public static final String ORDER_BY_ID="" +
             "select distinct o.ID id,o.ID_ORDERS idOrder,o.STATUS status,o.ORDERS_DATE orderDate,o.NOTES notes,o.ID_CUSTOMER idCus,\n" +
             "       o.TOTAL_MONEY totalMoney, o.NAME_RECIVER nameReceiver,\n" +
-            "       o.ADDRESS address,o.PHONE phone,od.QTY quantity,\n" +
+            "       o.ADDRESS address,o.PHONE phone,\n" +
             "       op.NOTES notePayment,ot.NOTES noteTran,ot.TOTAL totalTran\n" +
             "from `order` o\n" +
             "         inner JOIN material.orders_details od on o.ID = od.IDORD\n" +
@@ -91,13 +91,18 @@ public class SQL {
             "         inner join material.product p on od.IDPRODUCT = p.ID\n" +
             "where o.ID = ?";
     public static final String ORDER_DETAIL_BY_IDORDER="" +
-            "select p.NAME name,pi.URL image,od.QTY quantity,od.PRICE price from orders_details od\n" +
+            "select p.NAME name,pi.URL image,od.QTY quantity,od.PRICE price,od.IDPRODUCT idPro from orders_details od\n" +
             "        inner JOIN material.product p on od.IDPRODUCT = p.ID\n" +
             "        inner join material.product_images pi on p.IMAGE = pi.ID\n" +
             "where od.IDORD = ?";
     public static final String EVALUATE_IDORDER_IDCUS="" +
-            "select *from evaluate\n" +
-            "        inner join material.`order` o on evaluate.IDORDER = o.ID\n" +
-            "        where IDORDER=? and o.ID_CUSTOMER = ?;";
+            "select distinct evaluate.VALUE value from evaluate\n" +
+            "        inner join material.`order` o on evaluate.ID_ORDER = o.ID\n" +
+            "        where ID_ORDER=? and o.ID_CUSTOMER = ?;";
 
+    public static final String EVALUATE_PRO="" +
+            "select evaluate.VALUE value,c.NAME nameCus ,o.ORDERS_DATE orderDate from evaluate\n" +
+            "         inner join material.`order` o on evaluate.ID_ORDER = o.ID\n" +
+            "         inner join material.customer c on o.ID_CUSTOMER = c.ID\n" +
+            "         where ID_PRO =? and evaluate.ISDELETE = 1 and c.ISACTIVE =1";
 }

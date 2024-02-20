@@ -4552,6 +4552,9 @@ textarea.form-control-lg {
   outline: 0;
   box-shadow: var(--bs-pagination-focus-box-shadow);
 }
+.page-link:after{
+  background-color: #0dcaf0;
+}
 .page-link.active, .active > .page-link {
   z-index: 3;
   color: var(--bs-pagination-active-color);
