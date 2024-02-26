@@ -1,7 +1,7 @@
 package devmaster.TTCN1.sql;
 
 public class SQL {
-    public static final String TRANGCHU="select * from product where ISACTIVE = 1 and ISDELETE = 1";
+    public static final String TRANGCHU="select * from product where  ISDELETE = 1";
 
     public static final String TRANGCHUCHITIET="select id, name, description, notes, image, idcategory, price, quatity, created_date, updated_date, isactive, isdelete " +
             "from product where ID = ?";
@@ -65,8 +65,8 @@ public class SQL {
     public static final String CART="select * from cart where id_customer =?";
     public static final String COUNTCART="select count(id_customer) count from cart where id_customer =?";
     public static final String RECEIVER="select *from receiver where isdelete = 1 and idcus=?;";
-    public static final String ALL_TRANSPORT="select * from transport_method where ISACTIVE =1 and ISDELETE = 1;";
-    public static final String ALL_PAYMENT="select * from payment_method where ISACTIVE =1 and ISDELETE = 1;";
+    public static final String ALL_TRANSPORT="select * from transport_method where  ISDELETE = 1;";
+    public static final String ALL_PAYMENT="select * from payment_method where  ISDELETE = 1;";
     public static final String ALL_CUSTOMER="select * from customer";
     public static final String ORDER="select *from `order` o where o.STATUS = ?";
     public static final String ORDER_STATUS_IDCUS=" " +
@@ -104,5 +104,9 @@ public class SQL {
             "select evaluate.VALUE value,c.NAME nameCus ,o.ORDERS_DATE orderDate from evaluate\n" +
             "         inner join material.`order` o on evaluate.ID_ORDER = o.ID\n" +
             "         inner join material.customer c on o.ID_CUSTOMER = c.ID\n" +
-            "         where ID_PRO =? and evaluate.ISDELETE = 1 and c.ISACTIVE =1";
+            "         where ID_PRO =? and evaluate.ISDELETE = 1 ";
+
+    public static final String PRO_CATE="select p.ID id,c.NAME nameCate from product p\n" +
+            "    inner join material.category c on p.IDCATEGORY = c.ID\n" +
+            "where p.ID = ?";
 }

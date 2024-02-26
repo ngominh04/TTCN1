@@ -42,10 +42,10 @@ public class Product {
     private int quatity;
 
     @Column(name = "CREATED_DATE")
-    private Instant createdDate;
+    private String createdDate;
 
     @Column(name = "UPDATED_DATE")
-    private Instant updatedDate;
+    private String updatedDate;
 
     @Column(name = "ISACTIVE")
     private Byte isactive;

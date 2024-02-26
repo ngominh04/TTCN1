@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/user/css/styles.css}" rel="stylesheet" />
+    <style>
+        .btn1 {
+            cursor: pointer;
+            position: relative;
+            padding: 10px 20px;
+            background: #4d5154;
+            font-size: 18px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            transition: all 0.5s;
+            text-decoration: none;
+            &:after, &:before {
+                content: " ";
+                width: 10px;
+                height: 10px;
+                position: absolute;
+                border: 0px solid #fff;
+                transition: all 1s;
+            }
+
+            &:after {
+                top: -1px;
+                left: -1px;
+                border-top: 5px solid #b6effb;
+                border-left: 5px solid #b6effb;
+            }
+
+            &:before {
+                bottom: -1px;
+                right: -1px;
+                border-bottom: 5px solid #b6effb;
+                border-right: 5px solid #b6effb;
+            }
+
+            &:hover {
+                border-top-right-radius: 0px;
+                border-bottom-left-radius: 0px;
+            / / background: rgba(0, 0, 0, .5);
+            / / color: white;
+
+                &:before, &:after {
+
+                    width: 100%;
+                    height: 100%;
+                / / border-color: white;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top: 3.5rem">
+    <div class="row">
+        <div class="col-6" >
+            <div class="row">
+                <div class="col-4" style="border-radius: 10px" th:each="img: ${productImages}">
+                    <img width="180" th:src="@{'/product_image/'+${img.url}}">
+                </div>
+                <a class="btn1" style="width: 150px;margin-top: 2rem" th:href="@{#}">Quản lí ảnh</a>
+            </div>
+        </div>
+        <div class="col-6" style="text-align: left">
+            <h2>Thông tin sản phẩm</h2>
+            <h5 th:text="'Tên sản phẩm: '+${productChiTiet.name}"></h5>
+            <h5 th:text="'Cấu hình máy: '+${productChiTiet.notes}"></h5>
+            <h5 ><span th:text="'Hãng: '+${productChiTiet.description}"></span><span style="padding-left: 2rem" th:text="' Loại: '+${cate.nameCate}"></span></h5>
+            <h5 >Giá tiền: <span style="color: orangered" th:text="${#numbers.formatDecimal(productChiTiet.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></h5>
+            <h5 >Số lượng trong kho : <span th:text="${productChiTiet.quatity}"></span></h5>
+<!--            còn bán hay ko còn bán -->
+            <h5 th:text="'Trang thái hàng: '+${productChiTiet.isactive}"></h5>
+<!--            ẩn ,hiện sản phẩm ở trang người dùng -->
+            <h5 th:text="'Trạng thái ở trang người dùng: '+${productChiTiet.isDelete}"></h5>
+            <h5 th:text="'Ngày tạo : '+${productChiTiet.created_date}"></h5>
+            <h5 th:text="'Ngày sửa gần nhất: '+${productChiTiet.updated_date}"></h5>
+            <br>
+            <a class="btn1"  th:href="@{#}">Chỉnh sửa thông tin</a>
+        </div>
+        <div class="col-12">
+            <h5>Đánh giá sản phẩm</h5>
+            <div th:if="${evaluate != null}">
+                <div th:each="ev: ${evaluate}">
+                    <div class="row" style="border: 1px solid #b6effb;border-radius: 10px;padding: 0.5rem">
+                        <div class="col-8">
+                            <span th:text="${ev.nameCus}+' |'+${ev.orderDate}"></span>
+                            <br>
+                            <span style="margin-left: 1rem" th:text="${ev.value}"></span>
+                        </div>
+                        <div class="col-3">
+                            <div ></div>
+                            <a class="btn1" th:href="@{#}">Ẩn đánh giá</a>
+<!--                            <a class="btn1" th:href="@{#}">Hiện đánh giá</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${evaluate.size() == 0}">
+                <p style="border: 1px solid #b6effb;border-radius: 10px;padding: 0.5rem">
+                    Sản phẩm  chưa có đánh giá
+                </p>
+            </div>
+
+        </div>
+        <div class="col-6">
+            <a class="btn1"
+               th:href="@{#}"
+               style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
+            >Back</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

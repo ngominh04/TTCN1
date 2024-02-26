@@ -56,4 +56,9 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
     @Query(value = "select p.* from Product p where p.isactive = 1 and p.isdelete = 1 and p.name like concat('%',:name,'%')",nativeQuery = true)
     List<Product> getAllName(String name);
 
+    @Query(value = "select *from product",nativeQuery = true)
+    List<Product> getAll();
+
+    @Query(value = SQL.PRO_CATE,nativeQuery = true)
+    IProduct getProByIdCate(Integer idPro);
 }

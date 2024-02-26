@@ -92,8 +92,8 @@ public class CartController {
         Product product = productRespon.findAllById(idPro);
 
         Cart cart = cartRespon.findAllById(idCart);
-        if (cart.getQuantity() > product.getQuatity()){
-            cart.setQuantity(cart.getQuantity());
+        if (cart.getQuantity() >= product.getQuatity()){
+            cart.setQuantity(product.getQuatity());
         }else {
             cart.setQuantity(cart.getQuantity()+1);
         }
@@ -115,6 +115,10 @@ public class CartController {
         }
         if (quantity < 1){
             cart.setQuantity(1);
+            cartService.save(cart);
+        }
+        if(quantity > product.getQuatity()){
+            cart.setQuantity(product.getQuatity());
             cartService.save(cart);
         }
         else {

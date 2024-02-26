@@ -2,6 +2,7 @@ package devmaster.TTCN1.projection;
 
 public interface IProduct {
     Integer getId();
+    String getNameCate();
     String getName();
     String getDescription();
     String getNotes();
@@ -9,7 +10,7 @@ public interface IProduct {
     Integer getIdcategory();
     Double getPrice();
     int getQuatity();
-    String getCreate_date();
+    String getCreated_date();
     String getUpdated_date();
     Integer getIsactive();
     Integer getIsDelete();
