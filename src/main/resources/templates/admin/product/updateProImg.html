@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/product/detailPro}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-6" layout:fragment="updateProImg" style="text-align: left">
+    <form th:action="@{'/product/updatePro/'+${productDetail.id}}" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <h5>Ảnh chính</h5><br>
+            <img style="width: 70%" th:src="@{'/product_image/'+${proImg.url}}">
+            <h5 style="margin-top: 1rem">Ảnh chi tiết sản phẩm</h5><br>
+            <div class="col-4" style="border-radius: 10px" th:each="img: ${productImages}">
+                <img width="180" th:src="@{'/product_image/'+${img.url}}">
+            </div>
+            <br>
+
+        </div>
+        <button class="btn1"
+                style="color: white;margin-top: 1rem;margin-bottom: 1rem"
+                type="submit" >Cập nhật ảnh sản phẩm</button>
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{/admin/product/detailPro}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-6" layout:fragment="updatePro" style="text-align: left">
+    <form th:action="@{'/product/updatePro/'+${productDetail.id}}" method="post" enctype="multipart/form-data">
+        <h2>Chỉnh sửa thông tin sản phẩm</h2>
+        <label for="name">Tên sản phẩm</label>
+        <input type="text" th:value="${productDetail.name}" id="name" name="namePro">
+        <br><br>
+        <label for="notes">Cấu hình sản phẩm</label>
+        <input type="text" size="55" th:value="${productDetail.notes}" id="notes" name="notes">
+        <br><br>
+        <label for="description">Hãng</label>
+        <input type="text" th:value="${productDetail.description}" id="description" name="description">
+        <br><br>
+        <p>Loại</p>
+        <div class="row">
+            <div class="col-4" th:each="ct: ${cateAll}">
+                <input type="checkbox"  id="nameCate" name="idCate" th:value="${ct.id}"  th:checked="${cate.idcategory}==${ct.id}">
+                <label for="nameCate" th:text="${ct.id}" name="idCate" th:value="${ct.id}"></label>
+                <label for="nameCate" th:text="${ct.name}"></label>
+            </div>
+        </div>
+        <br>
+        <label for="price">Giá tiền</label>
+        <input type="text" th:value="${#numbers.formatDecimal(productDetail.price,3,'DEFAULT', 0, 'DEFAULT')}"  id="price" name="price">
+        <br><br>
+        <label for="quantity">Số lượng trong kho</label>
+        <input type="number" th:value="${productDetail.quatity}" id="quantity" name="quantity">
+        <br><br>
+        <button class="btn1" style="color: white" type="submit" >Cập nhật thông tin sản phẩm</button>
+    </form>
+
+</div>
+
+</body>
+</html>

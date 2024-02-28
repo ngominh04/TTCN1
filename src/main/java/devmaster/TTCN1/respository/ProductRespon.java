@@ -23,7 +23,7 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
     List<AllProductImage> getAllImage(Integer idPro);
 
     @Query(value = SQL.TRANGCHUCHITIET,nativeQuery = true) // SHOW CHI TIẾT SẢN PHẨM
-    IProduct getProductChiTiet(Integer idPro);
+    Product getProductChiTiet(Integer idPro);
 
     @Query(value = SQL.PRICE_DOWN,nativeQuery = true) // lọc theo giá tiền giảm dần
     List<Product> getPriceDown();
@@ -59,6 +59,6 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
     @Query(value = "select *from product",nativeQuery = true)
     List<Product> getAll();
 
-    @Query(value = SQL.PRO_CATE,nativeQuery = true)
-    IProduct getProByIdCate(Integer idPro);
+    @Query(value = SQL.PRO_CATE_IMG,nativeQuery = true)
+    IProduct getProByIdCateByUrl(Integer idPro);
 }

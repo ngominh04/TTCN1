@@ -2,16 +2,18 @@ package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.Category;
 import devmaster.TTCN1.domain.Product;
+import devmaster.TTCN1.respository.CategoryRespon;
 import devmaster.TTCN1.respository.EvaluateRespon;
 import devmaster.TTCN1.respository.ProductRespon;
 import devmaster.TTCN1.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/product")
@@ -22,6 +24,8 @@ public class ProductController {
     ProductService productService;
     @Autowired
     EvaluateRespon evaluateRespon;
+    @Autowired
+    CategoryRespon categoryRespon;
     // click vào tắt ở Is active -> chuyển isactive = 0
     @GetMapping("/activeProOff/{idPro}")
     public String activeProOff(@PathVariable("idPro")Integer idPro){
@@ -56,12 +60,65 @@ public class ProductController {
     }
     // xem chi tiết product
     @GetMapping("/detailPro/{idPro}")
-    public String detailPro(Model model,@PathVariable("idPro")Integer idPro){
+    public String detailPro(Model model, @PathVariable("idPro")Integer idPro){
         model.addAttribute("productImages",productRespon.getAllImage(idPro));
-        model.addAttribute("productChiTiet",productRespon.getProductChiTiet(idPro));
-        model.addAttribute("cate",productRespon.getProByIdCate(idPro));
+        model.addAttribute("proImg",productRespon.getProByIdCateByUrl(idPro));
+        model.addAttribute("productDetail",productRespon.getProductChiTiet(idPro));
+        model.addAttribute("cate",productRespon.getProByIdCateByUrl(idPro));
         model.addAttribute("evaluate",evaluateRespon.getAllEvaluateByPro(idPro));
+
+//        model.addAttribute("cateAll",categoryRespon.getAll());
         return "/admin/product/detailPro";
+    }
+    // click ấn chỉnh sửa thông tin sp
+    @GetMapping("/updatePro/{idPro}")
+    public String updatePro(Model model,@PathVariable("idPro")Integer idPro, HttpSession session){
+        model.addAttribute("productImages",productRespon.getAllImage(idPro));
+        model.addAttribute("proImg",productRespon.getProByIdCateByUrl(idPro));
+        model.addAttribute("productDetail",productRespon.getProductChiTiet(idPro));
+        model.addAttribute("cate",productRespon.getProByIdCateByUrl(idPro));
+        model.addAttribute("evaluate",evaluateRespon.getAllEvaluateByPro(idPro));
+        model.addAttribute("cateAll",categoryRespon.getAll());
+        session.setAttribute("product",productRespon.getProductChiTiet(idPro));
+        return "/admin/product/updatePro";
+    }
+    // lưu cập nhật sản phẩm
+    @PostMapping("/updatePro/{idPro}")
+    public String updatePro(HttpSession session,
+                            @PathVariable("idPro")Integer idPro,
+                            @RequestParam("namePro")String namePro,
+                            @RequestParam("notes")String notes,
+                            @RequestParam("description")String description,
+                            @RequestParam("idCate")Integer idCate,
+                            @RequestParam("price")String priceStr,
+                            @RequestParam("quantity")int quantity){
+        Product product = (Product) session.getAttribute("product");
+        Category category = categoryRespon.findAllById(idCate);
+        product.setName(namePro);
+        product.setDescription(description);
+        product.setNotes(notes);
+        product.setIdcategory(category);
+        // replace("chuỗi cần thay","thay bằng")
+        double price = Double.parseDouble(priceStr.replace(".",""));
+        product.setPrice(price);
+        product.setUpdatedDate(String.valueOf(LocalDateTime.now()));
+        product.setQuatity(quantity);
+        productService.save(product);
+        session.removeAttribute("product");
+        return "redirect:/product/detailPro/{idPro}";
+    }
+
+    // click quản lí ảnh
+    @GetMapping("/updateProImg/{idPro}")
+    public String updateProImg(Model model,@PathVariable("idPro")Integer idPro, HttpSession session){
+        model.addAttribute("productImages",productRespon.getAllImage(idPro));
+        model.addAttribute("proImg",productRespon.getProByIdCateByUrl(idPro));
+        model.addAttribute("productDetail",productRespon.getProductChiTiet(idPro));
+        model.addAttribute("cate",productRespon.getProByIdCateByUrl(idPro));
+        model.addAttribute("evaluate",evaluateRespon.getAllEvaluateByPro(idPro));
+        model.addAttribute("cateAll",categoryRespon.getAll());
+        session.setAttribute("product",productRespon.getProductChiTiet(idPro));
+        return "/admin/product/updateProImg";
     }
 
 }

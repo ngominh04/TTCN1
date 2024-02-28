@@ -3,7 +3,7 @@ package devmaster.TTCN1.sql;
 public class SQL {
     public static final String TRANGCHU="select * from product where  ISDELETE = 1";
 
-    public static final String TRANGCHUCHITIET="select id, name, description, notes, image, idcategory, price, quatity, created_date, updated_date, isactive, isdelete " +
+    public static final String TRANGCHUCHITIET="select * " +
             "from product where ID = ?";
     public static final String ALL_PRODUCT_IMAGE="select id, name, url from product_images where ID_PRODUCT = ?";
     public static final String  PRICE_DOWN="select id, name, description, notes, image, idcategory,\n" +
@@ -106,7 +106,8 @@ public class SQL {
             "         inner join material.customer c on o.ID_CUSTOMER = c.ID\n" +
             "         where ID_PRO =? and evaluate.ISDELETE = 1 ";
 
-    public static final String PRO_CATE="select p.ID id,c.NAME nameCate from product p\n" +
+    public static final String PRO_CATE_IMG="select p.ID id,c.NAME nameCate,pi.URL url,p.IDCATEGORY idcategory from product p\n" +
             "    inner join material.category c on p.IDCATEGORY = c.ID\n" +
+            "    inner join material.product_images pi on p.IMAGE = pi.ID\n" +
             "where p.ID = ?";
 }
