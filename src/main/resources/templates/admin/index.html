@@ -566,7 +566,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#product">Product</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#customer">Customer</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#order">Order</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Method</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#method">Method</a></li>
                     <div th:if="${session.saveCus == null}">
                         <li class="nav-item">
                             <a
@@ -687,9 +687,6 @@
             <div layout:fragment="content3">
                 <section class="resume-section" id="product">
                     <section>
-                        <!--for demo wrap-->
-                        <!--                            lấy bảng -->
-                        <!--                            https://codepen.io/nikhil8krishnan/pen/WvYPvv-->
                         <div class="tbl-header">
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <thead>
@@ -907,51 +904,82 @@
             </div>
 
             <hr class="m-0" />
-            <!-- Awards-->
+            <!-- method-->
             <div layout:fragment="content6">
-                <section class="resume-section" id="awards">
+                <section class="resume-section" id="method">
                     <div class="resume-section-content">
-                        <h2 class="mb-5">Awards & Certifications</h2>
-                        <ul class="fa-ul mb-0">
-                            <li>
-                                <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                                Google Analytics Certified Developer
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                                Mobile Web Specialist - Google Certification
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                                1
-                                <sup>st</sup>
-                                Place - University of Colorado Boulder - Emerging Tech Competition 2009
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                                1
-                                <sup>st</sup>
-                                Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                                2
-                                <sup>nd</sup>
-                                Place - University of Colorado Boulder - Emerging Tech Competition 2008
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                                1
-                                <sup>st</sup>
-                                Place - James Buchanan High School - Hackathon 2006
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                                3
-                                <sup>rd</sup>
-                                Place - James Buchanan High School - Hackathon 2005
-                            </li>
-                        </ul>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 align="center">Những phương thức thanh toán được áp dụng</h5>
+                                    <section>
+                                        <div class="tbl-header">
+                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width: 50px">ID</th>
+                                                    <th style="width: 170px">Name</th>
+                                                    <th>Notes</th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="tbl-content">
+                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                <tbody>
+                                                <tr th:each="py : ${payment}">
+                                                    <td style="width: 50px" th:text="${py.id}"></td>
+                                                    <td style="width: 170px" th:text="${py.name}"></td>
+                                                    <td th:text="${py.notes}"></td>
+
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div style="margin-top: 1rem" align="center">
+                                            <a class="btn1" th:href="@{/payment/allPayment}">Chỉnh sửa payment</a>
+                                            <a class="btn1" th:href="@{/payment/newPayment}">Thêm mới payment</a>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-6">
+                                    <h5 align="center">Những phương thức vận chuyển được áp dụng</h5>
+                                    <section>
+                                        <div class="tbl-header">
+                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width: 50px">ID</th>
+                                                    <th style="width: 170px">Name</th>
+                                                    <th>Notes</th>
+                                                    <th>Price</th>
+
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="tbl-content">
+                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                <tbody>
+                                                <tr th:each="tp : ${transport}">
+                                                    <td style="width: 50px" th:text="${tp.id}"></td>
+                                                    <td style="width: 170px" th:text="${tp.name}"></td>
+                                                    <td th:text="${tp.notes}"></td>
+                                                    <td th:text="${#numbers.formatDecimal(tp.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div style="margin-top: 1rem" align="center">
+                                            <a class="btn1" th:href="@{/transport/allTransport}">Chỉnh sửa transport</a>
+                                            <a class="btn1" th:href="@{/transport/newTransport}">Thêm mới transport</a>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>

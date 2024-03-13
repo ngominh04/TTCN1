@@ -110,4 +110,9 @@ public class SQL {
             "    inner join material.category c on p.IDCATEGORY = c.ID\n" +
             "    inner join material.product_images pi on p.IMAGE = pi.ID\n" +
             "where p.ID = ?";
+
+    public static final String PAYMENT_ID="select * from payment_method where  ID = ?;";
+    public static final String PAYMENT_ALL="select * from payment_method";
+    public static final String TRANSPORT_ALL="select * from transport_method";
+    public static final String TRANSPORT_ID="select * from transport_method where  ID = ?;";
 }

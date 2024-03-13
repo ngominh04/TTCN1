@@ -30,7 +30,9 @@ public class TransportMethod {
     private String updatedDate;
 
     @Column(name = "ISACTIVE")
-    private Byte isactive;
+    private Byte isActive;
+    @Column(name = "ISDELETE")
+    private Byte isDelete;
 
     @Column(name = "PRICE")
     private double price;

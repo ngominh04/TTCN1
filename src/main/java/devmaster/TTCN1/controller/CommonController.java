@@ -5,10 +5,7 @@ import devmaster.TTCN1.domain.Customer;
 import devmaster.TTCN1.domain.Order;
 import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.projection.ICountCart;
-import devmaster.TTCN1.respository.CartRespon;
-import devmaster.TTCN1.respository.CategoryRespon;
-import devmaster.TTCN1.respository.OrderRespon;
-import devmaster.TTCN1.respository.ProductRespon;
+import devmaster.TTCN1.respository.*;
 import devmaster.TTCN1.service.CategoryService;
 import devmaster.TTCN1.service.ProductService;
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +33,10 @@ public class CommonController {
     CartRespon cartRespon;
     @Autowired
     ProductService productService;
+    @Autowired
+    PaymentRespon paymentRespon;
+    @Autowired
+    TransportRespon transportRespon;
     @GetMapping("/")
     public String showUser(Model model, HttpSession session,
                            @RequestParam("page") Optional<Integer> page,
@@ -82,7 +83,8 @@ public class CommonController {
         model.addAttribute("order",orderRespon.getOrderByStatus(1));
         model.addAttribute("order1",orderRespon.getOrderByStatus(2));
         model.addAttribute("order2",orderRespon.getOrderByStatus(3));
-
+        model.addAttribute("payment",paymentRespon.getAllById());
+        model.addAttribute("transport",transportRespon.getAllById());
         return "admin/index";
     }
 }

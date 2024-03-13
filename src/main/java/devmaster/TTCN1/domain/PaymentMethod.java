@@ -24,12 +24,15 @@ public class PaymentMethod {
     private String notes;
 
     @Column(name = "CREATED_DATE")
-    private Instant createdDate;
+    private String createdDate;
 
     @Column(name = "UPDATED_DATE")
-    private Instant updatedDate;
+    private String updatedDate;
 
     @Column(name = "ISACTIVE")
     private Byte isactive;
+
+    @Column(name = "ISDELETE")
+    private Byte isDelete;
 
 }
