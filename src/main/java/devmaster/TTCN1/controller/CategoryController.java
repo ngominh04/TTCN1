@@ -28,12 +28,16 @@ public class CategoryController {
         session.setAttribute("updateCate",category);
         return "/admin/category/updateCate";
     }
-    @PostMapping("/updateCate")
-    public String updateCate(@RequestParam("idParent")Integer idParent,
+
+    // khi ấn submit form
+    @PostMapping("/updateCate/{idCate}")
+    public String updateCate(@PathVariable("idCate")Integer idCate,
+                             @RequestParam("idParent")Integer idParent,
                              @RequestParam("name")String name,
                              @RequestParam("notes")String notes,
                              HttpSession session){
-        Category category = (Category) session.getAttribute("updateCate");
+//        Category category = (Category) session.getAttribute("updateCate");
+        Category category = categoryRespon.findAllById(idCate);
         category.setIdparent(idParent);
         category.setName(name);
         category.setNotes(notes);

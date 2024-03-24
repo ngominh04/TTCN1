@@ -31,9 +31,9 @@ public class Product {
     @JoinColumn(name = "IMAGE")
     private ProductImage image;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDCATEGORY")
-    private Category idcategory;
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "IDCATEGORY")
+    private Integer idCategory;
 
     @Column(name = "PRICE")
     private Double price;

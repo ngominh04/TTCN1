@@ -38,7 +38,7 @@ public class Customer {
     private String createdDate;
 
     @Column(name = "ISACTIVE")
-    private Byte isactive;
+    private Byte isActive;
 
     @Column(name = "ISDELETE")
     private Byte isDelete;

@@ -62,7 +62,7 @@
         <div class="col-6" layout:fragment="updateProImg">
             <div class="row">
                 <h5>Ảnh chính</h5><br>
-                <img style="width: 70%" th:src="@{'/product_image/'+${proImg.url}}">
+                <img style="width: 70%" th:alt="'/product_image/'+${proImg.url}" th:src="@{'/product_image/'+${proImg.url}}">
                 <br><br>
                 <h5 style="margin-top: 1rem">Ảnh chi tiết sản phẩm</h5><br>
                 <div class="col-4" style="border-radius: 10px" th:each="img: ${productImages}">
@@ -72,42 +72,47 @@
                 <br>
             </div>
         </div>
-        <div class="col-6" style="text-align: left" layout:fragment="updatePro">
+        <div class="col-6" style="text-align: left;" layout:fragment="updatePro">
             <h2>Thông tin sản phẩm</h2>
             <h5 th:text="'Tên sản phẩm: '+${productDetail.name}"></h5>
-            <h5 th:text="'Cấu hình máy: '+${productDetail.notes}"></h5>
+            <h5 th:text="'Thông tin máy: '+${productDetail.notes}"></h5>
             <h5 ><span th:text="'Hãng: '+${productDetail.description}"></span><span style="padding-left: 2rem" th:text="' Loại: '+${cate.nameCate}"></span></h5>
             <h5 >Giá tiền: <span style="color: orangered" th:text="${#numbers.formatDecimal(productDetail.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></h5>
             <h5 >Số lượng trong kho : <span th:text="${productDetail.quatity}"></span></h5>
 <!--            còn bán hay ko còn bán -->
-            <h5 th:text="'Trang thái hàng: '+${productDetail.isactive}"></h5>
-<!--            ẩn ,hiện sản phẩm ở trang người dùng -->
-            <h5 th:text="'Trạng thái ở trang người dùng: '+${productDetail.isdelete}"></h5>
+<!--            <h5 th:text="'Trang thái hàng: '+${productDetail.isactive}+'(0: Tắt | 1: Bật)'"></h5>-->
+<!--&lt;!&ndash;            ẩn ,hiện sản phẩm ở trang người dùng &ndash;&gt;-->
+<!--            <h5 th:text="'Trạng thái ở trang người dùng: '+${productDetail.isdelete}"></h5>-->
             <h5 th:text="'Ngày tạo : '+${productDetail.createdDate}"></h5>
-            <h5 th:text="'Ngày sửa gần nhất: '+${productDetail.createdDate}"></h5>
+            <h5 th:text="'Ngày sửa gần nhất: '+${productDetail.updatedDate}"></h5>
             <br>
             <a class="btn1"  th:href="@{'/product/updatePro/'+${productDetail.id}}">Chỉnh sửa thông tin</a>
         </div>
 
-        <div class="col-12">
+        <div class="col-12" style="margin-top: 0.5rem">
             <h5>Đánh giá sản phẩm</h5>
-            <div th:if="${evaluate != null}">
-                <div th:each="ev: ${evaluate}">
+            <div style="margin-bottom: 3rem" th:if="${evaluate != null}">
+                <div style="margin-bottom: 1rem" th:each="ev: ${evaluate}">
                     <div class="row" style="border: 1px solid #b6effb;border-radius: 10px;padding: 0.5rem">
-                        <div class="col-8">
+                        <div class="col-9">
                             <span th:text="${ev.nameCus}+' |'+${ev.orderDate}"></span>
                             <br>
                             <span style="margin-left: 1rem" th:text="${ev.value}"></span>
                         </div>
-                        <div class="col-3">
-                            <div ></div>
-                            <a class="btn1" th:href="@{#}">Ẩn đánh giá</a>
+                        <div class="col-2">
+                            <div style="margin-top: 0.5rem" th:if="${ev.isActive} == 1">
+                                <a class="btn1" th:href="@{'/evaluate/activeOff/'+${ev.id}+'/'+${productDetail.id}}">Ẩn đánh giá</a>
+                            </div>
+                            <div style="margin-top: 0.5rem" th:if="${ev.isActive} == 0">
+                                <a class="btn1" th:href="@{'/evaluate/activeOn/'+${ev.id}+'/'+${productDetail.id}}">Hiện đánh giá</a>
+                            </div>
+
 <!--                            <a class="btn1" th:href="@{#}">Hiện đánh giá</a>-->
                         </div>
                     </div>
                 </div>
             </div>
-            <div th:if="${evaluate.size() == 0}">
+            <div style="margin-bottom: 3rem" th:if="${evaluate.size() == 0}">
                 <p style="border: 1px solid #b6effb;border-radius: 10px;padding: 0.5rem">
                     Sản phẩm  chưa có đánh giá
                 </p>

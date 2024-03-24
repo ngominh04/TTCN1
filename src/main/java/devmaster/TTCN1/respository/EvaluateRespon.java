@@ -16,4 +16,9 @@ public interface EvaluateRespon extends CrudRepository<Evaluate,Integer> {
 
     @Query(value = SQL.EVALUATE_PRO,nativeQuery = true)
     List<IEvaluate> getAllEvaluateByPro(Integer idPro);
+
+    @Query(value = SQL.EVALUATE_ADMIN_PRO,nativeQuery = true)
+    List<IEvaluate> getAllEvaluateAdminByPro(Integer idPro);
+
+    Evaluate getById(Integer idEvaluate);
 }

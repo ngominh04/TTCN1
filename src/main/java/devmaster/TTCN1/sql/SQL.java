@@ -59,7 +59,7 @@ public class SQL {
             "       price, quatity, created_date, updated_date, isactive, isdelete\n" +
             "from product\n" +
             "where DESCRIPTION = 'apple'";
-    public static final String CUSTOMER ="select *from customer where USERNAME =?";
+    public static final String CUSTOMER ="select *from customer where USERNAME =? ";
     public static final String CUSTOMER_BY_ID ="select *from customer where ID =?";
     public static final String PHUKIEN = "select *from product where IDCATEGORY !=1;";
     public static final String CART="select * from cart where id_customer =?";
@@ -101,10 +101,17 @@ public class SQL {
             "        where ID_ORDER=? and o.ID_CUSTOMER = ?;";
 
     public static final String EVALUATE_PRO="" +
-            "select evaluate.VALUE value,c.NAME nameCus ,o.ORDERS_DATE orderDate from evaluate\n" +
+            "select evaluate.VALUE value,c.NAME nameCus ,o.ORDERS_DATE orderDate,evaluate.id id,evaluate.ISACTIVE isActive" +
+            " from evaluate\n" +
             "         inner join material.`order` o on evaluate.ID_ORDER = o.ID\n" +
             "         inner join material.customer c on o.ID_CUSTOMER = c.ID\n" +
-            "         where ID_PRO =? and evaluate.ISDELETE = 1 ";
+            "         where ID_PRO =? and evaluate.ISACTIVE = 1 ";
+    public static final String EVALUATE_ADMIN_PRO="" +
+            "select evaluate.VALUE value,c.NAME nameCus ,o.ORDERS_DATE orderDate,evaluate.id id,evaluate.ISACTIVE isActive" +
+            " from evaluate\n" +
+            "         inner join material.`order` o on evaluate.ID_ORDER = o.ID\n" +
+            "         inner join material.customer c on o.ID_CUSTOMER = c.ID\n" +
+            "         where ID_PRO =?  ";
 
     public static final String PRO_CATE_IMG="select p.ID id,c.NAME nameCate,pi.URL url,p.IDCATEGORY idcategory from product p\n" +
             "    inner join material.category c on p.IDCATEGORY = c.ID\n" +

@@ -97,12 +97,16 @@ public class OrderController {
                               @RequestParam(value = "idPayment",required = false)Integer idPayment,
                               @RequestParam(value = "notes",required = false)String notes,
                               Model model,HttpSession session){
-
+        Customer customer = customerRespon.getCustomerById(idCus);
         if(idRece == null){ // ktra địa chỉ nhận , chưa có thì bắn lỗi
             showOrder(model,idCus,session); // gọi lại hàm showOrder ở trên để lấy lấy lại thông tin order7
             model.addAttribute("message","Chưa có địa chỉ nhận hàng");
-            return "user/order/showOrder";
-        }else {
+
+        }
+        else if (customer.getIsActive() == 0) {
+            model.addAttribute("message","Tài khoản của bạn bị cấm đặt hàng");
+        }
+        else {
             // save order
             Order order = new Order();
 
@@ -173,6 +177,7 @@ public class OrderController {
             }
             return "user/order/notifyOrder";
         }
+        return "user/order/showOrder";
     }
 
     // order 1 , khi người dùng ấn đặt hàng, admin vào xác nhận và chuẩn bị đơn

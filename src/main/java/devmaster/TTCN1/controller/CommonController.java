@@ -7,6 +7,7 @@ import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.projection.ICountCart;
 import devmaster.TTCN1.respository.*;
 import devmaster.TTCN1.service.CategoryService;
+import devmaster.TTCN1.service.CustomerService;
 import devmaster.TTCN1.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,16 @@ public class CommonController {
     PaymentRespon paymentRespon;
     @Autowired
     TransportRespon transportRespon;
+    @Autowired
+    CategoryRespon categoryRespon;
+    @Autowired
+    CategoryService categoryService;
+    @Autowired
+    OrderRespon orderRespon;
+    @Autowired
+    CustomerRespon customerRespon;
+    @Autowired
+    CustomerService customerService;
     @GetMapping("/")
     public String showUser(Model model, HttpSession session,
                            @RequestParam("page") Optional<Integer> page,
@@ -69,12 +80,7 @@ public class CommonController {
         return "user/index";
     }
 
-    @Autowired
-    CategoryRespon categoryRespon;
-    @Autowired
-    CategoryService categoryService;
-    @Autowired
-    OrderRespon orderRespon;
+
     @GetMapping("/admin")
     public String showAdmin(Model model){
         model.addAttribute("category",categoryRespon.getAll());
@@ -85,6 +91,7 @@ public class CommonController {
         model.addAttribute("order2",orderRespon.getOrderByStatus(3));
         model.addAttribute("payment",paymentRespon.getAllById());
         model.addAttribute("transport",transportRespon.getAllById());
+        model.addAttribute("customer",customerRespon.getAllById());
         return "admin/index";
     }
 }

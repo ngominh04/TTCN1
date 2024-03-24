@@ -732,7 +732,7 @@
 
                         </div>
                         <div style="margin-top: 1rem">
-                            <a class="btn1" th:href="@{/category/newCate}">Thêm mới prroduct</a>
+                            <a class="btn1" th:href="@{/product/newPro}">New prroduct</a>
 
                         </div>
                     </section>
@@ -744,41 +744,57 @@
             <div layout:fragment="content4">
                 <section class="resume-section" id="customer">
                     <div class="resume-section-content">
-                        <h2 class="mb-5">Skills</h2>
-                        <div class="subheading mb-3">Programming Languages & Tools</div>
-                        <ul class="list-inline dev-icons">
-                            <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-npm"></i></li>
-                        </ul>
-                        <div class="subheading mb-3">Workflow</div>
-                        <ul class="fa-ul mb-0">
-                            <li>
-                                <span class="fa-li"><i class="fas fa-check"></i></span>
-                                Mobile-First, Responsive Design
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-check"></i></span>
-                                Cross Browser Testing & Debugging
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-check"></i></span>
-                                Cross Functional Teams
-                            </li>
-                            <li>
-                                <span class="fa-li"><i class="fas fa-check"></i></span>
-                                Agile Development & Scrum
-                            </li>
-                        </ul>
+                        <h2>Danh sách quản lí khách hàng</h2>
+                        <section>
+                            <div class="tbl-header">
+                                <table cellpadding="0" cellspacing="0" border="0">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 50px">ID</th>
+                                        <th style="width: 100px">Name</th>
+                                        <th>Create date</th>
+                                        <th>Address</th>
+                                        <th style="width: 150px">Email</th>
+                                        <th>Phone</th>
+                                        <th style="width: 75px;padding: 0">Active</th>
+                                        <th style="width: 75px;padding: 0">Delete</th>
+<!--                                        <th>Thao tác</th>-->
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="tbl-content">
+                                <table cellpadding="0" cellspacing="0" border="0">
+                                    <tbody>
+                                    <tr th:each="pro : ${customer}">
+                                        <td style="width: 50px" th:text="${pro.id}"></td>
+                                        <td style="width: 100px" th:text="${pro.name}"></td>
+                                        <td th:text="${pro.createdDate}"></td>
+                                        <td th:text="${pro.address}"></td>
+                                        <td style="width: 150px" th:text="${pro.email}"></td>
+                                        <td th:text="${pro.phone}"></td>
+
+                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isActive} == 1">
+                                            <a class="btn1" th:href="@{'/customer/activeCusOff/'+${pro.id}}">Tắt</a>
+                                        </td>
+                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isActive} == 0">
+                                            <a class="btn1" th:href="@{'/customer/activeCusOn/'+${pro.id}}">Bật</a>
+                                        </td>
+                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isDelete} == 1">
+                                            <a class="btn1" th:href="@{'/customer/deleteCusOff/'+${pro.id}}">Tắt</a>
+                                        </td>
+                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isDelete} == 0">
+                                            <a class="btn1" th:href="@{'/customer/deleteCusOn/'+${pro.id}}">Bật</a>
+                                        </td>
+<!--                                        <td>-->
+<!--                                            <a class="btn1" th:href="@{'/product/detailPro/'+${pro.id}}">Xem chi tiết</a>-->
+<!--                                        </td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </section>
                     </div>
                 </section>
             </div>

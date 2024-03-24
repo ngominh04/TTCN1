@@ -46,14 +46,12 @@ public class RegisterController {
         try {
             if(!customer.getPassword().equals(password)){
                 model.addAttribute("message","Mật khẩu có vấn đề");
-            }else {
+            } else if (customer.getIsDelete() == 0) {
+                model.addAttribute("message","Tài khoản của bạn bị khóa");
+            } else {
 
                 model.addAttribute("customer",customerRespon.getCustomer(username));
 
-//                List<Nguoinhan> nguoinhan = nguoiNhanRespon.getNguoinhan(customer.getId());
-//                model.addAttribute("listNguoiNhan",nguoinhan);
-//
-//                item.setUsername(username);
                 if(customer.getPhanquyen() == 1){
                     return "redirect:/admin";
                 }else {
@@ -116,7 +114,7 @@ public class RegisterController {
         }
         if(checkCus) {
             Customer customer = new Customer();
-            customer.setIsactive((byte) 1);
+            customer.setIsActive((byte) 1);
             customer.setIsDelete((byte) 1);
             customer.setPhone(phone);
             customer.setEmail(email);
