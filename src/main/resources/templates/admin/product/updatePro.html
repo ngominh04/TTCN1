@@ -22,7 +22,12 @@ layout:decorate="~{/admin/product/detailPro}">
         <p>Loại</p>
         <div class="row">
             <div class="col-4" th:each="ct: ${cateAll}">
-                <input type="checkbox"  id="nameCate" name="idCate" th:value="${ct.id}"  th:checked="${cate.idcategory}==${ct.id}">
+                <input class="checkBox"
+                       type="checkbox"  id="nameCate"
+                       name="idCate" th:value="${ct.id}"
+                       th:checked="${cate.idcategory}==${ct.id}"
+                       onclick="checkedOnClick(this)"
+                >
                 <label for="nameCate" th:text="${ct.id}" name="idCate" th:value="${ct.id}"></label>
                 <label for="nameCate" th:text="${ct.name}"></label>
             </div>

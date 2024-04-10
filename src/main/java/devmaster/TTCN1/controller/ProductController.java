@@ -158,7 +158,6 @@ public class ProductController {
         productService.save(product);
 
         uploadFileService.store(file);
-
         // lưu lại ảnh vào product
         String fileName1 = StringUtils.cleanPath(file.getOriginalFilename());
         // tạo mới 1 ảnh
@@ -168,9 +167,9 @@ public class ProductController {
         // replace("chuỗi cần thay","thay bằng")
         String nameFile = fileName1.replace(".","");
         image.setName(nameFile);
-
         product.setImage(image);
         productImageService.save(image);
+
         Product product1 = productRespon.findAllById(product.getId());
         product1.setImage(image);
         productService.save(product1);

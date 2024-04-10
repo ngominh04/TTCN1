@@ -113,7 +113,7 @@ public class SQL {
             "         inner join material.customer c on o.ID_CUSTOMER = c.ID\n" +
             "         where ID_PRO =?  ";
 
-    public static final String PRO_CATE_IMG="select p.ID id,c.NAME nameCate,pi.URL url,p.IDCATEGORY idcategory from product p\n" +
+    public static final String PRO_CATE_IMG="select p.IMAGE image,p.ID id,c.NAME nameCate,pi.URL url,p.IDCATEGORY idcategory from product p\n" +
             "    inner join material.category c on p.IDCATEGORY = c.ID\n" +
             "    inner join material.product_images pi on p.IMAGE = pi.ID\n" +
             "where p.ID = ?";

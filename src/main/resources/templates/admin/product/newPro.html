@@ -114,8 +114,11 @@
                                     </select>
                                 </div>
                                 <div class="col-8">
-                                    <label for="file">Chọn ảnh</label>
-                                    <input type="file" name="file" id="file" required>
+
+                                    <img id="image" width="150"><br>
+                                    <input type="file" name="file" id="file" accept="multipart/form-data" onchange="loadImage(event)" required>
+                                    <br><label for="file">Chọn ảnh</label>
+                                    <br>
                                 </div>
                             </div>
                             <!--                            &lt;!&ndash; Password input &ndash;&gt;-->
@@ -125,12 +128,12 @@
                             <!--                            </div>-->
 
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-4">
+                            <button style="margin-top: 2rem" type="submit" class="btn btn-primary btn-block mb-4">
                                 Submit
                             </button>
                         </form>
                         <div class="col-4" align="left">
-                            <a class="btn1" th:href="@{/admin#category}">Back</a>
+                            <a class="btn1" th:href="@{/admin#product}">Back</a>
                         </div>
                     </div>
 
@@ -139,6 +142,15 @@
         </div>
     </section>
     <!-- Section: Design Block -->
+<script>
+    function loadImage(event) {
+        let output = document.getElementById('image');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src)
+        }
+    }
+</script>
 </div>
 </body>
 </html>
