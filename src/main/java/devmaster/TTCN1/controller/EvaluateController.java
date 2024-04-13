@@ -1,6 +1,7 @@
 package devmaster.TTCN1.controller;
 
 import devmaster.TTCN1.domain.Evaluate;
+import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.respository.CartRespon;
 import devmaster.TTCN1.respository.CategoryRespon;
 import devmaster.TTCN1.respository.EvaluateRespon;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/evaluate")
@@ -34,6 +37,9 @@ public class EvaluateController {
         model.addAttribute("evaluate",evaluateRespon.getAllEvaluateAdminByPro(idPro));
         model.addAttribute("cateAll",categoryRespon.getAll());
 
+        // lưu lại ngày sửa sản phẩm
+        Product product = productRespon.findAllById(idPro);
+        product.setUpdatedDate(String.valueOf(LocalDateTime.now()));
         Evaluate evaluate = evaluateRespon.getById(idEvaluate);
         evaluate.setIsActive((byte) 0);
         evaluateRespon.save(evaluate);
@@ -50,6 +56,9 @@ public class EvaluateController {
         model.addAttribute("evaluate",evaluateRespon.getAllEvaluateAdminByPro(idPro));
         model.addAttribute("cateAll",categoryRespon.getAll());
 
+        // lưu lại ngày sửa sản phẩm
+        Product product = productRespon.findAllById(idPro);
+        product.setUpdatedDate(String.valueOf(LocalDateTime.now()));
         Evaluate evaluate = evaluateRespon.getById(idEvaluate);
         evaluate.setIsActive((byte)1);
         evaluateRespon.save(evaluate);

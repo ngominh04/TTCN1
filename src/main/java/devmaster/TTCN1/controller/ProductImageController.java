@@ -55,6 +55,9 @@ public class ProductImageController {
         // lưu ảnh chính
 
         Product product = productRespon.getProductChiTiet(idPro);
+        //lưu lại ngày sửa đổi sản phẩm
+        product.setUpdatedDate(String.valueOf(LocalDateTime.now()));
+        // lưu lại idImg của sản phẩm khi cập nhật
         product.setImage(productImage);
 
         productRespon.save(product);
