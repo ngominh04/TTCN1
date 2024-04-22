@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -61,4 +64,7 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
 
     @Query(value = SQL.PRO_CATE_IMG,nativeQuery = true)
     IProduct getProByIdCateByUrl(Integer idPro);
+
+    @Query(value = SQL.PRODUCT_SOLD,nativeQuery = true)
+    List<IProduct> getProductSold(String fromDate, String toDate);
 }

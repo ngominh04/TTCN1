@@ -122,4 +122,12 @@ public class SQL {
     public static final String PAYMENT_ALL="select * from payment_method";
     public static final String TRANSPORT_ALL="select * from transport_method";
     public static final String TRANSPORT_ID="select * from transport_method where  ID = ?;";
+    public static final String PRODUCT_SOLD="select product.ID id,product.NAME name,product.NOTES notes,product.IMAGE image,\n" +
+            "     product.PRICE price,product.CREATED_DATE createdDate,product.UPDATED_DATE updatedDate,\n" +
+            "     product.QUATITY quantity,count(product.ID) sold from product\n" +
+            "inner join material.orders_details od on product.ID = od.IDPRODUCT\n" +
+            "inner JOIN material.`order` o on od.IDORD = o.ID\n" +
+            "where o.STATUS = 3 and o.ORDERS_DATE between ? and ?\n" +
+            "group by product.ID\n" +// nhóm sản phẩm theo product.id để đếm số lượng
+            "order by count(product.ID) desc"; // SẮP XẾP NHỨNG ĐƠN BÁN ĐC NHIỀU LÊN ĐẦU
 }

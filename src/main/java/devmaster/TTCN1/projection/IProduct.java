@@ -15,6 +15,5 @@ public interface IProduct {
     String getUpdated_date();
     Integer getIsactive();
     Integer getIsDelete();
-
-
+    Integer getSold(); // số lượng sản phẩm đã bán được
 }

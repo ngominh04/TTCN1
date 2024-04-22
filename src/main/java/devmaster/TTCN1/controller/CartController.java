@@ -113,12 +113,8 @@ public class CartController {
             cart.setQuantity(product.getQuatity());
             cartService.save(cart);
         }
-        if (quantity < 1){
+        if (quantity <= 1){
             cart.setQuantity(1);
-            cartService.save(cart);
-        }
-        if(quantity > product.getQuatity()){
-            cart.setQuantity(product.getQuatity());
             cartService.save(cart);
         }
         else {

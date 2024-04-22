@@ -5,6 +5,7 @@ import devmaster.TTCN1.domain.Customer;
 import devmaster.TTCN1.domain.Order;
 import devmaster.TTCN1.domain.Product;
 import devmaster.TTCN1.projection.ICountCart;
+import devmaster.TTCN1.projection.IProduct;
 import devmaster.TTCN1.respository.*;
 import devmaster.TTCN1.service.CategoryService;
 import devmaster.TTCN1.service.CustomerService;
@@ -20,6 +21,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+import java.time.Year;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,6 +88,21 @@ public class CommonController {
 
     @GetMapping("/admin")
     public String showAdmin(Model model){
+        String toDate = String.valueOf(LocalDateTime.now());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, -12);
+
+        String fromDate = String.valueOf(calendar.getTime());
+        List<IProduct> list = productRespon.getProductSold(fromDate,toDate);
+        double totalPrice = 0;
+        for (IProduct product: list) {
+            totalPrice += product.getPrice()* product.getSold();
+        }
+        model.addAttribute("totalPrice",totalPrice);
+        model.addAttribute("productStatistics",list);
+
         model.addAttribute("category",categoryRespon.getAll());
         model.addAttribute("product",productRespon.getAll());
 //        List<Order> orders = orderRespon.getOrderByStatus(1);
