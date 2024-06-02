@@ -188,21 +188,47 @@ public class RegisterController {
         return "/user/register/Login";
     }
     // sửa thông tin tài khoản
-    @GetMapping("/updateCus")
-    public String updateCus(HttpSession session,Model model){
+    @GetMapping("/updateCus/{idCus}")
+    public String updateCus(HttpSession session,Model model,@PathVariable("idCus") Integer idCus){
         Customer customer = (Customer) session.getAttribute("saveCus");
         model.addAttribute("customer",customer);
         return "user/register/updateCus";
     }
-    @PostMapping("/updateCus")
-    public String updatecus(@RequestParam("fullName")String fullName,
+    @PostMapping("/updateCus/{idCus}")
+    public String updatecus(@PathVariable("idCus") Integer idCus,
+                            @RequestParam("fullName")String fullName,
                             @RequestParam("email")String email,
                             @RequestParam("username")String username,
                             @RequestParam("password")String password,
                             HttpSession session,
                             Model model){
         Customer customer = (Customer) session.getAttribute("saveCus");
-
-        return "redirect:/";
+        if (fullName.isBlank() ){ // isBlank : ktra kí tu khoảng trắng và emty
+            model.addAttribute("message","Full name Không hợp lệ");
+            model.addAttribute("customer",customer);
+            return "user/register/updateCus";
+        }
+        String emailCut = email.replace("@gmail.com",""); // replace thay kí tự na thành kí tự khác
+        if (emailCut.isBlank() ){ // isBlank : ktra kí tu khoảng trắng và emty
+            model.addAttribute("message","email Không hợp lệ");
+            model.addAttribute("customer",customer);
+            return "user/register/updateCus";
+        }
+        if (password.isBlank() || password.length() < 5){ // isBlank : ktra kí tu khoảng trắng và emty
+            model.addAttribute("message","Password Không hợp lệ");
+            model.addAttribute("customer",customer);
+            return "user/register/updateCus";
+        }
+        if (username.isBlank() ){ // isBlank : ktra kí tu khoảng trắng và emty
+            model.addAttribute("message","Username Không hợp lệ");
+            model.addAttribute("customer",customer);
+            return "user/register/updateCus";
+        }
+        customer.setName(fullName);
+        customer.setEmail(email);
+        customer.setUsername(username);
+        customer.setPassword(password);
+//        customerService.save(customer);
+        return "redirect:/receiver/receiver/{idCus}";
     }
 }

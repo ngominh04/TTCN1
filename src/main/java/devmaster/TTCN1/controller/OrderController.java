@@ -289,4 +289,26 @@ public class OrderController {
         return "redirect:/order/orderChiTiet/{idOrder}";
     }
 
+    // detail order adminn
+    @GetMapping("/detail/{idOrder}")
+    public String orderChiTiet(@PathVariable("idOrder")Integer idOrder,
+                               Model model,HttpSession session){
+
+//        List<IOrderDetails> ordersDetails =orderDetailRespon.getOrdersDetail_IdOrder(idOrder);
+        model.addAttribute("pro",orderDetailRespon.getOrdersDetail_IdOrder(idOrder));
+
+        IOrder order = orderRespon.getOrderById(idOrder);
+
+        model.addAttribute("order",order);
+        model.addAttribute("total",order.getTotalMoney());
+        model.addAttribute("payment",order);
+        model.addAttribute("transport",order);
+
+        // hiển thị đánh giá sản phẩm khi người dùng đã đánh giá
+        Integer idCus= order.getIdCus();
+        IEvaluate evaluate = evaluateRespon.getEvaluate_IdOrder_IdCus(idOrder,idCus);
+        model.addAttribute("evaluate",evaluate);
+        return "/admin/order/detail";
+    }
+
 }

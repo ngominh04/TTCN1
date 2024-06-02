@@ -67,4 +67,8 @@ public interface ProductRespon extends CrudRepository<Product, Integer> {
 
     @Query(value = SQL.PRODUCT_SOLD,nativeQuery = true)
     List<IProduct> getProductSold(String fromDate, String toDate);
+
+    // lấy theo phụ kiện
+    @Query(value = SQL.PRODUCT_BY_IACATE,nativeQuery = true)
+    List<Product> getAllByIdCate(Integer idCate);
 }

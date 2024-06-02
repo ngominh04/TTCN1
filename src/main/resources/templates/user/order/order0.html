@@ -16,19 +16,24 @@
             <div class="col col_o-3">Total money</div>
             <div class="col col_o-4"></div>
         </li>
-        <li class="table-row" th:each="od: ${order0}">
-            <div class="col col_o-1" data-label="Job Id" th:text="${od.idOrder}"></div>
-            <div class="col col_o-2" data-label="Customer Name" th:text="${od.orderDate}"></div>
-            <div class="col col_o-3" data-label="Payment Status" th:text="${#numbers.formatDecimal(od.totalMoney,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></div>
-            <div class="col col_o-4" data-label="Payment Status" >
-                <a class="btn1" th:href="@{'/order/orderChiTiet/'+${od.id}}"
-                   style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
-                    Xem chi tiết</a>
-            </div>
-        </li>
     </ul>
+    <div style="height: 500px;overflow: scroll">
+        <ul class="responsive-table">
+            <li class="table-row" th:each="od: ${order0}">
+                <div class="col col_o-1" data-label="Job Id" th:text="${od.idOrder}"></div>
+                <div class="col col_o-2" data-label="Customer Name" th:text="${od.orderDate}"></div>
+                <div class="col col_o-3" data-label="Payment Status" th:text="${#numbers.formatDecimal(od.totalMoney,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></div>
+                <div class="col col_o-4" data-label="Payment Status" >
+                    <a class="btn1" th:href="@{'/order/orderChiTiet/'+${od.id}}"
+                       style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                        Xem chi tiết</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
     <a class="btn1" th:href="@{/view/backProductChiTiet}"
-       style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+       style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154;top: 2rem">
         Back to shop</a>
 </div>
 </body>

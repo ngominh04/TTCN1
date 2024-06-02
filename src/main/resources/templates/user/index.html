@@ -389,10 +389,6 @@
                 d: path("M0,-5 L0,5 M-5,0L 5,0");
                 stroke-linecap: round;
             }
-
-
-
-
             .burst:nth-child(4) {
                 transform: translate(30px, 100%) rotate(150deg);
             }
@@ -516,7 +512,11 @@
                             <a class="nav-link active" aria-current="page" th:href="@{/view/phuKien}">Phụ kiện</a>
                         </li>
                         <div th:if="${session.saveCus == null}">
-                            <li class="nav-item" style="background-color: black;color: #b6effb;margin-top: 0.5rem;margin-left: 2rem">Bạn chưa đăng nhập</li>
+                            <li class="nav-item"
+                                style="background-color: black;color: #b6effb;
+                                margin-top: 0.5rem;margin-left: 2rem;padding-right:1.5rem;padding-left: 1.5rem;
+                                border-radius: 10px"
+                            >Bạn chưa đăng nhập</li>
                         </div>
                         <div th:if="${session.saveCus !=null}">
                             <li class="nav-item" style="width: 90px">
@@ -526,11 +526,10 @@
                                 <a class="nav-link  " aria-current="page" th:href="@{'/order/order/'+${session.saveCus.id}}">Đơn hàng</a>
                             </li>
                             <li class="nav-item" style="margin-top: 0.5rem;margin-left: 2rem">
-                                <p style="margin-top: -2.5rem;margin-left: 10rem;background-color: black;color: #b6effb;padding-right:1.5rem;padding-left: 1.5rem ">
+                                <p style="margin-top: -2.5rem;margin-left: 10rem;background-color: black;color: #b6effb;padding-right:1.5rem;padding-left: 1.5rem;border-radius: 10px">
                                     Xin chào: <span th:text="${session.saveCus.name}" style=""></span></p>
                             </li>
                         </div>
-
                     </ul>
                     <div th:if="${session.saveCus == null}">
                         <form class="d-flex" >
@@ -651,7 +650,7 @@
                 <nav aria-label="Page navigation example">
                     <p >Bạn đang ở trang thứ <span th:text="${proPage.getNumber()+1}"></span></p>
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" th:href="@{/(size=8, page=1)}">First</a></li>
+                        <li class="page-item"><a class="page-link" th:href="@{/(size=8, page=1)}" style="text-decoration: none">First</a></li>
                         <div th:if="${proPage.totalPages > 0}"
                              th:each="pageNumber : ${pageNumbers}">
 
@@ -659,12 +658,13 @@
                                 <a th:href="@{/(size=${proPage.size}, page=${pageNumber})}"
                                    th:text="${pageNumber}"
                                    th:class="${pageNumber==proPage.number + 1} ? active"
+                                   style="text-decoration: none"
                                    class="page-link"
                                 ></a>
                             </li>
                         </div>
 
-                        <li class="page-item"><a class="page-link" th:href="@{/(size=${proPage.size}, page=${maxPageNumber})}">Last</a></li>
+                        <li class="page-item"><a class="page-link" style="text-decoration: none" th:href="@{/(size=${proPage.size}, page=${maxPageNumber})}">Last</a></li>
                     </ul>
                 </nav>
             </div>

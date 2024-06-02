@@ -130,4 +130,6 @@ public class SQL {
             "where o.STATUS = 3 and o.ORDERS_DATE between ? and ?\n" +
             "group by product.ID\n" +// nhóm sản phẩm theo product.id để đếm số lượng
             "order by count(product.ID) desc"; // SẮP XẾP NHỨNG ĐƠN BÁN ĐC NHIỀU LÊN ĐẦU
+    public static final String PRODUCT_BY_IACATE="" +
+            " select * from product where IDCATEGORY = ?";
 }

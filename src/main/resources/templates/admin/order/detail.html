@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--      layout:decorate="~{admin/index}"-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/user/css/styles.css}" rel="stylesheet" />
+    <style type="text/css">
+    @charset "UTF-8";
+    .custom-select {
+      position: relative;
+      display: block;
+      max-width: 400px;
+      min-width: 180px;
+      margin: 0 auto;
+      border: 1px solid #3C1C78;
+      background-color: #16013E;
+      z-index: 10;
+    }
+    .custom-select select {
+      border: none;
+      outline: none;
+      background: transparent;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border-radius: 0;
+      margin: 0;
+      display: block;
+      width: 108%;
+      padding: 12px 55px 15px 2px;
+      font-size: 14px;
+      color: #714BB9;
+    }
+    .custom-select:after {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 30px;
+      height: 100%;
+      line-height: 38px;
+      content: "∨";
+      text-align: center;
+      color: #714BB9;
+      font-size: 24px;
+      border-left: 1px solid #3C1C78;
+      z-index: -1;
+    }
+    /*nút thẻ a */
+    .btn1 {
+      cursor: pointer;
+      position: relative;
+      padding: 10px 20px;
+      background: #4d5154;
+      font-size: 18px;
+      border-top-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      transition: all 0.5s;
+      text-decoration: none;
+      &:after, &:before {
+        content: " ";
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        border: 0px solid #fff;
+        transition: all 1s;
+      }
+
+      &:after {
+        top: -1px;
+        left: -1px;
+        border-top: 5px solid #b6effb;
+        border-left: 5px solid #b6effb;
+      }
+
+      &:before {
+        bottom: -1px;
+        right: -1px;
+        border-bottom: 5px solid #b6effb;
+        border-right: 5px solid #b6effb;
+      }
+
+      &:hover {
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+      / / background: rgba(0, 0, 0, .5);
+      / / color: white;
+
+        &:before, &:after {
+
+          width: 100%;
+          height: 100%;
+        / / border-color: white;
+        }
+      }
+    }
+    /*end nút thẻ a*/
+  </style>
+</head>
+<body>
+<div >
+  <section  style="background-color: #d2c9ff;margin-top: 1rem;margin-bottom: 1rem" >
+    <div class="container py-5 ">
+      <div class="row d-flex justify-content-center align-items-center ">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 th:if="${order.status == 1}" class="fw-bold mb-0 text-black">Đơn hàng cần xác nhận</h1>
+                      <h1 th:if="${order.status == 2}" class="fw-bold mb-0 text-black">Đơn hàng đang giao tới khách</h1>
+                      <h1 th:if="${order.status == 3}" class="fw-bold mb-0 text-black">Đơn hàng đã bán</h1>
+<!--                      <h1 th:if="${order.status == 0}" class="fw-bold mb-0 text-black">Đơn hủy</h1>-->
+                    </div>
+                    <hr class="my-4">
+
+                    <div class="row mb-4 d-flex justify-content-between align-items-center" th:each="p: ${pro}">
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <img th:src="'/product_image/'+${p.image}"
+                             class="img-fluid rounded-3" alt="Cotton T-shirt">
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h6 class="text-black mb-0" th:text="${p.name}"></h6>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex" style="width: 25%">
+                        <h6 class="text-black mb-0" >Số Lượng: <span th:text="${p.quantity}"></span></h6>
+                      </div>
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0" style="width: 200%" th:text="${#numbers.formatDecimal(p.price,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+                      </div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="d-flex justify-content-between mb-5">
+                      <h6 class="text-uppercase">Tổng tiền sản phẩm + giá vận chuyển: </h6>
+                      <h6><span th:text="${#numbers.formatDecimal(total,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span></h6>
+                    </div>
+                    <hr class="my-4">
+                    <div class="pt-5" style="margin-top: -3rem">
+
+                      <h6 class="mb-0" style="width: 100%;height: 40px" >Lời nhắn cho shop: <span th:text="${order.notes}"></span></h6>
+                    </div>
+                    <div style="margin-top: 3rem" th:if="${order.status == 1}">
+                      <a class="btn1" style="text-decoration: none;padding: 0.5rem;font-size: 14px;top: 0.5rem" th:href="@{'/order/order1/'+${order.id}}">Confirm</a>
+                    </div>
+                      <div th:if="${evaluate != null && order.status == 3}">
+                        <h5 style="word-wrap: break-word"><b>Đánh giá của khách <span th:text="${order.nameReceiver}"></span>: </b><span th:text="${evaluate.value}"></span></h5>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <div class="fw-bold mb-5 mt-2 pt-1">
+                      <p>Địa chỉ nhận hàng: </p>
+                      <p >
+                        <span th:text="${order.nameReceiver}"></span><br>
+                        <span th:text="${order.phone}"></span><br>
+                        <span th:text="${order.address}"></span>
+                      </p>
+                    </div>
+
+                    <hr class="my-4">
+                    <div class="fw-bold mb-5 mt-2 pt-1">
+                      <p>Phương thức vận chuyển: </p>
+                      <p >
+                        <span th:text="${transport.noteTran}"></span><br>
+                        <span th:text="${#numbers.formatDecimal(transport.totalTran,3,'DEFAULT', 0, 'DEFAULT')}+' VNĐ'"></span>
+                      </p>
+                    </div>
+
+                    <hr class="my-4">
+                    <div class="fw-bold mb-5 mt-2 pt-1">
+                      <p>Phương thức thanh toán: </p>
+                      <p th:text="${payment.notePayment}"></p>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--    </div>-->
+    <a class="btn1" href="/admin#order"
+       style="text-decoration: none;color: white;font-size: 16px
+                ;background-color: #4d5154;top: -2rem;left: 7rem;"
+    >
+      Back</a>
+  </section>
+
+</div>
+
+</body>
+</html>

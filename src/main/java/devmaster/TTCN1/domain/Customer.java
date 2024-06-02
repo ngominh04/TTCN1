@@ -43,7 +43,7 @@ public class Customer {
     @Column(name = "ISDELETE")
     private Byte isDelete;
 
-    @Column(name = "phanquyen")
+    @Column(name = "role")
     private Integer phanquyen;
 
 }

@@ -1,8 +1,11 @@
 package devmaster.TTCN1.controller;
 
+import devmaster.TTCN1.domain.Category;
 import devmaster.TTCN1.domain.Product;
+import devmaster.TTCN1.respository.CategoryRespon;
 import devmaster.TTCN1.respository.EvaluateRespon;
 import devmaster.TTCN1.respository.ProductRespon;
+import devmaster.TTCN1.service.CategoryService;
 import devmaster.TTCN1.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,10 @@ public class ViewController {
     ProductRespon productRespon;
     @Autowired
     EvaluateRespon evaluateRespon;
+    @Autowired
+    CategoryRespon categoryRespon;
+    @Autowired
+    CategoryService categoryService;
     @GetMapping("/productChiTiet/{idPro}") // cchi tiết sản phẩm
     public String showChiTiet(Model model,@PathVariable("idPro") Integer idPro){
         model.addAttribute("productImages",productRespon.getAllImage(idPro));
@@ -108,8 +115,8 @@ public class ViewController {
         session.removeAttribute("apple");
         session.removeAttribute("hp");
         session.removeAttribute("lenovo");
-        session.setAttribute("accer",productRespon.getAccer());
-        model.addAttribute("accer",productRespon.getAccer());
+        session.setAttribute("acer",productRespon.getAccer());
+        model.addAttribute("acer",productRespon.getAccer());
         return "user/filter/Description";
     }
     @GetMapping("/asus")
@@ -174,7 +181,6 @@ public class ViewController {
         session.removeAttribute("hp");
         session.removeAttribute("asus");
         session.removeAttribute("apple");
-
         session.setAttribute("phuKien",productRespon.getPhuKien());
         model.addAttribute("phuKien",productRespon.getPhuKien());
         return "user/filter/Description";
@@ -238,5 +244,12 @@ public class ViewController {
         }
         // end phân trang
         return "user/filter/search";
+    }
+//    lấy ra  sản phẩm theo  phụ kiện chọn
+    @GetMapping("/pk/{idCate}")
+    public  String pkByIdCate(Model model,@PathVariable("idCate")Integer idCate){
+        List<Product> list=productRespon.getAllByIdCate(idCate);
+        model.addAttribute("cate",list);
+        return "user/filter/listByIdCate";
     }
 }

@@ -106,10 +106,10 @@
                             <th style="width: 50px">ID</th>
                             <th style="width: 170px">Name</th>
                             <th>Notes</th>
-                            <th>Ngày tạo</th>
-                            <th>Ngày cập nhật</th>
+                            <th>Create đate</th>
+                            <th>Update date</th>
                             <th>Trạng thái</th>
-                            <th>Thao tác</th>
+                            <th>Status</th>
 
                         </tr>
                         </thead>
@@ -126,14 +126,14 @@
                             <td th:text="${pm.updatedDate}"></td>
                             <td>
                                 <div th:if="${pm.isDelete == 1}">
-                                    <a class="btn1" th:href="'/payment/offDelete/'+${pm.id}">Tắt</a>
+                                    <a class="btn1" th:href="'/payment/offDelete/'+${pm.id}">Off</a>
                                 </div>
                                 <div th:if="${pm.isDelete == 0}">
-                                    <a class="btn1" th:href="'/payment/onDelete/'+${pm.id}">Bật</a>
+                                    <a class="btn1" th:href="'/payment/onDelete/'+${pm.id}">On</a>
                                 </div>
                             </td>
                             <td>
-                                <a class="btn1" th:href="@{'/payment/fixPayment/'+${pm.id}}">Sửa</a>
+                                <a class="btn1" th:href="@{'/payment/fixPayment/'+${pm.id}}">Fix</a>
                             </td>
 
                         </tr>
@@ -142,7 +142,7 @@
                 </div>
                 <div style="margin-top: 1rem" align="center">
 
-                    <a class="btn1" th:href="@{/payment/newPayment}">Thêm mới payment</a>
+                    <a class="btn1" th:href="@{/payment/newPayment}">New payment</a>
                 </div>
             </section>
         </div>
@@ -150,7 +150,7 @@
             <a class="btn1"
                href="/admin#method"
                style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
-            >Về trang chủ</a>
+            >Back to admin</a>
         </div>
     </div>
 </div>
