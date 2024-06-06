@@ -199,7 +199,7 @@
 <!--https://www.codingnepalweb.com/login-form-with-floating-label-animation/ -->
 <div class="wrapper">
   <div class="title">
-    Forgot password
+    Quên mật khẩu
   </div>
   <form method="post" th:action="@{/register/forgotPass}" enctype="multipart/form-data">
     <p style="color: red" th:text="${message}"></p>
@@ -209,16 +209,16 @@
     </div>
     <div class="field">
       <input type="text" id="username" name="username" required>
-      <label>User name</label>
+      <label>Tên tài khoản</label>
     </div>
     <div class="field">
-      <input type="submit" value="Check">
+      <input type="submit" value="Kiểm tra">
     </div>
     <div style="margin-top: 2rem">
       <a class="btn1"
          th:href="@{/view/backProductChiTiet}"
          style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
-      >Back</a>
+      >Quay lại</a>
     </div>
   </form>
 </div>

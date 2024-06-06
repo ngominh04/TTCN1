@@ -199,35 +199,35 @@
 <!--https://www.codingnepalweb.com/login-form-with-floating-label-animation/ -->
 <div class="wrapper">
     <div class="title">
-        Login Form
+        Đăng nhập
     </div>
 
     <form method="post" th:action="@{/register/login_check}" enctype="multipart/form-data">
         <p style="color: red" th:text="${message}"></p>
         <div class="field">
             <input type="text" id="username" name="username" required>
-            <label>User name</label>
+            <label>Tên tài khoản</label>
         </div>
         <div class="field">
             <input type="password" id="password" name="password" required>
-            <label>Password</label>
+            <label>Mật khẩu</label>
         </div>
         <div class="content">
             <a class="btn1"
                th:href="@{/register/forgotPass}"
                style="margin-top: 1rem;text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
-            >Forgot password</a>
+            >Quên mật khẩu</a>
         </div>
         <div class="field">
-            <input type="submit" value="Login">
+            <input type="submit" value="Đăng nhập">
         </div>
         <div style="margin-top: 2rem">
             <a class="btn1"
                th:href="@{/view/backProductChiTiet}"
                style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
-            >Back</a>
-            <a class="btn1" style="margin-left: 8rem;text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
-               th:href="@{/register/newCus}">Sign up</a>
+            >Quay lại</a>
+            <a class="btn1" style="margin-left: 6rem;text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
+               th:href="@{/register/newCus}">Đăng ký</a>
         </div>
     </form>
 </div>

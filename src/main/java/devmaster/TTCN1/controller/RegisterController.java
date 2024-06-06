@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/register")
@@ -45,7 +47,7 @@ public class RegisterController {
         session.setAttribute("saveCus",customer);
         try {
             if(!customer.getPassword().equals(password)){
-                model.addAttribute("message","Mật khẩu có vấn đề");
+                model.addAttribute("message","Mật khẩu sai");
             } else if (customer.getIsDelete() == 0) {
                 model.addAttribute("message","Tài khoản của bạn bị khóa");
             } else {
@@ -89,8 +91,8 @@ public class RegisterController {
         boolean checkCus = false;
         List<Customer> customers = customerRespon.getAllById();
         for (Customer cus:customers) {
-            if (cus.getEmail().equals(email) == true){
-                model.addAttribute("message","Đã tồn tại email này");
+            if (email.isBlank()){
+                model.addAttribute("message","email không được để trống");
                 checkCus = false;
                 break;
             }if (cus.getUsername().equals(username) == true){
@@ -99,12 +101,23 @@ public class RegisterController {
                 break;
             }
             if (phone.length() != 10 ){
-                model.addAttribute("message","Xem lại số điện thoại");
+                model.addAttribute("message","Số điện thoại phải 10 kí tự ");
                 checkCus = false;
                 break;
             }
-            if (password.length() < 5 ){
-                model.addAttribute("message","Mật khẩu phải trên 5 kí tự");
+            if (password.length() < 8  ){
+                model.addAttribute("message","Mật khẩu phải trên 8 kí tự");
+                checkCus = false;
+                break;
+            }
+            //Dùng regex
+            Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).+$");
+            Matcher matcher = pattern.matcher(password);
+            boolean checkPass = matcher.matches();
+            if ( checkPass == false){
+                model.addAttribute("message",
+                        "Mật khẩu phải chứa ít nhất 1 kí tự số, " +
+                                "1 chữ thường, 1 chữ hoa, 1 ký tự đặc biệt");
                 checkCus = false;
                 break;
             }
@@ -176,10 +189,21 @@ public class RegisterController {
             model.addAttribute("message","2 mật khẩu phải giống nhau");
             return "/user/register/forgotPass2";
         }
-        if (password.length() <5 && password2.length()<5){
-            model.addAttribute("message","Mật khẩu phải trên 5 ký tự");
+        if (password.length() <8 && password2.length()<8){
+            model.addAttribute("message","Mật khẩu phải trên 8 ký tự");
             return "/user/register/forgotPass2";
-        }else {
+        }
+        //Dùng regex
+        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).+$");
+        Matcher matcher = pattern.matcher(password);
+        boolean checkPass = matcher.matches();
+        if ( checkPass == false){
+            model.addAttribute("message",
+                    "Mật khẩu phải chứa ít nhất 1 kí tự số, " +
+                            "1 chữ thường, 1 chữ hoa, 1 ký tự đặc biệt");
+            return "/user/register/forgotPass2";
+        }
+        else {
             Customer customer = customerRespon.getCustomer((String) session.getAttribute("usernameForgot"));
             customer.setPassword(password);
             session.removeAttribute("usernameForgot");

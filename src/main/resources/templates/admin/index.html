@@ -741,7 +741,7 @@
             <div layout:fragment="content4">
                 <section class="resume-section" id="customer">
                     <div class="resume-section-content">
-                        <h2>Danh sách quản lí khách hàng</h2>
+                        <h2>Customer list</h2>
                         <section>
                             <div class="tbl-header">
                                 <table cellpadding="0" cellspacing="0" border="0">
@@ -753,8 +753,8 @@
                                         <th>Address</th>
                                         <th style="width: 150px">Email</th>
                                         <th>Phone</th>
-                                        <th style="width: 75px;padding: 0">Active</th>
-                                        <th style="width: 75px;padding: 0">Delete</th>
+                                        <th style="width: 100px;padding: 0">Active</th>
+                                        <th style="width: 100px;padding: 0">Delete</th>
 <!--                                        <th>Thao tác</th>-->
                                     </tr>
                                     </thead>
@@ -771,17 +771,17 @@
                                         <td style="width: 150px" th:text="${pro.email}"></td>
                                         <td th:text="${pro.phone}"></td>
 
-                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isActive} == 1">
-                                            <a class="btn1" th:href="@{'/customer/activeCusOff/'+${pro.id}}">Tắt</a>
+                                        <td style="width: 100px;padding: 0" align="center" th:if="${pro.isActive} == 1">
+                                            <a class="btn1" th:href="@{'/customer/activeCusOff/'+${pro.id}}">OFF</a>
                                         </td>
-                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isActive} == 0">
-                                            <a class="btn1" th:href="@{'/customer/activeCusOn/'+${pro.id}}">Bật</a>
+                                        <td style="width: 100px;padding: 0" align="center" th:if="${pro.isActive} == 0">
+                                            <a class="btn1" th:href="@{'/customer/activeCusOn/'+${pro.id}}">ON</a>
                                         </td>
-                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isDelete} == 1">
-                                            <a class="btn1" th:href="@{'/customer/deleteCusOff/'+${pro.id}}">Tắt</a>
+                                        <td style="width: 100px;padding: 0" align="center" th:if="${pro.isDelete} == 1">
+                                            <a class="btn1" th:href="@{'/customer/deleteCusOff/'+${pro.id}}">OFF</a>
                                         </td>
-                                        <td style="width: 75px;padding: 0" align="center" th:if="${pro.isDelete} == 0">
-                                            <a class="btn1" th:href="@{'/customer/deleteCusOn/'+${pro.id}}">Bật</a>
+                                        <td style="width: 100px;padding: 0" align="center" th:if="${pro.isDelete} == 0">
+                                            <a class="btn1" th:href="@{'/customer/deleteCusOn/'+${pro.id}}">ON</a>
                                         </td>
 <!--                                        <td>-->
 <!--                                            <a class="btn1" th:href="@{'/product/detailPro/'+${pro.id}}">Xem chi tiết</a>-->
@@ -1016,7 +1016,7 @@
             </div>
 
             <footer class="py-5 bg-dark">
-                <div class="container"><p class="m-0 text-center text-white">Xây dựng và pha triển bởi: <span style="color: greenyellow">Ngô Văn Minh</span> </p></div>
+                <div class="container"><p class="m-0 text-center text-white">Xây dựng và phát triển bởi: <span style="color: greenyellow">Ngô Văn Minh</span> </p></div>
             </footer>
         </div>
         <div th:if="${session.saveCus == null}">

@@ -199,13 +199,13 @@
 <!--https://www.codingnepalweb.com/login-form-with-floating-label-animation/ -->
 <div class="wrapper">
     <div class="title">
-        Login Form
+        Sửa tài khoản
     </div>
 
     <form method="post" th:action="@{'/register/updateCus/'+${session.saveCus.id}}" enctype="multipart/form-data">
         <p style="color: red" th:text="${message}"></p>
         <div class="field">
-            <p>Full name</p>
+            <p>Tên đầy đủ</p>
             <input type="text" id="fullName" name="fullName" th:value="${customer.name}" required>
 
         </div>
@@ -215,12 +215,12 @@
 
         </div>
         <div class="field" style="margin-top: 4rem">
-            <p>User name</p>
+            <p>Tài khoản</p>
             <input type="text" id="username" name="username" th:value="${customer.username}" required>
 
         </div>
         <div class="field" style="margin-top: 4rem">
-            <p>Password</p>
+            <p>Mật khẩu</p>
             <input type="text" id="password" name="password" th:value="${customer.password}" required>
 
         </div>
@@ -232,7 +232,7 @@
             <a class="btn1"
                th:href="@{/view/backProductChiTiet}"
                style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154"
-            >Back</a>
+            >Quay lại</a>
         </div>
     </form>
 </div>

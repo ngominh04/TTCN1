@@ -92,9 +92,16 @@ public class CartController {
         Product product = productRespon.findAllById(idPro);
 
         Cart cart = cartRespon.findAllById(idCart);
+        boolean checkQty = false;
+        if (cart.getQuantity() >= 100){
+            cart.setQuantity(100);
+            checkQty = true;
+        }
         if (cart.getQuantity() >= product.getQuatity()){
             cart.setQuantity(product.getQuatity());
-        }else {
+            checkQty = true;
+        }
+        if (checkQty == false){
             cart.setQuantity(cart.getQuantity()+1);
         }
         cartRespon.save(cart);
@@ -109,18 +116,23 @@ public class CartController {
                           ){
         Product product = productRespon.findAllById(idPro);
         Cart cart= cartRespon.findAllById(idCart);
-        if(quantity > product.getQuatity()){
-            cart.setQuantity(product.getQuatity());
-            cartService.save(cart);
+        boolean checkCart = false;
+        if(quantity >= 100){
+            cart.setQuantity(100);
+            checkCart =true;
+        }
+        if (quantity >= product.getQuatity()){
+            cart.setQuantity(product.getQuatity()-1);
+            checkCart =true;
         }
         if (quantity <= 1){
             cart.setQuantity(1);
-            cartService.save(cart);
+            checkCart =true;
         }
-        else {
+        if (checkCart== false){
             cart.setQuantity(quantity);
-            cartService.save(cart);
         }
+        cartService.save(cart);
         return "redirect:/shopping_cart/cart/{idCus}";
     }
     @GetMapping("/remove/{idCus}/{idCart}")
