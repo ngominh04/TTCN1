@@ -109,6 +109,9 @@ public class CommonController {
         model.addAttribute("order",orderRespon.getOrderByStatus(1));
         model.addAttribute("order1",orderRespon.getOrderByStatus(2));
         model.addAttribute("order2",orderRespon.getOrderByStatus(3));
+        model.addAttribute("order4",orderRespon.getOrderByStatus(4));
+        model.addAttribute("order5",orderRespon.getOrderByStatus(5));
+
         model.addAttribute("payment",paymentRespon.getAllById());
         model.addAttribute("transport",transportRespon.getAllById());
         model.addAttribute("customer",customerRespon.getAllById());

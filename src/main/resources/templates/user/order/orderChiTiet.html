@@ -22,6 +22,7 @@
                                                 <h1 th:if="${receiver.status == 2}" class="fw-bold mb-0 text-black">Đơn hàng đang giao</h1>
                                                 <h1 th:if="${receiver.status == 3}" class="fw-bold mb-0 text-black">Đơn hàng đã mua</h1>
                                                 <h1 th:if="${receiver.status == 0}" class="fw-bold mb-0 text-black">Đơn hủy</h1>
+                                                <h1 th:if="${receiver.status == 4}" class="fw-bold mb-0 text-black">Đơn hoàn trả</h1>
                                             </div>
                                             <hr class="my-4">
 
@@ -61,6 +62,9 @@
                                                 <a class="btn1" th:href="@{'/order/xacNhan/'+${session.saveCus.id}+'/'+${receiver.id}}"
                                                    style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
                                                     Đã nhận</a>
+                                                <a class="btn1" th:href="@{'/order/order5/'+${session.saveCus.id}+'/'+${receiver.id}}"
+                                                   style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                                                    Hoàn đơn</a>
                                             </div>
                                             <div style="margin-top: 3rem" th:if="${receiver.status == 0}">
                                                 <a class="btn1" th:href="@{'/order/muaLai/'+${session.saveCus.id}+'/'+${receiver.id}}"
@@ -79,6 +83,12 @@
                                                 <div th:if="${evaluate != null}">
                                                     <h5 style="word-wrap: break-word"><b>Đánh giá của bạn: </b><span th:text="${evaluate.value}"></span></h5>
                                                 </div>
+                                            </div>
+                                            <div style="margin-top: 3rem" th:if="${receiver.status == 4}">
+                                                <h5><b>Đơn hàng đang được giao lại cho cửa hàng</b></h5>
+                                            </div>
+                                            <div style="margin-top: 3rem" th:if="${receiver.status == 5}">
+                                                <h5><b>Đơn hàng hoàn trả thành công</b></h5>
                                             </div>
                                         </div>
                                     </div>

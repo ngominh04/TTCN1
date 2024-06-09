@@ -21,6 +21,9 @@ layout:decorate="~{user/index}">
             <a class="btn1" th:href="@{'/order/order0/'+${session.saveCus.id}}"
                style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
                 Đơn hủy</a>
+            <a class="btn1" th:href="@{'/order/order5/'+${session.saveCus.id}}"
+               style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154">
+                Đơn hoàn trả</a>
             <div class="container" layout:fragment="order">
                 <h2>Đợi xác nhận từ phía shop</h2>
                 <ul class="responsive-table">
@@ -49,7 +52,7 @@ layout:decorate="~{user/index}">
 
                 <a class="btn1" th:href="@{/view/backProductChiTiet}"
                    style="text-decoration: none;color: white;font-size: 16px;background-color: #4d5154;top: 2rem">
-                    Back to shop</a>
+                    Quay lại</a>
             </div>
 
         </div>

@@ -63,6 +63,7 @@ public class OrderController {
     @Autowired
     EvaluateService evaluateService;
 
+
     @GetMapping("/showOrder/{idCus}")
     public String showOrder(Model model, @PathVariable("idCus") Integer idCus,HttpSession session){
         session.setAttribute("newReceiverOrder",1);
@@ -88,8 +89,9 @@ public class OrderController {
 
 
     // các status của order:
-    // 1: đã đặt hàng, chờ xác nhận, 2: Đang giao, 3: Đã giao đến người dùng,4: người dùng xác nhận đã nhận được hàng, 0: Người dùng hủy hàng
-
+    // 1: đã đặt hàng, chờ xác nhận, 2: Đang giao, 3: Đã giao đến người dùng,
+    // 4: người dùng hoàn trả đơn hàng, 0: Người dùng hủy hàng
+    // 5: đươn hàng hoàn trả thành công
     @PostMapping("/updateOrder/{idCus}") // lưu đồng thời bảng order , order_detail, order_payment,order_transport
     public String updateOrder(@PathVariable("idCus") Integer idCus,
                               @RequestParam(value = "idRece",required = false)Integer idRece,
@@ -311,4 +313,36 @@ public class OrderController {
         return "/admin/order/detail";
     }
 
+    // trạng thái hoàn đơn : status 4, status 5: đơn hàng đã giao lại cho shop
+    @GetMapping("/order5/{idCus}")
+    public String order5(@PathVariable("idCus")Integer idCus,Model model){
+        model.addAttribute("order5",orderRespon.getOrder_IdCus_Status(idCus,4));
+        model.addAttribute("order5_",orderRespon.getOrder_IdCus_Status(idCus,5));
+        return "/user/order/order5";}
+
+    // click hoàn đơn hàng khi (2->4)
+    @GetMapping("/order5/{idCus}/{idOrder}")
+    public String  order5(@PathVariable("idCus")Integer idCus,
+                          @PathVariable("idOrder")Integer idOrder){
+        Order order = orderRespon.finById(idOrder);
+        order.setStatus(4);
+        orderRespon.save(order);
+        return "redirect:/order/order3/{idCus}";
+    }
+    // order 5 , admin vào xác nhận nhận đơn hoàn trả thành công
+    @GetMapping("/order5_admin/{idOrder}")
+    public String order5_admin(Model model,@PathVariable("idOrder")Integer idOrder){
+        Order order = orderRespon.finById(idOrder);
+        order.setStatus(5);
+        orderRespon.save(order);
+
+//        List<IOrderDetails> ordersDetail = orderDetailRespon.getOrdersDetail_IdOrder(idOrder);
+//        for (IOrderDetails iOrderDetails:ordersDetail) {
+//            Product product1 = productRespon.findAllById(iOrderDetails.getIdPro());
+//            product1.setQuatity(product1.getQuatity()+iOrderDetails.getQuantity());
+//            productRespon.save(product1);
+//        }
+
+        return "redirect:/admin#order";
+    }
 }
