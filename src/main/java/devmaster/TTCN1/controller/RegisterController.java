@@ -9,7 +9,9 @@ import devmaster.TTCN1.respository.ReceiverRespon;
 import devmaster.TTCN1.service.CustomerService;
 import devmaster.TTCN1.service.ParamService;
 import devmaster.TTCN1.service.ReceiverService;
+import devmaster.TTCN1.service.Sha_256_password;
 import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,9 @@ public class RegisterController {
     ReceiverRespon receiverRespon;
     @Autowired
     ReceiverService receiverService;
+    @Autowired
+    Sha_256_password sha_256_password;
+
     @GetMapping("/login")
     public String login(){
         return "user/register/Login";
@@ -46,9 +51,13 @@ public class RegisterController {
         Customer customer= customerRespon.getCustomer(username);
         session.setAttribute("saveCus",customer);
         try {
-            if(!customer.getPassword().equals(password)){
-                model.addAttribute("message","Mật khẩu sai");
-            } else if (customer.getIsDelete() == 0) {
+            if(!customer.getPassword().equals(sha_256_password.GM_SHA_password(password))){
+                model.addAttribute("message","Mật Khẩu Sai __");
+            }
+//            else if(!customer.getPassword().equals(password)){
+//                model.addAttribute("message","Mật khẩu sai");
+//            }
+            else if (customer.getIsDelete() == 0) {
                 model.addAttribute("message","Tài khoản của bạn bị khóa");
             } else {
 
@@ -64,7 +73,12 @@ public class RegisterController {
         }catch (Exception e){
             model.addAttribute("message","Không tồn tại tài khoản");
         }
-
+        // thay đổi lại pass vs những người dùng cũ
+        if(customer.getPassword().equals(password)){
+            model.addAttribute("message","Vì lí do bảo mật của chúng tôi với khách hàng cũ bạn vui lòng thay lại password: " +
+                    "Mật khẩu bạn phải hơn 8 kí tự, bao gồm ít nhất 1 số, 1 chữ thường, 1 chữ hoa, 1 kí tự đặc biệt");
+            return "/user/register/forgotPass2";
+        }
         return "user/register/Login";
     }
     @GetMapping("/logout")
@@ -131,7 +145,9 @@ public class RegisterController {
             customer.setIsDelete((byte) 1);
             customer.setPhone(phone);
             customer.setEmail(email);
-            customer.setPassword(password);
+            // mã hóa pass theo sha_256
+            customer.setPassword(sha_256_password.SHA_password(password));
+
             customer.setCreatedDate(String.valueOf(LocalDateTime.now()));
             customer.setPhanquyen(0);
             customer.setUsername(username);
@@ -205,7 +221,7 @@ public class RegisterController {
         }
         else {
             Customer customer = customerRespon.getCustomer((String) session.getAttribute("usernameForgot"));
-            customer.setPassword(password);
+            customer.setPassword(sha_256_password.SHA_password(password));
             session.removeAttribute("usernameForgot");
             customerService.save(customer);
         }
@@ -223,7 +239,6 @@ public class RegisterController {
                             @RequestParam("fullName")String fullName,
                             @RequestParam("email")String email,
                             @RequestParam("username")String username,
-                            @RequestParam("password")String password,
                             HttpSession session,
                             Model model){
         Customer customer = (Customer) session.getAttribute("saveCus");
@@ -238,11 +253,11 @@ public class RegisterController {
             model.addAttribute("customer",customer);
             return "user/register/updateCus";
         }
-        if (password.isBlank() || password.length() < 5){ // isBlank : ktra kí tu khoảng trắng và emty
-            model.addAttribute("message","Password Không hợp lệ");
-            model.addAttribute("customer",customer);
-            return "user/register/updateCus";
-        }
+//        if (password.isBlank() || password.length() < 5){ // isBlank : ktra kí tu khoảng trắng và emty
+//            model.addAttribute("message","Password Không hợp lệ");
+//            model.addAttribute("customer",customer);
+//            return "user/register/updateCus";
+//        }
         if (username.isBlank() ){ // isBlank : ktra kí tu khoảng trắng và emty
             model.addAttribute("message","Username Không hợp lệ");
             model.addAttribute("customer",customer);
@@ -251,8 +266,45 @@ public class RegisterController {
         customer.setName(fullName);
         customer.setEmail(email);
         customer.setUsername(username);
-        customer.setPassword(password);
-//        customerService.save(customer);
+//        customer.setPassword(password);
+        customerService.save(customer);
         return "redirect:/receiver/receiver/{idCus}";
     }
+    // thay đổi pass trong trang người dùng
+    @GetMapping("/repairPassG/{idCus}")
+    public String repairPass(@PathVariable("idCus") Integer idCus){
+        return "/user/register/forgotPass2";
+    }
+
+    @PostMapping("/repairPassP/{idCus}")
+    public String repairPass(Model model,@PathVariable("idCus") Integer idCus,
+                              @RequestParam("password")String password,
+                              @RequestParam("password2")String password2,
+                              HttpSession session){
+        if (password.equals(password2) == false){
+            model.addAttribute("message","2 mật khẩu phải giống nhau");
+            return "/user/register/forgotPass2";
+        }
+        if (password.length() <8 && password2.length()<8){
+            model.addAttribute("message","Mật khẩu phải trên 8 ký tự");
+            return "/user/register/forgotPass2";
+        }
+        //Dùng regex
+        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).+$");
+        Matcher matcher = pattern.matcher(password);
+        boolean checkPass = matcher.matches();
+        if ( checkPass == false){
+            model.addAttribute("message",
+                    "Mật khẩu phải chứa ít nhất 1 kí tự số, " +
+                            "1 chữ thường, 1 chữ hoa, 1 ký tự đặc biệt");
+            return "/user/register/forgotPass2";
+        }
+        else {
+            Customer customer = (Customer) session.getAttribute("saveCus");
+            customer.setPassword(sha_256_password.SHA_password(password));
+            customerService.save(customer);
+        }
+        return "redirect:/receiver/receiver/{idCus}";
+    }
+
 }
