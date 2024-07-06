@@ -117,12 +117,12 @@ public class CartController {
         Product product = productRespon.findAllById(idPro);
         Cart cart= cartRespon.findAllById(idCart);
         boolean checkCart = false;
-        if(quantity >= 100){
+        if(quantity >= 100  && product.getQuatity()>100){
             cart.setQuantity(100);
             checkCart =true;
         }
-        if (quantity >= product.getQuatity()){
-            cart.setQuantity(product.getQuatity()-1);
+        if (quantity >= product.getQuatity() && product.getQuatity() < 100){
+            cart.setQuantity(product.getQuatity());
             checkCart =true;
         }
         if (quantity <= 1){

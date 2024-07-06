@@ -135,4 +135,5 @@ public class SQL {
             "order by count(product.ID) desc"; // SẮP XẾP NHỨNG ĐƠN BÁN ĐC NHIỀU LÊN ĐẦU
     public static final String PRODUCT_BY_IACATE="" +
             " select * from product where IDCATEGORY = ?";
+    public static final String COUNT_ORDER_BY_STATIC_3="select count(id) SoDonHang from `order` where STATUS=3 and ID_CUSTOMER = ?";
 }

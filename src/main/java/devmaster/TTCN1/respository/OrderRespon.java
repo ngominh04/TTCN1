@@ -21,4 +21,7 @@ public interface OrderRespon extends CrudRepository<Order,Integer> {
 
     @Query(value = SQL.ORDER_BY_ID,nativeQuery = true)
     IOrder getOrderById(Integer idOrder);
+
+    @Query(value = SQL.COUNT_ORDER_BY_STATIC_3,nativeQuery = true)
+    IOrder getCountOrder3(Integer idCus);
 }
